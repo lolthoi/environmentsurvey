@@ -1,25 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "G:\\ES\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj": {}
+    "C:\\Users\\User\\Desktop\\environmentsurvey\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj": {}
   },
   "projects": {
-    "G:\\ES\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj": {
+    "C:\\Users\\User\\Desktop\\environmentsurvey\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\ES\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\environmentsurvey\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj",
         "projectName": "EnvironmentSurvey.WebAPI",
-        "projectPath": "G:\\ES\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj",
-        "packagesPath": "C:\\Users\\hoang.thai.duong\\.nuget\\packages\\",
-        "outputPath": "G:\\ES\\Server\\EnvironmentSurvey.WebAPI\\obj\\",
+        "projectPath": "C:\\Users\\User\\Desktop\\environmentsurvey\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\environmentsurvey\\Server\\EnvironmentSurvey.WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\DevExpress 20.2\\Components\\Offline Packages",
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\hoang.thai.duong\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.2.config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -27,7 +25,6 @@
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 20.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -47,6 +44,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.2, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.8, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.8, )"
@@ -88,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

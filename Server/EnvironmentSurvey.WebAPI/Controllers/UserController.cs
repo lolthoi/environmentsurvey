@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EnvironmentSurvey.WebAPI.BusinessLogic;
+using EnvironmentSurvey.WebAPI.ClientSide.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EnvironmentSurvey.WebAPI.Controllers
 {
@@ -12,36 +12,36 @@ namespace EnvironmentSurvey.WebAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        // GET: api/<UserController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
         {
-            return new string[] { "value1", "value2" };
+            _userService = userService;
         }
 
-        // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<UserController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("Register")]
+        //POST : /api/User/Register
+        public async Task<IActionResult> Register(UserModel model)
         {
+            var response = await _userService.Register(model);
+            if (response.Equals("Success"))
+                return Ok(new { succeeded = "Username has already sdasd taken!" });
+            else if (response.Equals("Duplicate"))
+                return BadRequest(new { error = "Username has already been taken!" });
+            else
+                return BadRequest(new { error = "Invalid request!" });
         }
 
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        [Route("Login")]
+        //POST : /api/User/Login
+        public async Task<IActionResult> Login(UserModel model)
         {
-        }
-
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var token = await _userService.Login(model);
+            if (token != null)
+                return Ok(new { token });
+            return BadRequest(new { message = "Username or password is incorrect!" });
         }
     }
 }
