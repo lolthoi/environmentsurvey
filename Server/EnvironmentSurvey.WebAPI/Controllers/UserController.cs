@@ -26,11 +26,11 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         {
             var response = await _userService.Register(model);
             if (response.Equals("Success"))
-                return Ok(new { succeeded = "Username has already sdasd taken!" });
+                return Ok(new { succeeded = "Success" });
             else if (response.Equals("Duplicate"))
                 return BadRequest(new { error = "Username has already been taken!" });
             else
-                return BadRequest(new { error = "Invalid request!" });
+                return BadRequest(new { error = response });
         }
 
         [HttpPost]

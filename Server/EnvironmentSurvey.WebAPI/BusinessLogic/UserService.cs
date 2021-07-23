@@ -60,12 +60,16 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Status = 0,
                 CreatedDate = DateTime.UtcNow
             };
-            
-            _context.Users.Add(user);
-            var result = await _context.SaveChangesAsync();
-            if(result > 0)
-                return "Success";
-            return "Invalid";
+            try
+            {
+                _context.Users.Add(user);
+                var result = await _context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
+            return "Success";
         }
 
         public async Task<string> Login(UserModel model)
