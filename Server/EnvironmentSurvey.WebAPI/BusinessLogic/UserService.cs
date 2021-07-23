@@ -19,6 +19,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         Task<string> Register(UserModel model);
         Task<string> Login(UserModel model);
         //Task<Object> GetUserProfile();
+        Task<string> changePassword(string userName, string oldPass, string newPass);
     }
     public class UserService : IUserService
     {
@@ -98,5 +99,23 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             }
             return null;
         }
+
+        public async Task<string> changePassword(string userName, string oldPass, string newPass)
+        {
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(userName));
+            string userPass = user.Password;
+
+            if (BC.Verify(oldPass, userPass))
+            {
+                string passwordHash = BC.HashPassword(newPass);
+                user.Password = passwordHash;
+                _context.Entry(user).State = EntityState.Modified;
+                _context.SaveChanges();
+                return  "success";
+            }
+
+            return "faild";
+
+        }   
     }
 }

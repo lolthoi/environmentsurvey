@@ -3,7 +3,9 @@ using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EnvironmentSurvey.WebAPI.Controllers
@@ -42,6 +44,27 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             if (token != null)
                 return Ok(new { token });
             return BadRequest(new { message = "Username or password is incorrect!" });
+        }
+
+        [HttpPost]
+        [Route("ChangePass")]
+        //POST : /api/User/ChangePassword
+        public async Task<IActionResult> ChangePass(UserPassModel model)
+        {
+            var userName = User.FindFirst("Username");
+            if (userName.Value.Equals(model.userName))
+            {
+                var check = await _userService.changePassword(model.userName, model.oldPass, model.newPass);
+                if(check.Equals("success"))
+                {
+                    return Ok("Password Change Successful");
+                } 
+                else
+                {
+                    return BadRequest("Change Password Fail");
+                }
+            }
+            return BadRequest("Change Password Fail");
         }
     }
 }
