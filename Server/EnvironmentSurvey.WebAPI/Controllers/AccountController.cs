@@ -5,28 +5,27 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EnvironmentSurvey.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class AccountController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
 
-        public UserController(IUserService userService)
+        public AccountController(IAccountService accountService)
         {
-            _userService = userService;
+            _accountService = accountService;
         }
 
         [HttpPost]
         [Route("Register")]
         //POST : /api/User/Register
-        public async Task<IActionResult> Register(UserModel model)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
-            var response = await _userService.Register(model);
+            var response = await _accountService.Register(model);
             if (response.Equals("Success"))
                 return Ok(new { succeeded = "Success" });
             else if (response.Equals("Duplicate"))
@@ -38,33 +37,28 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         [HttpPost]
         [Route("Login")]
         //POST : /api/User/Login
-        public async Task<IActionResult> Login(UserModel model)
+        public async Task<IActionResult> Login(LoginModel model)
         {
-            var token = await _userService.Login(model);
+            var token = await _accountService.Login(model);
             if (token != null)
                 return Ok(new { token });
             return BadRequest(new { message = "Username or password is incorrect!" });
         }
 
         [HttpPost]
-        [Route("ChangePass")]
+        [Authorize]
+        [Route("ChangePassword")]
         //POST : /api/User/ChangePassword
-        public async Task<IActionResult> ChangePass(UserPassModel model)
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
         {
             var userName = User.FindFirst("Username");
-            if (userName.Value.Equals(model.userName))
+            if (userName.Value.Equals(model.Username))
             {
-                var check = await _userService.changePassword(model.userName, model.oldPass, model.newPass);
-                if(check.Equals("success"))
-                {
-                    return Ok("Password Change Successful");
-                } 
-                else
-                {
-                    return BadRequest("Change Password Fail");
-                }
+                var check = await _accountService.changePassword(model);
+                if (check.Equals("Success"))
+                    return Ok(new { succeeded = "Password Change Successful" });
             }
-            return BadRequest("Change Password Fail");
+            return BadRequest(new { error = "Change Password Fail" });
         }
     }
 }

@@ -14,19 +14,19 @@ using BC = BCrypt.Net.BCrypt;
 
 namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
-    public interface IUserService
+    public interface IAccountService
     {
-        Task<string> Register(UserModel model);
-        Task<string> Login(UserModel model);
+        Task<string> Register(RegisterModel model);
+        Task<string> Login(LoginModel model);
         //Task<Object> GetUserProfile();
-        Task<string> changePassword(string userName, string oldPass, string newPass);
+        Task<string> changePassword(ChangePasswordModel model);
     }
-    public class UserService : IUserService
+    public class AccountService : IAccountService
     {
         private readonly ESContext _context;
         private IConfiguration _configuration;
 
-        public UserService(IConfiguration config, ESContext context)
+        public AccountService(IConfiguration config, ESContext context)
         {
             _configuration = config;
             _context = context;
@@ -41,7 +41,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 return await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(UserName));
         }
 
-        public async Task<string> Register(UserModel model)
+        public async Task<string> Register(RegisterModel model)
         {
             var duplicate = _context.Users.FirstOrDefault(u => u.Username.Equals(model.Username));
             if (duplicate != null)
@@ -73,7 +73,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             return "Success";
         }
 
-        public async Task<string> Login(UserModel model)
+        public async Task<string> Login(LoginModel model)
         {
             if (model != null && model.Username != null && model.Password != null)
             {
@@ -100,22 +100,19 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             return null;
         }
 
-        public async Task<string> changePassword(string userName, string oldPass, string newPass)
+        public async Task<string> changePassword(ChangePasswordModel model)
         {
-            User user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(userName));
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(model.Username));
             string userPass = user.Password;
-
-            if (BC.Verify(oldPass, userPass))
+            if (BC.Verify(model.OldPassword, userPass))
             {
-                string passwordHash = BC.HashPassword(newPass);
+                string passwordHash = BC.HashPassword(model.NewPassword);
                 user.Password = passwordHash;
                 _context.Entry(user).State = EntityState.Modified;
                 _context.SaveChanges();
-                return  "success";
+                return  "Success";
             }
-
-            return "faild";
-
+            return "Failed";
         }   
     }
 }

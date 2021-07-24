@@ -39,7 +39,7 @@ namespace EnvironmentSurvey.WebAPI
                 c.AddPolicy("AllowOrigin", op => op.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
             services.AddDbContext<ESContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EnvironmentSurvey")));
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddControllers();
             services.AddAuthentication(x =>
             {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EnvironmentSurvey.WebAPI.ClientSide.Models
 {
-    public class UserModel
+    public class RegisterModel
     {
         public string Username { get; set; }
         public string Password { get; set; }
@@ -16,7 +16,6 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public string Email { get; set; }
         public string Tel { get; set; }
         public string Address { get; set; }
-        public int? Gender { get; set; }
-        public int? Status { get; set; }
+        public int Gender { get; set; }
     }
 }
