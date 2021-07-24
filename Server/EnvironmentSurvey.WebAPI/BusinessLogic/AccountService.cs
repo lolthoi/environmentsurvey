@@ -1,4 +1,6 @@
-﻿using EnvironmentSurvey.WebAPI.ClientSide.Models;
+﻿using EnvironmentSurvey.WebAPI.ClientSide.Common;
+using EnvironmentSurvey.WebAPI.ClientSide.Models;
+using EnvironmentSurvey.WebAPI.ClientSide.Models.Account;
 using EnvironmentSurvey.WebAPI.DataAccess;
 using EnvironmentSurvey.WebAPI.DataAccess.Domains;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +19,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     public interface IAccountService
     {
         Task<string> Register(RegisterModel model);
-        Task<string> Login(LoginModel model);
+        Task<AuthendModel> Login(LoginModel model);
         //Task<Object> GetUserProfile();
         Task<string> changePassword(ChangePasswordModel model);
     }
@@ -58,7 +60,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Tel = model.Tel,
                 Address = model.Address,
                 Gender = model.Gender,
-                Status = 0,
+                Status = (int)Status.PENDING,
                 CreatedDate = DateTime.UtcNow
             };
             try
@@ -73,7 +75,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             return "Success";
         }
 
-        public async Task<string> Login(LoginModel model)
+        public async Task<AuthendModel> Login(LoginModel model)
         {
             if (model != null && model.Username != null && model.Password != null)
             {
@@ -84,7 +86,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     {
                         Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim("Username", user.Username)
+                        new Claim("Username", user.Username),
+                        new Claim("Role", user.Role.ToString()),
                     }),
                         Expires = DateTime.UtcNow.AddDays(1),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
@@ -92,7 +95,13 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                     var token = tokenHandler.WriteToken(securityToken);
-                    return token;
+                    var authenModel = new AuthendModel
+                    {
+                        Token = token,
+                        Username = user.Username,
+                        Role = user.Role
+                    };
+                    return authenModel;
                 }
                 else
                     return null;

@@ -39,9 +39,9 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         //POST : /api/User/Login
         public async Task<IActionResult> Login(LoginModel model)
         {
-            var token = await _accountService.Login(model);
-            if (token != null)
-                return Ok(new { token });
+            var authenModel = await _accountService.Login(model);
+            if (authenModel != null)
+                return Ok(new { authenModel });
             return BadRequest(new { message = "Username or password is incorrect!" });
         }
 
