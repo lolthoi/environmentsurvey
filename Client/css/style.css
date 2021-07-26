@@ -24,6 +24,10 @@ body {
   color: #5c5c77;
 }
 
+.hiddenField{
+  display: none;
+}
+
 p, .paragraph {
   font-weight: 400;
   color: #5c5c77;
