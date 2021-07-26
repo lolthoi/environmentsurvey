@@ -7,7 +7,7 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models.Account
 {
     public class AuthendModel
     {
-        public int Role { get; set; }
+        public string Role { get; set; }
         public string Token { get; set; }
         public string Username { get; set; }
     }
