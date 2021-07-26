@@ -12,6 +12,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -22,6 +23,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles="ADMIN")]
         //[Authorize(Roles ="ADMIN")]
         public async Task<List<UserModel>> getAll()
         {
@@ -30,11 +32,13 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
         [HttpPost]
         [Route("search")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<List<UserModel>> Search(SearchModel model)
         {
             return await _userService.Search(model.Search_key);
         }
         [HttpGet("{id:int}")]
+        [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
         public async Task<IActionResult> getUserByID(int id)
         {
             var user = await _userService.GetUserByID(id);
@@ -42,22 +46,31 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
         [HttpPost]
         [Route("searchByUsername")]
+        [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
         public async Task<UserModel> getUserByUsername(SearchModel model)
         {
             return await _userService.GetUserByName(model.Username);
         }
         [HttpPut]
         [Route("changeProfile")]
+        [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
         public async Task<string> update(UserModel model)
         {
             return await _userService.Update(model);
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<string> delete(int id)
         {
             return await _userService.Delete(id);
         }
-
+        [HttpPost]
+        [Route("checkUserExists")]
+        public async Task<IActionResult> checkUserExists(string username)
+        {
+            var data  = await _userService.checkUserExists(username);
+            return Ok(data);
+        }
     }
 }

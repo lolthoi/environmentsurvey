@@ -54,6 +54,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Password = BC.HashPassword(model.Password),
                 NumberId = model.NumberId,
                 Role = model.Role,
+                Image = model.Image,
                 LastName = model.LastName,
                 FirstName = model.FirstName,
                 Email = model.Email,
@@ -86,8 +87,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     {
                         Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim("Username", user.Username),
-                        new Claim("Role", user.Role.ToString()),
+                        new Claim(ClaimTypes.Name, user.Username),
+                        new Claim(ClaimTypes.Role, user.Role),
                     }),
                         Expires = DateTime.UtcNow.AddDays(1),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)

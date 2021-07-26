@@ -20,6 +20,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         Task<int> CountUser();
         Task<string> Update(UserModel model);
         Task<string> Delete(int Id);
+        Task<string> checkUserExists(string username);
         //Task<Object> GetUserProfile();
     }
     public class UserService : IUserService
@@ -31,6 +32,19 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         {
             _configuration = config;
             _context = context;
+        }
+
+        public async Task<string> checkUserExists(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(username));
+            if (user != null)
+            {
+                return "Username is unvalible";
+            }
+            else
+            {
+                return "";
+            }
         }
 
         public async Task<int> CountUser()
