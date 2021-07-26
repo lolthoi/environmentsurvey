@@ -69,7 +69,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 _context.Users.Add(user);
                 var result = await _context.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex.Message;
             }
@@ -83,26 +83,33 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 var user = await GetUser(model.Username, model.Password);
                 if (user != null)
                 {
-                    var tokenDescriptor = new SecurityTokenDescriptor
+                    if (user.Status != (int)Status.ACCEPTED)
                     {
-                        Subject = new ClaimsIdentity(new Claim[]
+                        return null;
+                    }
+                    else
                     {
+                        var tokenDescriptor = new SecurityTokenDescriptor
+                        {
+                            Subject = new ClaimsIdentity(new Claim[]
+                        {
                         new Claim(ClaimTypes.Name, user.Username),
                         new Claim(ClaimTypes.Role, user.Role),
-                    }),
-                        Expires = DateTime.UtcNow.AddDays(1),
-                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
-                    };
-                    var tokenHandler = new JwtSecurityTokenHandler();
-                    var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                    var token = tokenHandler.WriteToken(securityToken);
-                    var authenModel = new AuthendModel
-                    {
-                        Token = token,
-                        Username = user.Username,
-                        Role = user.Role
-                    };
-                    return authenModel;
+                        }),
+                            Expires = DateTime.UtcNow.AddDays(1),
+                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
+                        };
+                        var tokenHandler = new JwtSecurityTokenHandler();
+                        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                        var token = tokenHandler.WriteToken(securityToken);
+                        var authenModel = new AuthendModel
+                        {
+                            Token = token,
+                            Username = user.Username,
+                            Role = user.Role
+                        };
+                        return authenModel;
+                    }
                 }
                 else
                     return null;
@@ -120,9 +127,9 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 user.Password = passwordHash;
                 _context.Entry(user).State = EntityState.Modified;
                 _context.SaveChanges();
-                return  "Success";
+                return "Success";
             }
             return "Failed";
-        }   
+        }
     }
 }
