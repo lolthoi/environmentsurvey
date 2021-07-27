@@ -79,6 +79,7 @@ namespace EnvironmentSurvey.WebAPI
             //app.UseCors(op => op.WithOrigins(Configuration["Client_URL"]).AllowAnyMethod().AllowAnyHeader());
             app.UseCors(op => op.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 

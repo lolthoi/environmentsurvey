@@ -76,6 +76,7 @@ function validateForm() {
   else
     return false;
 }
+
 var name1 = document.querySelector("#username");
 var pass = document.querySelector("#userPass");
 var repass = document.querySelector("#retypePass");
@@ -84,6 +85,7 @@ var lname = document.querySelector("#userLastname");
 var tel = document.querySelector("#userTel");
 var number = document.querySelector("#idNumber");
 var email = document.querySelector("#userEmail");
+
 name1.oninput = function() {
   $("#message_user").html("");
 };
@@ -113,26 +115,15 @@ number.oninput = function() {
 $(document).ready(function() {
   $("#register").click(function() {
     var check = validateForm();
-    var data = {
-      Username: $("#username").val(),
-      Password: $("#userPass").val(),
-      NumberId: $("#idNumber").val(),
-      Role: $("#userRole").val(),
-      LastName: $("#userLastname").val(),
-      FirstName: $("#userFirstname").val(),
-      Email: $("#userEmail").val(),
-      Tel: $("#userTel").val(),
-      Address: $("#userAddress").val(),
-      Gender: $("#userGender").val(),
-      Status: 0,
-    };
-    if (check) {
+    if (check){
+      var form = new FormData($("#registerForm")[0]);
       $.ajax({
         type: "POST",
         url: "https://localhost:44304/api/Account/Register",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data),
-        dataType: "json",
+        dataType: 'text',
+        data: form,
+        processData: false,
+        contentType: false,
         async: true,
         success: function(response) {
           if (response.succeeded == "Success") {
@@ -141,5 +132,7 @@ $(document).ready(function() {
         },
       });
     }
+    
   });
+  
 });

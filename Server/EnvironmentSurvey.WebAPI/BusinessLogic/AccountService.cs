@@ -3,10 +3,12 @@ using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using EnvironmentSurvey.WebAPI.ClientSide.Models.Account;
 using EnvironmentSurvey.WebAPI.DataAccess;
 using EnvironmentSurvey.WebAPI.DataAccess.Domains;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -18,7 +20,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
     public interface IAccountService
     {
-        Task<string> Register(RegisterModel model);
+        Task<string> Register(Dictionary<string, string> dict, string imagePath);
         Task<AuthendModel> Login(LoginModel model);
         //Task<Object> GetUserProfile();
         Task<string> changePassword(ChangePasswordModel model);
@@ -43,27 +45,30 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 return await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(UserName));
         }
 
-        public async Task<string> Register(RegisterModel model)
+        public async Task<string> Register(Dictionary<string,string> dict, string imagePath)
         {
-            var duplicate = _context.Users.FirstOrDefault(u => u.Username.Equals(model.Username));
+            User user = new User();
+            foreach (string key in dict.Keys)
+            {
+                if (key.Equals("username")) { user.Username = dict[key]; continue; }
+                if (key.Equals("userPass")) { user.Password = BC.HashPassword(dict[key]); continue; }
+                if (key.Equals("idNumber")) { user.NumberId = dict[key]; continue; }
+                if (key.Equals("userRole")) { user.Role = dict[key]; continue; }
+                if (key.Equals("userLastname")) { user.LastName = dict[key]; continue; }
+                if (key.Equals("userFirstname")) { user.FirstName = dict[key]; continue; }
+                if (key.Equals("userEmail")) { user.Email = dict[key]; continue; }
+                if (key.Equals("userTel")) { user.Tel = dict[key]; continue; }
+                if (key.Equals("userAddress")) { user.Address = dict[key]; continue; }
+                if (key.Equals("userGender")) { user.Gender = Int32.Parse(dict[key]); continue; }
+            }
+            user.Image = imagePath;
+            user.Status = (int)Status.PENDING;
+            user.CreatedDate = DateTime.UtcNow;
+
+            var duplicate = _context.Users.FirstOrDefault(u => u.Username.Equals(user.Username));
             if (duplicate != null)
                 return "Duplicate";
-            var user = new User()
-            {
-                Username = model.Username,
-                Password = BC.HashPassword(model.Password),
-                NumberId = model.NumberId,
-                Role = model.Role,
-                Image = model.Image,
-                LastName = model.LastName,
-                FirstName = model.FirstName,
-                Email = model.Email,
-                Tel = model.Tel,
-                Address = model.Address,
-                Gender = model.Gender,
-                Status = (int)Status.PENDING,
-                CreatedDate = DateTime.UtcNow
-            };
+
             try
             {
                 _context.Users.Add(user);
