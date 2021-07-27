@@ -25,10 +25,27 @@
 
   <!-- Main Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
-
+  <link href="css/owl.carousel.min.css" rel="stylesheet">
+  <link href="css/owl.theme.default.min.css" rel="stylesheet">
   <!--Favicon-->
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
   <link rel="icon" href="images/favicon.png" type="image/x-icon">
+
+
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script> -->
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="js/viewJs/owl.carousel.min.js"></script>
+
 
 </head>
 
@@ -41,32 +58,6 @@
 
 <!-- header -->
 <header class="fixed-top header">
-  <!-- top header -->
-  <!-- <div class="top-header py-2 bg-white">
-    <div class="container">
-      <div class="row no-gutters">
-        <div class="col-lg-4 text-center text-lg-left">
-          <a class="text-color mr-3" href="callto:+443003030266"><strong>CALL</strong> +44 300 303 0266</a>
-          <ul class="list-inline d-inline">
-            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-facebook"></i></a></li>
-            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
-            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-linkedin"></i></a></li>
-            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="ti-instagram"></i></a></li>
-          </ul>
-        </div>
-        <div class="col-lg-8 text-center text-lg-right">
-          <ul class="list-inline test">
-            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="notice.html">notice</a></li>
-            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="research.html">research</a></li>
-            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="scholarship.html">SCHOLARSHIP</a></li>
-            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#loginModal">login</a></li>
-            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#signupModal">register</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  <!-- navbar -->
   <div class="navigation w-100">
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-dark p-0">
@@ -93,24 +84,25 @@
             <li class="nav-item @@contact">
               <a class="nav-link" href="contact.html">CONTACT</a>
             </li>
-            <li class="nav-item dropdown view">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            <li class="nav-item dropdown view profile">
+              <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Thành Vinh
+                
               </a>
               <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="#">Update Profile</a>
                 <a class="dropdown-item" href="#">Change Password</a>
                 <a class="dropdown-item" href="#">History</a>
-                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item logout"href="#" >Logout</a>
               </div>
             </li>
             
-            <li class="nav-item @@login">
+            <li class="nav-item @@login login">
               <a class="nav-link"  data-toggle="modal" data-target="#loginModal">LOGIN</a>
             </li>           
           </ul>
         </div>
+
       </nav>
     </div>
   </div>
@@ -557,6 +549,76 @@
 </section>
 <!-- /teachers -->
 
+<!-- teachers -->
+<section class="section">
+  <div class="container">
+    <div class="col-12">
+      <h2 class="section-title">Slider Top Student</h2>
+    </div>
+    <div class="owl-carousel owl-theme"  id="detail_dashboard">	    
+      <div class=" item">
+        <div class="card border-0 rounded-0 hover-shadow">
+          <img class="card-img-top rounded-0" src="images/teachers/teacher-1.jpg" alt="teacher">
+          <div class="card-body">
+            <a href="teacher-single.html">
+              <h4 class="card-title">Jacke Masito</h4>
+            </a>
+            <p>Teacher</p>
+            <ul class="list-inline">
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-facebook"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-google"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-linkedin"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class=" item">
+        <div class="card border-0 rounded-0 hover-shadow">
+          <img class="card-img-top rounded-0" src="images/teachers/teacher-2.jpg" alt="teacher">
+          <div class="card-body">
+            <a href="teacher-single.html">
+              <h4 class="card-title">Jacke Masito</h4>
+            </a>
+            <p>Teacher</p>
+            <ul class="list-inline">
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-facebook"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-google"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-linkedin"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class=" item">
+        <div class="card border-0 rounded-0 hover-shadow">
+          <img class="card-img-top rounded-0" src="images/teachers/teacher-3.jpg" alt="teacher">
+          <div class="card-body">
+            <a href="teacher-single.html">
+              <h4 class="card-title">Jacke Masito</h4>
+            </a>
+            <p>Teacher</p>
+            <ul class="list-inline">
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-facebook"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-twitter-alt"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-google"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="ti-linkedin"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /teachers -->
+
+
+
+
+
+
+
 <!-- blog -->
 <section class="section pt-0">
   <div class="container">
@@ -751,14 +813,9 @@
 <!-- Main Script -->
 <script src="js/script.js"></script>
 <script src="js/viewJs/login.js"></script>
-<!-- <script>
-  $( document ).ready(function() {
-    if(true){
-      //$('.test').addClass('.d-print-none');
-      $('.test').css("display","none");
-    }
- });
-
-</script> -->
+<script src="js/viewJs/home.js"></script>
+<script src="js/viewJs/owl.carousel.min.js"></script>
+<script src="js/viewJs/owl.carousel.js"></script>
+<script src="js/viewJs/authorize.js"></script>
 </body>
 </html>

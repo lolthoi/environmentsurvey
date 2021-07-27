@@ -69,20 +69,20 @@
             <li class="nav-item @@contact">
               <a class="nav-link" href="contact.html">CONTACT</a>
             </li>
-            <li class="nav-item dropdown view">
+            <li class="nav-item dropdown view profile">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Thành Vinh
+                
               </a>
               <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="#">Update Profile</a>
                 <a class="dropdown-item" href="#">Change Password</a>
                 <a class="dropdown-item" href="#">History</a>
-                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item logout" href="#">Logout</a>
               </div>
             </li>
             
-            <li class="nav-item @@login">
+            <li class="nav-item @@login login">
               <a class="nav-link"  data-toggle="modal" data-target="#loginModal">LOGIN</a>
             </li>           
           </ul>
@@ -93,38 +93,33 @@
 </header>
 <!-- /header -->
 <!-- Modal -->
-<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content rounded-0 border-0 p-4">
-            <div class="modal-header border-0">
-                <h3>Register</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="login">
-                    <form action="#" class="row">
-                        <div class="col-12">
-                            <input type="text" class="form-control mb-3" id="signupPhone" name="signupPhone" placeholder="Phone">
-                        </div>
-                        <div class="col-12">
-                            <input type="text" class="form-control mb-3" id="signupName" name="signupName" placeholder="Name">
-                        </div>
-                        <div class="col-12">
-                            <input type="email" class="form-control mb-3" id="signupEmail" name="signupEmail" placeholder="Email">
-                        </div>
-                        <div class="col-12">
-                            <input type="password" class="form-control mb-3" id="signupPassword" name="signupPassword" placeholder="Password">
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">SIGN UP</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content rounded-0 border-0 p-4">
+          <div class="modal-header border-0">
+              <h3>Login</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form action="#" class="row">
+                  <span id="message" class="hiddenField" style="color: red;"></span>
+                  <div class="col-12">
+                      <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Username">
+                  </div>
+                  <div class="col-12">
+                      <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password">
+                  </div>
+                  <div class="col-12">
+                      <button type="button" id="loginButton" class="btn btn-primary">LOGIN</button>
+                  </div>
+              </form>
+              <p>Not have an Account? <a href="register.html">Click Here</a></p>
+              
+          </div>
+      </div>
+  </div>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -522,6 +517,6 @@
 
 <!-- Main Script -->
 <script src="js/script.js"></script>
-
+<script src="js/viewJs/authorize.js"></script>
 </body>
 </html>

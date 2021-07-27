@@ -10,6 +10,8 @@ $(document).ready(function(){
             url: "https://localhost:44304/api/Account/Login",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
+            datatype:"json",
+            async:true,
             success : function(response){
                 localStorage.setItem('username', response.authenModel.Username);
                 localStorage.setItem('role', response.authenModel.Role);
