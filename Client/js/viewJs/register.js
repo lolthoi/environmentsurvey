@@ -15,11 +15,61 @@ function checkUserExists() {
     },
   });
 }
+//Check email exists
+function checkEmailExists() {
+  var email = $("#userEmail").val();
+  $.ajax({
+    type: "POST",
+    url: "https://localhost:44304/api/User/checkEmailExists?email=" + email,
+    contentType: "application/json; charset=utf-8",
+    async: true,
+    success: function(response) {
+      $("#message_email").html(response);
+    },
+  });
+}
+//Check tel exists
+function checkTelExists() {
+  var tel = $("#userTel").val();
+  $.ajax({
+    type: "POST",
+    url: "https://localhost:44304/api/User/checkTelExists?tel=" + tel,
+    contentType: "application/json; charset=utf-8",
+    async: true,
+    success: function(response) {
+      $("#message_tel").html(response);
+    },
+  });
+}
+
+//Check IDnumber exists
+function checkIdNumberExists() {
+  var idNum = $("#idNumber").val();
+  $.ajax({
+    type: "POST",
+    url: "https://localhost:44304/api/User/checkIdNumberExists?idnum=" + idNum,
+    contentType: "application/json; charset=utf-8",
+    async: true,
+    success: function(response) {
+      $("#message_number").html(response);
+    },
+  });
+}
 $(document).ready(function() {
   $("#username").keyup(function() {
     checkUserExists();
   });
+  $("#userEmail").keyup(function() {
+    checkEmailExists()
+  });
+  $("#idNumber").keyup(function() {
+    checkIdNumberExists()
+  });
+  $("#userTel").keyup(function() {
+    checkTelExists()
+  });
 });
+
 //validation
 function validateForm() {
   var username = $("#username").val();
@@ -31,6 +81,9 @@ function validateForm() {
   var userTel = $("#userTel").val();
   var message_number = $("#idNumber").val();
   var response = $("#message_user").text();
+  var responseEmail = $('#message_email').text();
+  var responseTel = $('#message_tel').text();
+  var responseIdnumber = $('#message_number').text();
   var flag = true;
   if (username == "") {
     $("#message_user").html("User name can not be empty");
@@ -90,9 +143,21 @@ function validateForm() {
   }else{
     flag = true;
   }
-  // if (username!="" && response!="" && message_number!="" && userTel!="" && userLastname!="" && userFirstname!="" && userEmail!="" && userrepass!="" && userpass!="" && username!="" ){
-  //   return true;
-  // }
+  if(responseEmail != null){
+    flag = flase;
+  }else{
+    flag = true;
+  }
+  if(responseTel != null){
+    flag = flase;
+  }else{
+    flag = true;
+  }
+  if(responseIdnumber != null){
+    flag = flase;
+  }else{
+    flag = true;
+  }
   return flag;
 }
 var name1 = document.querySelector("#username");

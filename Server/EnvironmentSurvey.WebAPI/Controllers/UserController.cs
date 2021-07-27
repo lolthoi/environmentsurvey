@@ -72,5 +72,26 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             var data  = await _userService.checkUserExists(username);
             return Ok(data);
         }
+        [HttpPost]
+        [Route("checkEmailExists")]
+        public async Task<IActionResult> checkEmailExists(string email)
+        {
+            var data = await _userService.checkEmailExists(email);
+            return Ok(data);
+        }
+        [HttpPost]
+        [Route("checkTelExists")]
+        public async Task<IActionResult> checkTelExists(string tel)
+        {
+            var data = await _userService.checkTelExists(tel);
+            return Ok(data);
+        }
+        [HttpPost]
+        [Route("checkIdNumberExists")]
+        public async Task<IActionResult> checkIdNumberExists(string idnum)
+        {
+            var data = await _userService.checkIdnumberExists(idnum);
+            return Ok(data);
+        }
     }
 }

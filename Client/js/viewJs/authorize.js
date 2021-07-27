@@ -1,3 +1,6 @@
+
+var domen = "https://localhost:44304";
+
 $(document).ready(function(){
 
     var username = localStorage.getItem('username');
@@ -6,7 +9,7 @@ $(document).ready(function(){
     console.log(token);
     $.ajax({
         type: "POST",
-        url: "https://localhost:44304/api/User/checkUserExists?username=" + username,
+        url: domen+"/api/User/checkUserExists?username=" + username,
         contentType: "application/json; charset=utf-8",
         async: true,
         success: function(response) {

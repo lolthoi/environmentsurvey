@@ -21,6 +21,9 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         Task<string> Update(UserModel model);
         Task<string> Delete(int Id);
         Task<string> checkUserExists(string username);
+        Task<string> checkEmailExists(string email);
+        Task<string> checkTelExists(string tel);
+        Task<string> checkIdnumberExists(string idNumber);
         //Task<Object> GetUserProfile();
     }
     public class UserService : IUserService
@@ -32,6 +35,45 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         {
             _configuration = config;
             _context = context;
+        }
+
+        public async Task<string> checkEmailExists(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email));
+            if (user != null)
+            {
+                return "Email is already in use";
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public async Task<string> checkIdnumberExists(string idNumber)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.NumberId.Equals(idNumber));
+            if (user != null)
+            {
+                return "ID Number is already in use";
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public async Task<string> checkTelExists(string tel)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Tel.Equals(tel));
+            if (user != null)
+            {
+                return "Tel is already in use";
+            }
+            else
+            {
+                return "";
+            }
         }
 
         public async Task<string> checkUserExists(string username)
