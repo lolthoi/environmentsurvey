@@ -18,7 +18,6 @@ function checkUserExists() {
 $(document).ready(function() {
   $("#registerForm").keyup(function() {
     checkUserExists();
-    validateForm();
   });
 });
 //validation
@@ -37,7 +36,7 @@ function validateForm() {
     $("#message_user").html("User name can not be empty");
     flag = false;
   }
-  else if (userpass == "") {
+  if (userpass == "") {
     $("#message_pass").html("Password can not be empty");
     flag = false;
   }
