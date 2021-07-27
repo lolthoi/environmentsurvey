@@ -15,6 +15,10 @@ $(document).ready(function(){
                 localStorage.setItem('role', response.authenModel.Role);
                 localStorage.setItem('token', response.authenModel.Token);
                 window.location.href = 'index.html';
+            },
+            error: function(response){
+                $("#message").text("Username Or Password Not Correct");
+                $('#message').removeClass('hiddenField');
             }
         })
     })
