@@ -16,7 +16,7 @@ function checkUserExists() {
   });
 }
 $(document).ready(function() {
-  $("#registerForm").keyup(function() {
+  $("#username").keyup(function() {
     checkUserExists();
   });
 });
@@ -29,52 +29,71 @@ function validateForm() {
   var userFirstname = $("#userFirstname").val();
   var userLastname = $("#userLastname").val();
   var userTel = $("#userTel").val();
-  var message_number = $("#message_number").val();
+  var message_number = $("#idNumber").val();
   var response = $("#message_user").text();
   var flag = true;
   if (username == "") {
     $("#message_user").html("User name can not be empty");
     flag = false;
+  }else{
+    flag = true;
   }
   if (userpass == "") {
     $("#message_pass").html("Password can not be empty");
     flag = false;
+  }else{
+    flag = true;
   }
   if (userrepass == "") {
     $("#message_repass").html("Confirm Password can not be empty");
     flag = false;
+  }else{flag = true;return true;
   }
   if (userrepass != userpass) {
     $("#message_repass").html("Confirm Password not correct");
     flag = false;
+  }else{
+    flag = true;
   }
   if (userEmail == "") {
     $("#message_email").html("Email can not be empty");
     flag = false;
+  }else{
+    flag = true;
   }
   if (userFirstname == "") {
     $("#message_fname").html("First name can not be empty");
     flag = false;
+  }else{
+    flag = true;
   }
   if (userLastname == "") {
     $("#message_lname").html("Last name can not be empty");
     flag = false;
+  }else{
+    flag = true;
   }
   if (userTel == "") {
     $("#message_tel").html("Tel can not be empty");
     flag = false;
+  }else{
+    flag = true;
   }
   if (message_number == "") {
     $("#message_number").html("IDStudent can not be empty");
     flag = false;
+  }else{
+    flag = true;
   }
   if (response != null) {
     flag = false;
+  }else{
+    flag = true;
   }
-  if (flag)
-    return true;
-  else
-    return false;
+  // if (username!="" && response!="" && message_number!="" && userTel!="" && userLastname!="" && userFirstname!="" && userEmail!="" && userrepass!="" && userpass!="" && username!="" ){
+  //   return true;
+  // }
+  return flag;
 }
 var name1 = document.querySelector("#username");
 var pass = document.querySelector("#userPass");
@@ -113,6 +132,7 @@ number.oninput = function() {
 $(document).ready(function() {
   $("#register").click(function() {
     var check = validateForm();
+    console.log(check);
     var data = {
       Username: $("#username").val(),
       Password: $("#userPass").val(),
