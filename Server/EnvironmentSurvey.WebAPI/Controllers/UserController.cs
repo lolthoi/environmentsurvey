@@ -2,9 +2,11 @@
 using EnvironmentSurvey.WebAPI.ClientSide.Common;
 using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,10 +18,12 @@ namespace EnvironmentSurvey.WebAPI.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IHostingEnvironment hostingEnvironment;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IHostingEnvironment hostingEnv)
         {
             _userService = userService;
+            hostingEnvironment = hostingEnv;
         }
 
         [HttpGet]
@@ -47,16 +51,45 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         [HttpPost]
         [Route("searchByUsername")]
         [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
-        public async Task<UserModel> getUserByUsername(SearchModel model)
+        public async Task<IActionResult> getUserByUsername(SearchModel model)
         {
-            return await _userService.GetUserByName(model.Username);
+            var userModel = await _userService.GetUserByName(model.Username);
+            if(userModel != null)
+            {
+                return Ok(userModel);
+            }
+            else
+            {
+                return BadRequest(new { error = "can not find user info" });
+            }
+            
         }
         [HttpPut]
         [Route("changeProfile")]
         [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
-        public async Task<string> update(UserModel model)
+        public async Task<IActionResult> update()
         {
-            return await _userService.Update(model);
+            var formCollection = await Request.ReadFormAsync();
+            int count = formCollection.Count();
+            var dict = formCollection.ToDictionary(x => x.Key, x => x.Value.ToString());
+            string imgPath = null;
+            if (count == 7)
+            {
+                var file = formCollection.Files.First();
+                if (file != null)
+                {
+                    FileInfo fi = new FileInfo(file.FileName);
+                    var newfilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + fi.Extension;
+                    var path = Path.Combine("", hostingEnvironment.WebRootPath + "\\Images\\" + newfilename);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                        imgPath = "Images/" + newfilename;
+                    }
+                }
+            }           
+            var response = await _userService.Update(dict, imgPath);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]

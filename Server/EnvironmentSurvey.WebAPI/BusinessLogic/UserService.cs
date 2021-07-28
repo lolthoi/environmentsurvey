@@ -18,7 +18,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         Task<UserModel> GetUserByID(int user_ID);
         Task<UserModel> GetUserByName(string userName);
         Task<int> CountUser();
-        Task<string> Update(UserModel model);
+        Task<string> Update(Dictionary<string, string> dict, string imagePath);
         Task<string> Delete(int Id);
         Task<string> checkUserExists(string username);
         Task<string> checkEmailExists(string email);
@@ -177,6 +177,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Gender = user.Gender,
                 Tel = user.Tel,
                 Status = user.Status,
+                Image = user.Image
             };
             return userModel;
         }
@@ -209,21 +210,25 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             }
         }
 
-        public async Task<string> Update(UserModel model)
+        public async Task<string> Update(Dictionary<string, string> dict, string imagePath)
         {
-            User user = await _context.Users.FindAsync(model.ID);
-            if (model.Username == user.Username)
-            {
-                user.NumberId = model.NumberId;
-                user.LastName = model.LastName;
-                user.FirstName = model.FirstName;
-                user.Email = model.Email;
-                user.Tel = model.Tel;
-                user.Address = model.Address;
-                user.Gender = model.Gender;
-                user.Status = model.Status;
-                user.ModifiedDate = DateTime.UtcNow;
+            int id = Int32.Parse(dict["userId"]);
+            User user = await _context.Users.FindAsync(id);
+            foreach (string key in dict.Keys)
+            {                              
+                if (key.Equals("idNumber")) { user.NumberId = dict[key]; continue; }                
+                if (key.Equals("userLastname")) { user.LastName = dict[key]; continue; }
+                if (key.Equals("userFirstname")) { user.FirstName = dict[key]; continue; }
+                if (key.Equals("userEmail")) { user.Email = dict[key]; continue; }
+                if (key.Equals("userTel")) { user.Tel = dict[key]; continue; }
+                if (key.Equals("userAddress")) { user.Address = dict[key]; continue; }
+                if (key.Equals("userGender")) { user.Gender = Int32.Parse(dict[key]); continue; }
             }
+            if(imagePath != null)
+            {
+                user.Image = imagePath;
+            }                      
+            user.ModifiedDate = DateTime.UtcNow;
             try
             {
                 await _context.SaveChangesAsync();
@@ -231,7 +236,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return "Update error";
             }
         }
     }
