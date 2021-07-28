@@ -1,3 +1,6 @@
+
+var domen = "https://localhost:44304";
+
 $(document).ready(function(){
     $('#loginButton').click(function(){
         var data = {
@@ -7,7 +10,7 @@ $(document).ready(function(){
 
         $.ajax({
             type : "POST",
-            url: "https://localhost:44304/api/Account/Login",
+            url: domen+"/api/Account/Login",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
             datatype:"json",
