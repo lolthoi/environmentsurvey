@@ -4,16 +4,13 @@ var domen = "https://localhost:44304";
 $(document).ready(function(){
 
     var username = localStorage.getItem('username');
-    console.log(username);
     var token = localStorage.getItem('token');
-    console.log(token);
     $.ajax({
         type: "POST",
         url: domen+"/api/User/checkUserExists?username=" + username,
         contentType: "application/json; charset=utf-8",
         async: true,
         success: function(response) {
-            console.log("response  : "+response);
             if(username != null && token != null && response == "Username is unvalible"){
                 $('.login').css("display","none");
                 $('.profile').css("display","block");

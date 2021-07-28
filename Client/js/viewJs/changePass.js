@@ -1,3 +1,7 @@
+
+var domen = "https://localhost:44304";
+
+
 $(document).ready(function(){
 
     $('#oldPass').focusout(function(){
@@ -18,7 +22,7 @@ $(document).ready(function(){
 
         $.ajax({
             type : "POST",
-            url: "https://localhost:44304/api/Account/ChangePassword",
+            url: domen+"/api/Account/ChangePassword",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
             success : function(response){
