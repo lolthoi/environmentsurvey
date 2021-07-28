@@ -38,6 +38,11 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             string imgPath = null;
             if (file != null)
             {
+                string imageFolderPath = hostingEnvironment.WebRootPath+ "\\Images";
+                if (!Directory.Exists(imageFolderPath))
+                {
+                    Directory.CreateDirectory(imageFolderPath);
+                }
                 FileInfo fi = new FileInfo(file.FileName);
                 var newfilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + fi.Extension;
                 var path = Path.Combine("", hostingEnvironment.WebRootPath + "\\Images\\" + newfilename);

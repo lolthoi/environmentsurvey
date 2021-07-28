@@ -211,7 +211,7 @@ $(document).ready(function() {
         async: true,
         success: function(response) {
           if (response.succeeded == "Success") {
-            window.location.href = "response.html";
+            window.location.href = "index.html";
           }
         },
       });
