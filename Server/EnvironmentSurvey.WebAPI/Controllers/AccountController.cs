@@ -44,7 +44,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
                     file.CopyTo(stream);
-                    imgPath = "Images/" + newfilename;
+                    imgPath =  newfilename;
                 }
             }
             var response = await _accountService.Register(dict, imgPath);

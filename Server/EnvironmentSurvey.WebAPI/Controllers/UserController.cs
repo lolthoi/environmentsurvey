@@ -84,10 +84,12 @@ namespace EnvironmentSurvey.WebAPI.Controllers
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         file.CopyTo(stream);
-                        imgPath = "Images/" + newfilename;
+                        imgPath = newfilename;
                     }
+                   
                 }
-            }           
+            }
+            
             var response = await _userService.Update(dict, imgPath);
             return Ok(response);
         }

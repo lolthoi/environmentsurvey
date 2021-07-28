@@ -26,14 +26,14 @@ $(document).ready(function() {
             $('#userTel').val(response.Tel);
             $('#userAddress').val(response.Address);
             $('#userId').val(response.ID);
-            console.log(JSON.stringify(response))
+            //console.log(JSON.stringify(response))
             var gender = response.Gender;
             if(gender == 0){
                 $("#userGender").val(gender).find("option[value=" + gender +"]").attr('selected', true);
             }else if(gender == 1){              
                 $("#userGender").val(gender).find("option[value=" + gender +"]").attr('selected', true);
             }
-            $('#output').attr("src", domen+'/'+response.Image);
+            $('#output').attr("src", domen+'/Images/'+response.Image);
         },       
     })
 

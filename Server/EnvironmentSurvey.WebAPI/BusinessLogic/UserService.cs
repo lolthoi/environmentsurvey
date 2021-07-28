@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -224,8 +226,16 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 if (key.Equals("userAddress")) { user.Address = dict[key]; continue; }
                 if (key.Equals("userGender")) { user.Gender = Int32.Parse(dict[key]); continue; }
             }
-            if(imagePath != null)
+            
+
+            if (imagePath != null)
             {
+                //delete old image
+                var path = Path.Combine(Environment.CurrentDirectory, @"wwwroot\Images", user.Image);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
                 user.Image = imagePath;
             }                      
             user.ModifiedDate = DateTime.UtcNow;
