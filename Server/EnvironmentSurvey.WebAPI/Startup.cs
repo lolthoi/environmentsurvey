@@ -1,4 +1,5 @@
 using EnvironmentSurvey.WebAPI.BusinessLogic;
+using EnvironmentSurvey.WebAPI.ClientSide.Common;
 using EnvironmentSurvey.WebAPI.DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +35,10 @@ namespace EnvironmentSurvey.WebAPI
         {
             services.AddControllers().AddJsonOptions(options =>
                options.JsonSerializerOptions.PropertyNamingPolicy = null);
+            services.AddOptions();
+            var mailsettings = Configuration.GetSection("MailSettings");
+            services.Configure<MailSettings>(mailsettings);
+            services.AddScoped<ISendMailService, SendMailService>();
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", op => op.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());

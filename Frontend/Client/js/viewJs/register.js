@@ -202,7 +202,6 @@ number.oninput = function() {
 $(document).ready(function() {
   $("#register").click(function() {
     var check = validateForm();
-    console.log(check)
     if (check){
       var form = new FormData($("#registerForm")[0]);
       $.ajax({
@@ -214,9 +213,10 @@ $(document).ready(function() {
         contentType: false,
         async: true,
         success: function(response) {
-          if (response.succeeded == "Success") {
+          if (response === "Success") {
             window.location.href = "index.html";
           }
+         
         },
       });
     }

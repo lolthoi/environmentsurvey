@@ -54,11 +54,11 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             }
             var response = await _accountService.Register(dict, imgPath);
             if (response.Equals("Success"))
-                return Ok(new { succeeded = "Success" });
+                return Ok("Success");
             else if (response.Equals("Duplicate"))
-                return BadRequest(new { error = "Username has already been taken!" });
+                return BadRequest("Username has already been taken!");
             else
-                return BadRequest(new { error = response });
+                return BadRequest(response);
         }
 
         [HttpPost]

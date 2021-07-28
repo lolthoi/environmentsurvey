@@ -29,11 +29,13 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     {
         private readonly ESContext _context;
         private IConfiguration _configuration;
+        private readonly ISendMailService _sendMailService;
 
-        public AccountService(IConfiguration config, ESContext context)
+        public AccountService(IConfiguration config, ESContext context, ISendMailService sendMailService)
         {
             _configuration = config;
             _context = context;
+            _sendMailService = sendMailService;
         }
 
         private async Task<User> GetUser(string UserName, string Password)
@@ -73,6 +75,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 _context.Users.Add(user);
                 var result = await _context.SaveChangesAsync();
+                await _sendMailService.SendWelcomeEmailAsync(user.Email, "Xin chào bạn", user.Username);
             }
             catch (Exception ex)
             {
