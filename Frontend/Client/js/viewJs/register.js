@@ -201,8 +201,10 @@ number.oninput = function() {
 //Create new account
 $(document).ready(function() {
   $("#register").click(function() {
+    var username = $("#username").val();
     var check = validateForm();
     if (check){
+      $('#registerModal').modal('show');
       var form = new FormData($("#registerForm")[0]);
       $.ajax({
         type: "POST",
@@ -213,8 +215,15 @@ $(document).ready(function() {
         contentType: false,
         async: true,
         success: function(response) {
-          if (response === "Success") {
-            window.location.href = "index.html";
+          if (response == "Success") {
+            localStorage.setItem('registerUser', username);
+            $('#registerModal').modal('hide');            
+            $('#sucessModal').modal('show');
+            setInterval(function(){ 
+              if ( $('#sucessModal').attr('aria-hidden')){
+                   window.location.href = "index.html";
+                 }
+            }, 500);
           }
          
         },
