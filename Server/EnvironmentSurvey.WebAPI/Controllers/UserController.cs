@@ -128,5 +128,13 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             var data = await _userService.checkIdnumberExists(idnum);
             return Ok(data);
         }
+
+        [HttpPost]
+        [Route("verifyAccoount")]
+        public async Task<IActionResult> verifyAccount(string username)
+        {
+            var data = await _userService.VerifyAccount(username);
+            return Ok(data);
+        }
     }
 }

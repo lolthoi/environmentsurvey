@@ -67,15 +67,15 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             user.Status = (int)Status.PENDING;
             user.CreatedDate = DateTime.UtcNow;
 
-            var duplicate = _context.Users.FirstOrDefault(u => u.Username.Equals(user.Username));
+            /*var duplicate = _context.Users.FirstOrDefault(u => u.Username.Equals(user.Username));
             if (duplicate != null)
-                return "Duplicate";
+                return "Duplicate";*/
 
             try
             {
                 _context.Users.Add(user);
                 var result = await _context.SaveChangesAsync();
-                await _sendMailService.SendWelcomeEmailAsync(user.Email, "Xin chào bạn", user.Username);
+                //await _sendMailService.SendWelcomeEmailAsync(user.Email, "Verify Account", user.Username);
             }
             catch (Exception ex)
             {

@@ -16,12 +16,14 @@ namespace EnvironmentSurvey.WebAPI.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly ISendMailService _sendMailService;
         private readonly IHostingEnvironment hostingEnvironment;
 
-        public AccountController(IAccountService accountService, IHostingEnvironment hostingEnv)
+        public AccountController(IAccountService accountService, IHostingEnvironment hostingEnv, ISendMailService sendMailService)
         {
             _accountService = accountService;
             hostingEnvironment = hostingEnv;
+            _sendMailService = sendMailService;
         }
 
         [HttpPost]
@@ -54,9 +56,14 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             }
             var response = await _accountService.Register(dict, imgPath);
             if (response.Equals("Success"))
+            {
+                var email = dict["userEmail"];
+                var username = dict["username"];
+                await _sendMailService.SendWelcomeEmailAsync(email, "Verify Account", username);
                 return Ok("Success");
-            else if (response.Equals("Duplicate"))
-                return BadRequest("Username has already been taken!");
+            }                
+            /*else if (response.Equals("Duplicate"))
+                return BadRequest("Username has already been taken!");*/
             else
                 return BadRequest(response);
         }
@@ -87,5 +94,6 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             }
             return BadRequest(new { error = "Change Password Fail" });
         }
+
     }
 }

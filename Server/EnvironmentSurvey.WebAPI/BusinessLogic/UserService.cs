@@ -26,7 +26,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         Task<string> checkEmailExists(string email);
         Task<string> checkTelExists(string tel);
         Task<string> checkIdnumberExists(string idNumber);
-        //Task<Object> GetUserProfile();
+        Task<string> VerifyAccount(string username);
     }
     public class UserService : IUserService
     {
@@ -247,6 +247,21 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             catch (Exception ex)
             {
                 return "Update error";
+            }
+        }
+
+        public async Task<string> VerifyAccount(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(username));
+            user.Status = (int)Status.ACCEPTED;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return "Verify Success";
+            }
+            catch (Exception ex)
+            {
+                return "Verify error";
             }
         }
     }
