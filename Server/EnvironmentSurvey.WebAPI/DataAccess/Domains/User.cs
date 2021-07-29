@@ -22,5 +22,6 @@ namespace EnvironmentSurvey.WebAPI.DataAccess.Domains
 
         public virtual ICollection<Result> Results { get; set; }
         public virtual ICollection<UserAnswer> UserAnswers { get; set; }
+        public virtual ICollection<UserSeminar> UserSeminars { get; set; }
     }
 }

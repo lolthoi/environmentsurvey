@@ -27,6 +27,7 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
         public virtual DbSet<SurveyQuestion> SurveyQuestions { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserAnswer> UserAnswers { get; set; }
+        public virtual DbSet<UserSeminar> UserSeminars { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -91,6 +92,23 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Results__UserId__35BCFE0A");
+            });
+
+            modelBuilder.Entity<UserSeminar>(entity =>
+            {
+                entity.Property(e => e.Status).HasDefaultValueSql("('1')");
+
+                entity.HasOne(d => d.Seminar)
+                    .WithMany(p => p.UserSeminars)
+                    .HasForeignKey(d => d.SeminarId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__UserSeminars__SurveyI__36B12243");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserSeminars)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__UserSeminars__UserId__35BCFE0A");
             });
 
             modelBuilder.Entity<Seminar>(entity =>

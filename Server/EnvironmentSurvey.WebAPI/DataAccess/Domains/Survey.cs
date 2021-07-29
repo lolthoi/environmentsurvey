@@ -13,7 +13,7 @@ namespace EnvironmentSurvey.WebAPI.DataAccess.Domains
         public DateTime EndTime { get; set; }
         public int Status { get; set; }
         public int SerminarId { get; set; }
-
+        public string  Description { get; set; }
         public virtual Seminar Serminar { get; set; }
         public virtual ICollection<Result> Results { get; set; }
         public virtual ICollection<SurveyQuestion> SurveyQuestions { get; set; }
