@@ -7,5 +7,16 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
 {
     public class SeminarModel
     {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+        public string Location { get; set; }
+        public string Author { get; set; }
+        public string Subject { get; set; }
+        public int forUser { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
+
     }
 }

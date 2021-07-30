@@ -58,12 +58,38 @@ function checkIdNumberExists() {
     },
   });
 }
+//validate email;
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+function checkEmailValid(){
+  var userEmail = $("#userEmail").val();
+  if(!validateEmail(userEmail)){
+    $("#message_email").html("Email not valid");
+  }
+}
+//validate tel
+function validateTel(tel) {
+  const re = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+  return re.test(tel);
+}
+function checkTelValid(){
+  var userTel = $("#userTel").val();
+  if(!validateTel(userTel)){
+    $("#message_tel").html("Tel not valid");
+    flag = false;
+  }
+}
+
+
 $(document).ready(function() {
   $("#username").keyup(function() {
     checkUserExists();
   });
   $("#userEmail").keyup(function() {
-    checkEmailExists()
+    checkEmailExists();
+    //checkEmailValid();
   });
   $("#idNumber").keyup(function() {
     checkIdNumberExists()
@@ -161,6 +187,7 @@ function validateForm() {
   }else{
     flag = true;
   }
+  
   return flag;
 }
 

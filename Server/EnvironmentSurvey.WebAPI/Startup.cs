@@ -46,6 +46,7 @@ namespace EnvironmentSurvey.WebAPI
             services.AddDbContext<ESContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EnvironmentSurvey")));
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISeminarService, SeminarService>();
             services.AddControllers();
             services.AddAuthentication(x =>
             {

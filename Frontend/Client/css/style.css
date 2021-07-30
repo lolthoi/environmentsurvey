@@ -1079,3 +1079,20 @@ link:focus,
   100% { transform: rotate(360deg); }
 }
 
+
+/* heigh image Seminar */
+.card-img-top.seminar_picture{
+  height: 230px;
+}
+
+/*limit description seminar display */
+.card-text.seminar_desc{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.seminar_item{
+  display: flex;
+  justify-content: space-between;
+}

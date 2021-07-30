@@ -144,7 +144,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             User user = await _context.Users.FindAsync(user_ID);
             if (user == null)
             {
-                throw new Exception("Place not found");
+                throw new Exception("User not found");
             }
             var userModel = new UserModel
             {
