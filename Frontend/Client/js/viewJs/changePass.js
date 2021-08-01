@@ -1,5 +1,6 @@
 
 var domen = "https://localhost:44304";
+var token_string = localStorage.getItem("token");
 
 
 $(document).ready(function(){
@@ -23,9 +24,12 @@ $(document).ready(function(){
         $.ajax({
             type : "POST",
             url: domen+"/api/Account/ChangePassword",
+            headers: {Authorization: 'Bearer '+ token_string},
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
             success : function(response){
+                showPopup(response);
+                clearInput();
                 console.log(response);
             }
         })
@@ -43,5 +47,20 @@ function confirmPassword(){
     } else {
         $('#message').addClass('hiddenField');
         $('#changePassButton').removeClass('disabled');
+    }
+}
+
+function showPopup(text){
+    document.getElementById("popupname").value = text;
+    document.getElementById("myForm").style.display = "block";
+    setTimeout(function(){
+		document.getElementById("myForm").style.display = "none";
+	},3000);
+}
+
+function clearInput(){
+    var elements = document.getElementsByTagName("input");
+    for (var i=0; i < elements.length; i++) {
+        elements[ii].value = "";
     }
 }

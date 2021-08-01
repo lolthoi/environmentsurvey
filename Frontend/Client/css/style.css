@@ -28,6 +28,56 @@ body {
   display: none;
 }
 
+.form-popup {
+  background: rgba(100, 100, 100, 0.5);
+  position: fixed;
+  display: none;
+  z-index: 5000;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 600px;
+  width: 70%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  padding: 20px;
+  z-index: 5001;
+  text-align: center;
+  box-shadow: 0px 0px 15px 0px rgba(#000000, 0.4);
+  border-radius: 20px 0 20px 0;
+  background: -webkit-linear-gradient(top left, white 50%, coral 50%);
+}
+
+.pop {
+  background: #444;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 10px 0 10px 0;
+  color: white;
+}
+
+.pop h2{
+	color: white;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+
 p, .paragraph {
   font-weight: 400;
   color: #5c5c77;

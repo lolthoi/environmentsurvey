@@ -80,19 +80,20 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
         [Route("ChangePassword")]
         //POST : /api/User/ChangePassword
         public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
         {
-            var userName = User.FindFirst("Username");
-            if (userName.Value.Equals(model.Username))
+            //var userName = User.FindFirst("name");
+            var userName = User.Identity.Name;
+            if (userName.Equals(model.Username))
             {
                 var check = await _accountService.changePassword(model);
                 if (check.Equals("Success"))
-                    return Ok(new { succeeded = "Password Change Successful" });
+                    return Ok("Password Change Successful");
             }
-            return BadRequest(new { error = "Change Password Fail" });
+            return BadRequest("Change Password Fail");
         }
 
     }
