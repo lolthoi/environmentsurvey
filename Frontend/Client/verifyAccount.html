@@ -276,6 +276,9 @@
                     if(response == "Verify Success"){
                         $('#starConfirm').css("display","none");
                         $('#confirmSuccess').css("display","block");
+                        setTimeout(function(){
+                          window.location.href = "index.html";
+                        },2000);
                     }else{
                         $('#messageResponse').html(response);
                     }
