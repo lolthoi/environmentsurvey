@@ -13,35 +13,77 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
     public interface IUserSeminarService
     {
-        Task<bool> SeminarRegistration(UserSeminarModel model);
+        Task<string> SeminarRegistration(UserSeminarModel model);
+        Task<List<ResUserSemiModel>> getUserSeminarByUser(UserSeminarModel model);
     }
     public class UserSeminarService : IUserSeminarService
     {
         private readonly ESContext _context;
-        public UserSeminarService(ESContext context)
+        private readonly ISeminarService _seminarService;
+        public UserSeminarService(ESContext context, ISeminarService seminarService)
         {
             _context = context;
+            _seminarService = seminarService; 
         }
-        public async Task<bool> SeminarRegistration(UserSeminarModel model)
+
+        public async Task<List<ResUserSemiModel>> getUserSeminarByUser(UserSeminarModel model)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(model.Username));
-            var userSeminar = new UserSeminar
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(model.Username));
+            if(user != null)
             {
-                UserId = user.Id,
-                SeminarId = model.SeminarId,
-                Status = (int)Status.PENDING,
-                CreatedDate = DateTime.UtcNow
-            };
-            try
-            {
-                _context.UserSeminars.Add(userSeminar);
-                await _context.SaveChangesAsync();
-                return true;
+                var listUserSemnar = await _context.UserSeminars.Where(us => us.UserId.Equals(user.Id)).ToListAsync();
+                List<ResUserSemiModel> lsUserSeminarModal = new List<ResUserSemiModel>();
+                foreach(var US in listUserSemnar)
+                {
+                    var user_seminar = new ResUserSemiModel
+                    {
+                        UserId = US.UserId,
+                        SeminarId = US.SeminarId,
+                        Seminar = await _seminarService.GetByID(US.SeminarId),
+                        Status = US.Status
+                    };
+                    lsUserSeminarModal.Add(user_seminar);
+                }
+                return lsUserSeminarModal.ToList();
             }
-            catch (Exception ex)
+            else
             {
-                return false;
+                return null;
             }
+        }
+
+        public async Task<string> SeminarRegistration(UserSeminarModel model)
+        {
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(model.Username));
+            Seminar seminar = await _context.Seminars.FindAsync(model.SeminarId);
+            if (user != null && seminar != null )
+            {
+                var userSeminar = new UserSeminar
+                {
+                    UserId = user.Id,
+                    User = user,
+                    SeminarId = model.SeminarId,
+                    Seminar = seminar,
+                    Status = (int)Status.PENDING,
+                    CreatedDate = DateTime.UtcNow
+                };
+                try
+                {
+                    _context.UserSeminars.Add(userSeminar);
+                    await _context.SaveChangesAsync();
+                    return "Register success";
+                }
+                catch (Exception ex)
+                {
+                    return "Register error";
+                }
+               
+            }
+            else 
+            {
+                return "User not found";
+            }
+            
         }
     }
 }

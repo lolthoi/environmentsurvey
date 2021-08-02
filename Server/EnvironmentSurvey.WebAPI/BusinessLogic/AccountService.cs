@@ -29,13 +29,12 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     {
         private readonly ESContext _context;
         private IConfiguration _configuration;
-        private readonly ISendMailService _sendMailService;
 
-        public AccountService(IConfiguration config, ESContext context, ISendMailService sendMailService)
+        public AccountService(IConfiguration config, ESContext context)
         {
             _configuration = config;
             _context = context;
-            _sendMailService = sendMailService;
+           
         }
 
         private async Task<User> GetUser(string UserName, string Password)

@@ -89,7 +89,6 @@ $(document).ready(function() {
   });
   $("#userEmail").keyup(function() {
     checkEmailExists();
-    //checkEmailValid();
   });
   $("#idNumber").keyup(function() {
     checkIdNumberExists()
@@ -109,6 +108,7 @@ function validateForm() {
   var userLastname = $("#userLastname").val();
   var userTel = $("#userTel").val();
   var message_number = $("#idNumber").val();
+  var avata = $("#userAvatar").val();
   var response = $("#message_user").text();
   var responseEmail = $('#message_email').text();
   var responseTel = $('#message_tel').text();
@@ -163,6 +163,12 @@ function validateForm() {
   }
   if (message_number == "") {
     $("#message_number").html("IDStudent can not be empty");
+    flag = false;
+  }else{
+    flag = true;
+  }
+  if (avata == "") {
+    $("#message_avata").html("Please choose the avata");
     flag = false;
   }else{
     flag = true;

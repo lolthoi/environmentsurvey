@@ -55,9 +55,6 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             }
             else
             {
-                /*DateTime dt = DateTime.ParseExact(seminar.StartDate.ToString(), "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture);
-                string startDate = dt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);*/
-
                 string startDate = seminar.StartDate.ToString("yyyy-MM-dd");
                 string endDate = seminar.EndTime.ToString("yyyy-MM-dd");
                 var seminarModel = new SeminarModel
