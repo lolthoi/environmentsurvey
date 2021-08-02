@@ -14,7 +14,6 @@ $(document).ready(function(){
         contentType: "application/json; charset=utf-8",
         async:true,
         success : function(seminar){
-            console.log(seminar);
             $('#seminar_detail_name').html(seminar.Name);	
             showSeminarDetail(seminar)
         },       

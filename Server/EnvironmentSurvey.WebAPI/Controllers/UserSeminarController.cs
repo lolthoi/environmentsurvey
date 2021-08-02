@@ -25,13 +25,20 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         [HttpPost]
         [Route("SeminarRegistration")]
         [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
-        public async Task<IActionResult> SeminarRegistration(UserSeminarModel model)
+        public async Task<string> SeminarRegistration(UserSeminarModel model)
         {
-            var result = await _userSeminarService.SeminarRegistration(model);
-            if(result)
-                return Ok();
-            else
-                return BadRequest();
+            var response = await _userSeminarService.SeminarRegistration(model);
+            return response;
         }
+
+        [HttpPost]
+        [Route("getUserSeminarByUser")]
+        [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
+        public async Task<List<ResUserSemiModel>> getUserSeminarByUser(UserSeminarModel model)
+        {
+            var response = await _userSeminarService.getUserSeminarByUser(model);
+            return response;
+        }
+
     }
 }

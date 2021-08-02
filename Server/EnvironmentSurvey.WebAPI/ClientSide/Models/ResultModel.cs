@@ -10,5 +10,7 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public int surveyId { get; set; }
         public string surveyName { get; set; }
         public int point { get; set;  }
+        public DateTime SubmitTime { get; set; }
+        public int UserId { get; set; }
     }
 }

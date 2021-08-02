@@ -58,27 +58,27 @@
               <a class="nav-link" href="index.html">HOME</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="about.html">SEMINAR</a>
+              <a class="nav-link" href="seminars.html">SEMINAR</a>
             </li>
             <li class="nav-item @@courses">
               <a class="nav-link" href="courses.html">SUPPORT</a>
             </li>
             <li class="nav-item @@events">
-              <a class="nav-link" href="events.html">FAGS</a>
+              <a class="nav-link" href="fags.html">FAGS</a>
             </li>
             <li class="nav-item @@contact">
               <a class="nav-link" href="contact.html">CONTACT</a>
             </li>
             <li class="nav-item dropdown view profile">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 
               </a>
               <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Update Profile</a>
+                <a class="dropdown-item" href="changeProfile.html">Update Profile</a>
                 <a class="dropdown-item" href="#">Change Password</a>
-                <a class="dropdown-item" href="#">History</a>
-                <a class="dropdown-item logout" href="#">Logout</a>
+                <a class="dropdown-item" href="my_seminar.html">My Seminars</a>
+                <a class="dropdown-item logout"href="#" >Logout</a>
               </div>
             </li>
             
@@ -87,6 +87,7 @@
             </li>           
           </ul>
         </div>
+
       </nav>
     </div>
   </div>
@@ -150,7 +151,31 @@
         </div>
     </div>
 </div>
-
+<!-- Modal register seminar -->
+<div class="modal fade" id="registerSeminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Notify</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6 id="message_register_seminar"></h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal loader -->
+<div class="modal " id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered text-center" role="document">
+    <div class="loader"></div>
+  </div>
+</div>
 <!-- page title -->
 <section class="page-title-section overlay" data-background="images/backgrounds/page-title.jpg">
   <div class="container">
