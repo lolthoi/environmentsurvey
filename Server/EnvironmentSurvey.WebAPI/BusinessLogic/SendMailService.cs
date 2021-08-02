@@ -15,7 +15,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     {
         Task SendMail(MailModel mailContent);
 
-        Task SendWelcomeEmailAsync(string email, string subject, string username);
+        Task SendWelcomeEmailAsync(string email, string subject, string username, string token);
     }
     public class SendMailService : ISendMailService
     {
@@ -26,13 +26,14 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             mailSettings = _mailSettings.Value;
         }
 
-        public async Task SendWelcomeEmailAsync(string email, string subject, string username)
+        public async Task SendWelcomeEmailAsync(string email, string subject, string username, string token)
         {
             string FilePath = Directory.GetCurrentDirectory() + "\\Templates\\EmailTemplate.html";
             StreamReader str = new StreamReader(FilePath);
             string MailText = str.ReadToEnd();
             str.Close();
             MailText = MailText.Replace("[Username]", username);
+            MailText = MailText.Replace("[userToken]", token);
 
             MailModel mailContent = new MailModel();
             mailContent.To = email;

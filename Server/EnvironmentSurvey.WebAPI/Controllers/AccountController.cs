@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BC = BCrypt.Net.BCrypt;
 
 namespace EnvironmentSurvey.WebAPI.Controllers
 {
@@ -59,7 +60,8 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             {
                 var email = dict["userEmail"];
                 var username = dict["username"];
-                await _sendMailService.SendWelcomeEmailAsync(email, "Verify Account", username);
+                var token = username;
+                await _sendMailService.SendWelcomeEmailAsync(email, "Verify Account", username, token);
                 return Ok("Success");
             }                
             /*else if (response.Equals("Duplicate"))

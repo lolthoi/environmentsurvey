@@ -11,7 +11,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
     public interface IResultService
     {
-        Task<ResultModel> showResult(int surveyId, int userId);
+        Task<ResultModel> showResult(int surveyId, string userName);
     }
     public class ResultService : IResultService
     {
@@ -22,9 +22,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             _context = context;
         }
 
-        public async Task<ResultModel> showResult(int surveyId, int userId)
+        public async Task<ResultModel> showResult(int surveyId, string userName)
         {
-            var result = await _context.Results.Where(r => r.SurveyId == surveyId && r.UserId == userId).FirstOrDefaultAsync();
+            var account = _context.Users.SingleOrDefault(u => u.Username.Equals(userName));
+            var result = await _context.Results.Where(r => r.SurveyId == surveyId && r.UserId == account.Id).FirstOrDefaultAsync();
             if(result == null)
             {
                 throw new Exception("There is no result");

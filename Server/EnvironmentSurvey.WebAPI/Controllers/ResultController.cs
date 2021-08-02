@@ -20,17 +20,23 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> getResult(int surveyId, int userId)
+        [Route("getResult")]
+        public async Task<IActionResult> getResult(int surveyId, string userName)
         {
-            try
-            {
-                var result = await _resultService.showResult(surveyId, userId);
-                return Ok(result);
+            var userNameInToken = User.Identity.Name;
+            if (userNameInToken.Equals(userName)){
+                try
+                {
+                    var result = await _resultService.showResult(surveyId, userName);
+                    return Ok(result);
+                }
+                catch
+                {
+                    return BadRequest("Result Not Found");
+                }
             }
-            catch
-            {
-                return BadRequest("Result Not Found");
-            }
+            return BadRequest("User Not Authorize");
+            
             
             
         }
