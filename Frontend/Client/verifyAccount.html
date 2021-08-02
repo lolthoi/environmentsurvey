@@ -255,14 +255,17 @@
 
   <!-- Main Script -->
   <script src="js/script.js"></script>
-  <script src="js/viewJs/register.js"></script>
   <script src="js/viewJs/authorize.js"></script>
   <script src="js/viewJs/login.js"></script>
   <script>
     $(document).ready(function() {
+        var url_string = window.location + "";
+        var url = new URL(url_string);
+        var username = url.searchParams.get("username");
+
         $(".verify").click(function() {
             var domen = "https://localhost:44304";
-            var username = localStorage.getItem('registerUser');
+            
             $.ajax({
                 type: "POST",
                 url: domen+"/api/User/verifyAccoount?username=" + username,
