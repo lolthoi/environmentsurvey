@@ -1,6 +1,7 @@
 using EnvironmentSurvey.WebAPI.BusinessLogic;
 using EnvironmentSurvey.WebAPI.ClientSide.Common;
 using EnvironmentSurvey.WebAPI.DataAccess;
+using EnvironmentSurvey.WebAPI.DataAccess.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,17 +45,20 @@ namespace EnvironmentSurvey.WebAPI
                 c.AddPolicy("AllowOrigin", op => op.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
             services.AddDbContext<ESContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EnvironmentSurvey")));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISeminarService, SeminarService>();
             services.AddScoped<IUserSeminarService, UserSeminarService>();
+            services.AddScoped<IUserAnswerService, UserAnswerService>();
             services.AddControllers();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x => {
+            }).AddJwtBearer(x =>
+            {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = false;
                 x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
