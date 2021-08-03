@@ -1,0 +1,48 @@
+﻿using EnvironmentSurvey.WebAPI.BusinessLogic;
+using EnvironmentSurvey.WebAPI.ClientSide.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace EnvironmentSurvey.WebAPI.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class QuestionController : ControllerBase
+    {
+        private readonly IQuestionService _questionService;
+        public QuestionController(IQuestionService questionService)
+        {
+            _questionService = questionService;
+        }
+        [HttpGet]
+        public ActionResult<List<QuestionModel>> GetAll()
+        {
+            return _questionService.GetAll();
+        }
+        [HttpGet("{id}")]
+        public ActionResult<QuestionModel> GetById(int id)
+        {
+            return _questionService.GetById(id);
+        }
+        [HttpPost]
+        public ActionResult<QuestionModel> Create(QuestionModel model)
+        {
+            return _questionService.Create(model);
+        }
+        [HttpPut]
+        public ActionResult<QuestionModel> Update(QuestionModel model)
+        {
+            return _questionService.Update(model);
+        }
+        [HttpDelete("{id}")]
+        public ActionResult<bool> Delete(int id)
+        {
+            return _questionService.Delete(id);
+        }
+    }
+}
