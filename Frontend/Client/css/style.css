@@ -1146,3 +1146,9 @@ link:focus,
   display: flex;
   justify-content: space-between;
 }
+
+/* css take a survey */
+.takeSurvey {
+  background: rgb(54, 54, 243) !important;
+  color:white;
+}

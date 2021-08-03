@@ -19,17 +19,17 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             _seminarSevice = seminarSevice;
         }
 
-        [HttpGet]
+        [HttpPost]
         //[Authorize(Roles = "ADMIN,STUDENT,EMPLOYEE")]
         //[Authorize(Roles ="ADMIN")]
-        public async Task<List<SeminarModel>> getAll()
+        public async Task<List<SeminarModel>> getAll(SearchModel model)
         {
-            var listUser = await _seminarSevice.GetAll();
+            var listUser = await _seminarSevice.GetAll(model.Search_key);
             return listUser;
         }
 
         [HttpGet("{id:int}")]
-        [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
+        //[Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
         public async Task<SeminarModel> getSeminarByID(int id)
         {
             var user = await _seminarSevice.GetByID(id);

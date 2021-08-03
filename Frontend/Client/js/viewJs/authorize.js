@@ -27,4 +27,5 @@ $('.logout').click(function(){
     localStorage.clear();
     $('.profile').css("display","none");
     $('.login').css("display","block");
+    window.location.href = 'index.html';
 })

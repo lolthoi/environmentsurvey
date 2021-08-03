@@ -14,7 +14,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     
     public interface ISeminarService
     {
-        public Task<List<SeminarModel>> GetAll();
+        public Task<List<SeminarModel>> GetAll(string key);
         public Task<SeminarModel> GetByID(int id);
     }
     public class SeminarService : ISeminarService
@@ -27,9 +27,27 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             _context = context;
             _configuration = configuration;
         }
-        public async Task<List<SeminarModel>> GetAll()
+        public async Task<List<SeminarModel>> GetAll(string  key)
         {
-            var listSeminar = await _context.Seminars.ToListAsync();
+            List<Seminar> listSeminar = new List<Seminar>();
+            DateTime dateTime = DateTime.Now;
+            var pageNumber = 3;
+            var pageSize = 1;
+
+            if (key == "")
+            {
+                listSeminar = await _context.Seminars.Where(s=> s.StartDate > dateTime)
+                    .OrderByDescending(s=> s.CreatedDate)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            }
+            else
+            {
+                listSeminar = await _context.Seminars.Where(s => s.StartDate > dateTime)
+                                .Where(s => s.Name.Contains(key) || s.Author.Contains(key) || s.Subject.Contains(key) || s.Description.Contains(key))
+                                .OrderByDescending(s => s.CreatedDate).ToListAsync();
+            }
             var seminarModel = listSeminar.Select(x => new SeminarModel
             {
                 ID = x.Id,

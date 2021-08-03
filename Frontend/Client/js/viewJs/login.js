@@ -19,7 +19,8 @@ $(document).ready(function(){
                 localStorage.setItem('username', response.authenModel.Username);
                 localStorage.setItem('role', response.authenModel.Role);
                 localStorage.setItem('token', response.authenModel.Token);
-                window.location.href = 'index.html';
+                //window.location.href = 'index.html';
+                location.reload();
             },
             error: function(response){
                 $("#message").text("Username Or Password Not Correct");

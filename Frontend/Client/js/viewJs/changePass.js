@@ -30,7 +30,7 @@ $(document).ready(function(){
             success : function(response){
                 showPopup(response);
                 clearInput();
-                console.log(response);
+                
             }
         })
     })

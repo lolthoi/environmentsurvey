@@ -26,15 +26,15 @@ $(document).ready(function(){
 				
                 if(userseminar.Status == 1){
 					i++;
-                    showSeminar(userseminar.Seminar);
+                    showSeminar(userseminar.Seminar,userseminar.Status );
                 }
                 if(userseminar.Status == 2){
 					j++;
-                    showSeminarRegistering(userseminar.Seminar);
+                    showSeminarRegistering(userseminar.Seminar,userseminar.Status);
                 }
                 if(userseminar.Status == 3){
 					j++;
-                    showSeminarDecline(userseminar.Seminar);
+                    showSeminarDecline(userseminar.Seminar, userseminar.Status);
                 }
 				
             });
@@ -49,7 +49,7 @@ $(document).ready(function(){
 })
 
 //show seminar
-function showSeminar(seminar){
+function showSeminar(seminar, status){
 	$('#seminarRegistered').append(
 		'<div class="col-lg-4 col-sm-6 mb-5">'
 			+'<div class="card p-0 border-primary rounded-0 hover-shadow">'
@@ -64,14 +64,14 @@ function showSeminar(seminar){
 				+'<h4 class="card-title">'+seminar.Name+'</h4>'
 				+'</a>'
 				+'<p class="card-text mb-4 seminar_desc">'+seminar.Description+' </p>'
-				+'<a href="seminar-single.html?id='+seminar.ID+'" class="btn btn-primary btn-sm button_register" id="button_register_'+seminar.ID+'" data-name="'+seminar.Name+'" data-id="'+seminar.ID+'">View detail</a>'
+				+'<a href="seminar-single.html?id='+seminar.ID+'&status='+status+'" class="btn btn-primary btn-sm button_register" id="button_register_'+seminar.ID+'" data-name="'+seminar.Name+'" data-id="'+seminar.ID+'">View detail</a>'
 			+'</div>'
 			+'</div>'
 		+'</div>'
 	)
 }
 
-function showSeminarRegistering(seminar){
+function showSeminarRegistering(seminar,status){
 	$('#seminar').append(
 		'<div class="col-lg-4 col-sm-6 mb-5">'
 			+'<div class="card p-0 border-primary rounded-0 hover-shadow">'
@@ -86,7 +86,7 @@ function showSeminarRegistering(seminar){
 				+'<h4 class="card-title">'+seminar.Name+'</h4>'
 				+'</a>'
 				+'<p class="card-text mb-4 seminar_desc">'+seminar.Description+' </p>'
-				+'<button type="button" class="btn btn-primary btn-sm button_register" id="button_register_'+seminar.ID+'" data-name="'+seminar.Name+'" data-id="'+seminar.ID+'">Processing</button>'
+				+'<a href="seminar-single.html?id='+seminar.ID+'&status='+status+'" class="btn btn-primary btn-sm button_register" id="button_register_'+seminar.ID+'" data-name="'+seminar.Name+'" data-id="'+seminar.ID+'">View detail</a>'
 			+'</div>'
 			+'</div>'
 		+'</div>'

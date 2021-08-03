@@ -127,15 +127,23 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         public async Task<string> changePassword(ChangePasswordModel model)
         {
             User user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(model.Username));
-            string userPass = user.Password;
-            if (BC.Verify(model.OldPassword, userPass))
+            if(user != null)
             {
-                string passwordHash = BC.HashPassword(model.NewPassword);
-                user.Password = passwordHash;
-                _context.Entry(user).State = EntityState.Modified;
-                _context.SaveChanges();
-                return "Success";
+                string userPass = user.Password;
+                if (BC.Verify(model.OldPassword, userPass))
+                {
+                    string passwordHash = BC.HashPassword(model.NewPassword);
+                    user.Password = passwordHash;
+                    _context.Entry(user).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    return "Success";
+                }
             }
+            else
+            {
+                return "User not found";
+            }
+            
             return "Failed";
         }
     }
