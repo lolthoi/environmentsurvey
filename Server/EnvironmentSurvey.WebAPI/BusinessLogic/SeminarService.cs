@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
-    
+
     public interface ISeminarService
     {
         public Task<List<SeminarModel>> GetAll(string key);
@@ -27,7 +27,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             _context = context;
             _configuration = configuration;
         }
-        public async Task<List<SeminarModel>> GetAll(string  key)
+        public async Task<List<SeminarModel>> GetAll(string key)
         {
             List<Seminar> listSeminar = new List<Seminar>();
             DateTime dateTime = DateTime.Now;
@@ -36,8 +36,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
             if (key == "")
             {
-                listSeminar = await _context.Seminars.Where(s=> s.StartDate > dateTime)
-                    .OrderByDescending(s=> s.CreatedDate)
+                listSeminar = await _context.Seminars.Where(s => s.StartDate > dateTime)
+                    .OrderByDescending(s => s.CreatedDate)
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize)
                     .ToListAsync();
@@ -67,7 +67,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         public async Task<SeminarModel> GetByID(int id)
         {
             Seminar seminar = await _context.Seminars.FindAsync(id);
-            if(seminar == null)
+            if (seminar == null)
             {
                 throw new Exception("Seminar not found");
             }
