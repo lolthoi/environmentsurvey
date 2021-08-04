@@ -12,7 +12,6 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     {
         SurveyQuestionModel Create(SurveyQuestionModel model);
         List<SurveyQuestionModel> GetAll();
-        List<SurveyQuestionModel> GetAllBySurveyId(int surveyId);
         SurveyQuestionModel GetById(int Id);
         SurveyQuestionModel Update(SurveyQuestionModel model);
         bool Delete(int Id);
@@ -68,34 +67,6 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             var listSurveyQuestion = _surveyQuestionRepository.GetAll().ToList();
             if (listSurveyQuestion.Count == 0)
                 throw new Exception("There is no SurveyQuestion existed");
-            var result = listSurveyQuestion.Select(x => new SurveyQuestionModel
-            {
-                Id = x.Id,
-                SurveyId = x.SurveyId,
-                QuestionId = x.QuestionId,
-                UserAnswers = listUserAnswerModel.Count > 0 ? listUserAnswerModel.Where(y => y.SurveyQuestionId == x.Id).ToList() : null,
-            }).ToList();
-            return result;
-        }
-
-        public List<SurveyQuestionModel> GetAllBySurveyId(int Id)
-        {
-            var listUserAnswer = _userAnswerRepository.GetAll().ToList();
-            List<UserAnswerModel> listUserAnswerModel = new();
-            if (listUserAnswer.Count > 0)
-            {
-                listUserAnswerModel = listUserAnswer.Select(x => new UserAnswerModel
-                {
-                    Id = x.Id,
-                    SurveyQuestionId = x.SurveyQuestionId,
-                    AnswerId = x.AnswerId,
-                    UserId = x.UserId
-                }).ToList();
-            }
-
-            var listSurveyQuestion = _surveyQuestionRepository.GetAll().Where(x => x.SurveyId == Id).ToList();
-            if (listSurveyQuestion.Count == 0)
-                throw new Exception("There is no Question of this Survey existed");
             var result = listSurveyQuestion.Select(x => new SurveyQuestionModel
             {
                 Id = x.Id,
