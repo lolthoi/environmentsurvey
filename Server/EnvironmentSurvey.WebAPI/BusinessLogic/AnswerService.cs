@@ -18,9 +18,11 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     public class AnswerService : IAnswerService
     {
         private readonly IRepository<Answer> _answerRespository;
-        public AnswerService(IRepository<Answer> answerRespository)
+        private readonly IRepository<UserAnswer> _userAnswerRepository;
+        public AnswerService(IRepository<Answer> answerRespository, IRepository<UserAnswer> userAnswerRepositoty)
         {
             _answerRespository = answerRespository;
+            _userAnswerRepository = userAnswerRepositoty;
         }
         public AnswerModel Create(AnswerModel model)
         {
@@ -49,6 +51,19 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public List<AnswerModel> GetAll()
         {
+            var listUserAnswer = _userAnswerRepository.GetAll().ToList();
+            List<UserAnswerModel> listUserAnswerModel = new();
+            if (listUserAnswer.Count > 0)
+            {
+                listUserAnswerModel = listUserAnswer.Select(x => new UserAnswerModel
+                {
+                    Id = x.Id,
+                    SurveyQuestionId = x.SurveyQuestionId,
+                    AnswerId = x.AnswerId,
+                    UserId = x.UserId
+                }).ToList();
+            }
+
             var listAnswer = _answerRespository.GetAll().ToList();
             if (listAnswer.Count == 0)
                 throw new Exception("There is no answer existed");
@@ -58,12 +73,26 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Answer = x.Answer1,
                 IsCorrect = x.IsCorrect,
                 QuestionId = x.QuestionId,
+                UserAnswers = listUserAnswerModel.Count > 0 ? listUserAnswerModel.Where(y => y.AnswerId == x.Id).ToList() : null,
             }).ToList();
             return result;
         }
 
         public AnswerModel GetById(int Id)
         {
+            var listUserAnswer = _userAnswerRepository.GetAll().Where(x => x.AnswerId == Id).ToList();
+            List<UserAnswerModel> listUserAnswerModel = new();
+            if (listUserAnswer.Count > 0)
+            {
+                listUserAnswerModel = listUserAnswer.Select(x => new UserAnswerModel
+                {
+                    Id = x.Id,
+                    SurveyQuestionId = x.SurveyQuestionId,
+                    AnswerId = x.AnswerId,
+                    UserId = x.UserId
+                }).ToList();
+            }
+
             AnswerModel model = new();
             Answer answer = _answerRespository.Get(Id);
             if (answer == null)
@@ -74,6 +103,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 model.Answer = answer.Answer1;
                 model.IsCorrect = answer.IsCorrect;
                 model.QuestionId = answer.QuestionId;
+                model.UserAnswers = listUserAnswerModel;
             }
             return model;
         }
