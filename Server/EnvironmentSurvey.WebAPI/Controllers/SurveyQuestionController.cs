@@ -1,10 +1,7 @@
 ﻿using EnvironmentSurvey.WebAPI.BusinessLogic;
 using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,11 +12,19 @@ namespace EnvironmentSurvey.WebAPI.Controllers
     public class SurveyQuestionController : ControllerBase
     {
         private readonly ISurveyQuestionService _surveyQuestionService;
-
-        [HttpGet("/api/Survey/{id:int}/[controller]")]
-        public ActionResult<List<SurveyQuestionModel>> GetAllBySurveyId(int id)
+        public SurveyQuestionController(ISurveyQuestionService surveyQuestionService)
         {
-            return _surveyQuestionService.GetAllBySurveyId(id);
+            _surveyQuestionService = surveyQuestionService;
+        }
+        [HttpGet]
+        public ActionResult<List<SurveyQuestionModel>> GetAll()
+        {
+            return _surveyQuestionService.GetAll();
+        }
+        [HttpPost]
+        public ActionResult<SurveyQuestionModel> Create(SurveyQuestionModel model)
+        {
+            return _surveyQuestionService.Create(model);
         }
     }
 }

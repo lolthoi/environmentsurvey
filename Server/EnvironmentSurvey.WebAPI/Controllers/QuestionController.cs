@@ -29,6 +29,11 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         {
             return _questionService.GetById(id);
         }
+        [HttpGet("/api/Survey/{id:int}/[controller]")]
+        public ActionResult<List<QuestionModel>> GetAllQuestionBySurveyId(int id)
+        {
+            return _questionService.GetAllQuestionBySurveyId(id);
+        }
         [HttpPost]
         public ActionResult<QuestionModel> Create(QuestionModel model)
         {
