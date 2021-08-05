@@ -113,7 +113,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                         {
                             Token = token,
                             Username = user.Username,
-                            Role = user.Role
+                            Role = user.Role,
+                            UserId = user.Id
                         };
                         return authenModel;
                     }
