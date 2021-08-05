@@ -32,6 +32,7 @@ $(document).ready(function(){
 })
 
 function showSeminarDetail(seminar){
+  console.log("tesssst")
 	$('#seminar_detail').append(
 		'<div class="row">'
             +'<div class="col-12 mb-4">'
@@ -90,15 +91,18 @@ function showSeminarDetail(seminar){
        +'</div>'
      +'</div>'
      +'<div class="col-12 mb-4">'
-       +'<h3 class="mb-3">Survey</h3>'
-       +'<ul class="list-styled">'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-       +'</ul>'
-     +'</div>'
+        +'<div id="loadListSurvey"> </div>'
+     +'</div'
+    //  +'<div class="col-12 mb-4">'
+    //    +'<h3 class="mb-3">Survey</h3>'
+    //    +'<ul class="list-styled">'
+    //      +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
+    //      +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
+    //      +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
+    //      +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
+    //      +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
+    //    +'</ul>'
+    //  +'</div>'
      +'<div class="col-12 mb-4">'
       +'<button type="button" class="btn btn-primary btn-sm button_register" data-name="'+seminar.Name+'" ">Register Now</button>'
      +'</div>'
@@ -106,6 +110,7 @@ function showSeminarDetail(seminar){
      +'</div>'
    +'</div>'
 	)
+  $('#loadListSurvey').load("listSurvey.html");
 }
 function showSeminarDetailRegisteringOrDecline(seminar){
 	$('#seminar_detail').append(
@@ -238,15 +243,18 @@ function showSeminarDetailRegistered(seminar){
        +'</div>'
      +'</div>'
      +'<div class="col-12 mb-4">'
-       +'<h3 class="mb-3">Survey</h3>'
-       +'<ul class="list-styled">'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-       +'</ul>'
-     +'</div>'
+        +'<div id="loadListSurvey"> </div>'
+     +'</div'
+    //  +'<div class="col-12 mb-4">'
+    //    +'<h3 class="mb-3">Survey</h3>'
+    //    +'<ul class="list-styled">'
+    //      +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
+    //      +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
+    //      +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
+    //      +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
+    //      +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
+    //    +'</ul>'
+    //  +'</div>'
      +'<div class="col-12 mb-4">'
       +'<button type="button" class="btn takeSurvey btn-sm take_survey" data-endDate="'+seminar.EndDate+'" ">Take a Survey</button>'
      +'</div>'
@@ -311,6 +319,7 @@ $(document).ready(function() {
 	});
 	
 });
+
 
 $(document).ready(function() {
 	$("body").on("click", ".take_survey", function(){		
