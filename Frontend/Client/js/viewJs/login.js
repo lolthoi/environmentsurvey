@@ -19,8 +19,14 @@ $(document).ready(function(){
                 localStorage.setItem('username', response.authenModel.Username);
                 localStorage.setItem('role', response.authenModel.Role);
                 localStorage.setItem('token', response.authenModel.Token);
+                localStorage.setItem('userId', response.authenModel.UserId);
                 //window.location.href = 'index.html';
-                location.reload();
+                if(response.authenModel.Role == "ADMIN"){
+                    window.location.href = "/Admin/dashboard.html";
+                }else{
+                    location.reload();
+                }
+                
             },
             error: function(response){
                 $("#message").text("Username Or Password Not Correct");
