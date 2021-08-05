@@ -580,17 +580,17 @@ option1.addEventListener("click", () => {
 
 option2.addEventListener("click", () => {
   UserAns.push({
-    "QuestionId": idSurveyPost,
+    "SurveyQuestionId": idSurveyPost,
     "AnswerId": document.getElementById("option2").value,
   })});
 option3.addEventListener("click", () => {
   UserAns.push({
-    "QuestionId": idSurveyPost,
+    "SurveyQuestionId": idSurveyPost,
     "AnswerId": document.getElementById("option3").value
   })});
 option4.addEventListener("click", () => {
   UserAns.push({
-    "QuestionId": idSurveyPost,
+    "SurveyQuestionId": idSurveyPost,
     "AnswerId": document.getElementById("option4").value
   })});
 
@@ -630,22 +630,23 @@ next_question.addEventListener("click", () => {
           "SurveyId":null,
           "SerminarId":null
         }
+        console.log(totalAnswer)
         // call api đẩy data ở đây
-        $.ajax({
-            type : "POST",
-            url: domen+"/api/UserAnswer",
-            headers: {Authorization: 'Bearer '+ token_string},
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(totalAnswer),
-            success : function(response){
+        // $.ajax({
+        //     type : "POST",
+        //     url: domen+"/api/UserAnswer",
+        //     headers: {Authorization: 'Bearer '+ token_string},
+        //     contentType: "application/json; charset=utf-8",
+        //     data: JSON.stringify(totalAnswer),
+        //     success : function(response){
                 
-            }
-        })
+        //     }
+        // })
         UserAns = [];
         totalAnswer = {};
         clearInterval(interval);
         quiz.style.display = "none";
-        result.style.display = "block";
+        result.style.display = "block"
     }
     for (i = 0; i <= 3; i++) {
         choice_que[i].classList.remove("disabled");
