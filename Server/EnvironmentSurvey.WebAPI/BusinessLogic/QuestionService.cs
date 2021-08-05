@@ -1,4 +1,5 @@
-﻿using EnvironmentSurvey.WebAPI.ClientSide.Models;
+﻿using EnvironmentSurvey.WebAPI.ClientSide.Common;
+using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using EnvironmentSurvey.WebAPI.DataAccess.Domains;
 using EnvironmentSurvey.WebAPI.DataAccess.Extensions;
 using System;
@@ -64,7 +65,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 {
                     Id = x.Id,
                     Answer = x.Answer1,
-                    IsCorrect = x.IsCorrect,
+                    IsCorrect = null,
                     QuestionId = x.QuestionId
                 }).ToList();
             }
@@ -105,12 +106,11 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 {
                     Id = x.Id,
                     Answer = x.Answer1,
-                    IsCorrect = x.IsCorrect,
+                    IsCorrect = null,
                     QuestionId = x.QuestionId
                 }).ToList();
             }
             var listQuestion = _questionRepository.GetAll().ToList();
-
 
             var listSurveyQuestion = _surveyQuestionRepository.GetAll().Where(x => x.SurveyId == Id).ToList();
             if (listSurveyQuestion.Count == 0)
@@ -140,7 +140,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 {
                     Id = x.Id,
                     Answer = x.Answer1,
-                    IsCorrect = x.IsCorrect,
+                    IsCorrect = null,
                     QuestionId = x.QuestionId
                 }).ToList();
             }
