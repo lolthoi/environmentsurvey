@@ -90,8 +90,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 listSeminar = await _context.Seminars.Where(s => s.StartDate > dateTime)
                     .OrderByDescending(s => s.CreatedDate)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize)
+                    /*.Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)*/
                     .ToListAsync();
             }
             else

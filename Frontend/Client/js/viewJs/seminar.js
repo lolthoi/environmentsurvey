@@ -7,11 +7,12 @@ $(document).ready(function(){
 	var data = {
 		Username : username,		
 	}	
+	var listUserSeminar = '';
 	function doWork(response)
 	{
 		listUserSeminar = response;
 	}
-	var listUserSeminar = '';
+	
 	$.ajax({
 		type : "POST",
 		url: domen+"/api/UserSeminar/getUserSeminarByUser",
