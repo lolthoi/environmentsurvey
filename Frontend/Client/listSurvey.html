@@ -289,79 +289,12 @@
 <section class="section pt-0">
   <div class="container">
     <div class="row">
-      <div class="col-12">
-        <h2 class="section-title"> Seminar</h2>
+      <div class="col-12" id="focusWhenCloseQuestion">
+        <h2 class="section-title"> List Survey</h2>
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div id="listSurveyData" class="row justify-content-center">
       <!-- course item -->
-      <div class="col-lg-3 col-sm-6 mb-5">
-        <div class="card p-0 border-primary rounded-0 hover-shadow">
-          <div class="card-body">
-            <ul class="list-inline mb-2">
-              <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>02-14-2018</li>
-              <li class="list-inline-item"><a class="text-color" href="#">Humanities</a></li>
-            </ul>
-            <a href="">
-              <h4 class="card-title">Photography</h4>
-            </a>
-            <p class="card-text mb-4"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna.</p>
-            <button href="" id="start_1" class=" button_startbtn btn-primary btn-sm">Start</button>
-          </div>
-        </div>
-      </div>
-      <!-- course item -->
-      <div class="col-lg-3 col-sm-6 mb-5">
-        <div class="card p-0 border-primary rounded-0 hover-shadow">
-          
-          <div class="card-body">
-            <ul class="list-inline mb-2">
-              <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>02-14-2018</li>
-              <li class="list-inline-item"><a class="text-color" href="#">Humanities</a></li>
-            </ul>
-            <a href="" >
-              <h4 class="card-title">Programming</h4>
-            </a>
-            <p class="card-text mb-4"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna.</p>
-            <button href="" id="start_2" class=" button_startbtn btn-primary btn-sm">Start</button>
-          </div>
-        </div>
-      </div>
-      <!-- course item -->
-      <div class="col-lg-3 col-sm-6 mb-5">
-        <div class="card p-0 border-primary rounded-0 hover-shadow">
-          <div class="card-body">
-            <ul class="list-inline mb-2">
-              <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>02-14-2018</li>
-              <li class="list-inline-item"><a class="text-color" href="#">Humanities</a></li>
-            </ul>
-            <a href="" >
-              <h4 class="card-title">Lifestyle Archives</h4>
-            </a>
-            <p class="card-text mb-4"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna.</p>
-            <button href="" id="start_3" class=" button_startbtn btn-primary btn-sm">Start</button>
-          </div>
-        </div>
-      </div>
-	  <div class="col-lg-3 col-sm-6 mb-5">
-        <div class="card p-0 border-primary rounded-0 hover-shadow">
-          <div class="card-body">
-            <ul class="list-inline mb-2">
-              <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>02-14-2018</li>
-              <li class="list-inline-item"><a class="text-color" href="#">Humanities</a></li>
-            </ul>
-            <a href="" >
-              <h4 class="card-title">Archives</h4>
-            </a>
-            <p class="card-text mb-4"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna.</p>
-            <button id="start_4" class=" button_startbtn btn-primary btn-sm">Start</button>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -369,7 +302,7 @@
 <section class="section">
   <div id="container">
         <!--    Start Section     -->
-        <div id="start">Start Quiz</div>
+        <div id="start" tabindex="1" style="display: none;">Start Quiz</div>
 
         <!--    Guide Section    -->
         <div id="guide">
@@ -380,7 +313,7 @@
             <h4>4. You Can't Exit From The Quiz While You Are Playing.</h4>
             <div id="button">
                 <button id="exit">Exit</button>
-                <button id="continue">Continue</button>
+                <button onclick="countQuestion()" id="continue">Continue</button>
             </div>
         </div>
 
@@ -413,8 +346,8 @@
             <!--  Answers Section-->
 
             <div id="answersSection">
-                <h3 id="total_correct">3 Of 10 Questions</h3>
-                <h3 id="next_question">Next</h3>
+                <h3 id="total_correct" style="display: block !important;" >0 Of ${questionData.length} Questions</h3>
+                <h3 onclick="countQuestion()" id="next_question">Next</h3>
             </div>
         </div>
         <!--   Result Section  -->
@@ -423,24 +356,27 @@
             <h6>You Are Completed The Quiz</h6>
             <h6 id="points">Congrast</h6>
             <button id="quit">Quit Quiz</button>
-            <button id="startAgain">Start Again</button>
         </div>
     </div>
 </section>
 <!-- courses -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script>
 
-var domen = "https://localhost:44304";
-var role = localStorage.getItem("role");
-var username = localStorage.getItem("username");
-var data = {
-		Username : username,		
-}	
+// var domen = "https://localhost:44304";
+// var token = localStorage.getItem('token');
+// var role = localStorage.getItem("role");
+// var username = localStorage.getItem("username");
+
+// const queryString = window.location.search;
+// const urlParams = new URLSearchParams(queryString);
+// const id = urlParams.get('id');
+// const status = urlParams.get('status');
 
 $(document).ready(function(){
 	$.ajax({
 			type : "GET",
-			url: domen+"/api/Survey/2/Question",
+			url: domen+"/api/Seminar/"+id+"/Survey",
 			headers: {
 				Authorization: 'Bearer '+token
 			},
@@ -448,37 +384,50 @@ $(document).ready(function(){
 			datatype:"json",
 			async:false,
 			success : function(response){
-				copyData(response);
+				showSurvey(response);
 			},       
 		});
   });
+  function showSurvey(res){
+    res.forEach(showEachSurvey);
+  }
+
+  function showEachSurvey(eachSurvey){
+    let startDateOfSurvey = new Date(Date.parse(eachSurvey.StartDate)).toString();
+    var date = new Date(startDateOfSurvey); // Date 2011-05-09T06:08:45.178Z
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    let endDateOfSurvey = new Date(Date.parse(eachSurvey.EndDate)).toString();
+    var dateEnd = new Date(startDateOfSurvey); // Date 2011-05-09T06:08:45.178Z
+    var yearEnd = dateEnd.getFullYear();
+    var monthEnd = ("0" + (dateEnd.getMonth() + 1)).slice(-2);
+    var dayEnd = ("0" + dateEnd.getDate()).slice(-2);
+    $('#listSurveyData').append(
+      '<div class="col-lg-3 col-sm-6 mb-5">'
+        +'<div class="card p-0 border-primary rounded-0 hover-shadow">'
+          +'<div class="card-body">'
+            +'<ul class="list-inline mb-2">'
+              +'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+`${year}-${month}-${day}`+'</li>'
+              +'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+`${yearEnd}-${monthEnd}-${dayEnd}`+'</li>'
+              +'<li class="list-inline-item"><a class="text-color">'+eachSurvey.Name+'</a></li>'
+              +'</ul>'
+              +'<button onclick="startQuestion('+eachSurvey.Id+')" value="" class="eachSurveyQues button_startbtn btn-primary btn-sm">Start</button>'
+            +'</div>'
+          +'</div>'
+      +'</div>'
+    );
+  }
 
 let questionData = []
+let idSurveyPost ;
 var token = localStorage.getItem("token")
-  $(document).ready(function(){
-	$.ajax({
-			type : "GET",
-			url: domen+"/api/Survey/2/Question",
-			headers: {
-				Authorization: 'Bearer '+token
-			},
-			contentType: "application/json; charset=utf-8",
-			datatype:"json",
-			async:false,
-			success : function(response){
-				copyData(response);
-			},       
-		});
-  });
-
   function copyData(res){
     questionData = res
   }
 
-let start_1 = document.getElementById('start_1');
-let start_2 = document.getElementById('start_2');
-let start_3 = document.getElementById('start_3');
-let start_4 = document.getElementById('start_4');
+let startSurvey = document.getElementById('startSurvey');
 //Start Section
 let start = document.querySelector("#start");
 
@@ -533,28 +482,39 @@ let common = function(id){
 	clearInterval(interval);
     quiz.style.display = "none";
 }
-start_1.addEventListener("click", () => {
-	 common(start_1);   
-});
-start_2.addEventListener("click", () => {
-	 common(start_2);   
-});
-start_3.addEventListener("click", () => {
-	 common(start_3);   
-});
-start_4.addEventListener("click", () => {
-	 common(start_4);   
-});
+
+function startQuestion(idSurvey){
+  idSurveyPost = idSurvey;
+  $("#start").show();
+  $(".eachSurveyQues"). prop('disabled', true);
+  document.getElementById("start").focus();
+  $.ajax({
+			type : "GET",
+			url: domen+"/api/Survey/"+idSurvey+"/Question",
+			headers: {
+				Authorization: 'Bearer '+token
+			},
+			contentType: "application/json; charset=utf-8",
+			datatype:"json",
+			async:false,
+			success : function(response){
+				copyData(response);
+			},       
+		});
+}
 //what happen when 'Start' Button Will Click
 start.addEventListener("click", () => {
-    start.style.display = "none";
-    guide.style.display = "block";
+  document.getElementById("guide").focus();
+  start.style.display = "none";
+  guide.style.display = "block";
 });
 
 //what happen when 'Exit' Button Will Click
 exit.addEventListener("click", () => {
-    start.style.display = "block";
-    guide.style.display = "none";
+  $("#start").hide();
+  guide.style.display = "none";
+  document.getElementById("focusWhenCloseQuestion").focus();
+  $(".eachSurveyQues"). prop('disabled', false);
 });
 
 
@@ -589,14 +549,19 @@ function loadData() {
     timer = 15;
 }
 
-
+let count = 0;
+function countQuestion(){
+  count++;
+}
 //what happen when 'Continue' Button Will Click
 continueBtn.addEventListener("click", () => {
+  
     quiz.style.display = "block";
     guide.style.display = "none";
 
     interval = setInterval(countDown, 1000);
     loadData();
+    total_correct.innerHTML = count+ ` Of ${questionData.length} Questions`;
 
     //    remove All Active Classes When Continue Button Will Click
 
@@ -604,28 +569,28 @@ continueBtn.addEventListener("click", () => {
         removeActive.classList.remove("active");
     })
 
-    total_correct.innerHTML = `${correct = 0} Out Of ${questionData.length} Questions`;
+    
 });
 
 option1.addEventListener("click", () => {
   UserAns.push({
-    "QuestionId": questionData[index].Id,
+    "SurveyQuestionId": idSurveyPost,
     "AnswerId": document.getElementById("option1").value
 })});
 
 option2.addEventListener("click", () => {
   UserAns.push({
-    "QuestionId": questionData[index].Id,
+    "SurveyQuestionId": idSurveyPost,
     "AnswerId": document.getElementById("option2").value,
   })});
 option3.addEventListener("click", () => {
   UserAns.push({
-    "QuestionId": questionData[index].id,
+    "SurveyQuestionId": idSurveyPost,
     "AnswerId": document.getElementById("option3").value
   })});
 option4.addEventListener("click", () => {
   UserAns.push({
-    "QuestionId": questionData[index].id,
+    "SurveyQuestionId": idSurveyPost,
     "AnswerId": document.getElementById("option4").value
   })});
 
@@ -649,6 +614,7 @@ next_question.addEventListener("click", () => {
         choice_que.forEach(removeActive => {
             removeActive.classList.remove("active");
         })
+        total_correct.innerHTML = count+ ` Of ${questionData.length} Questions`;
         //question
         loadData();
         //result
@@ -664,13 +630,23 @@ next_question.addEventListener("click", () => {
           "SurveyId":null,
           "SerminarId":null
         }
+        console.log(totalAnswer)
         // call api đẩy data ở đây
-        console.log('tung????????',totalAnswer)
+        // $.ajax({
+        //     type : "POST",
+        //     url: domen+"/api/UserAnswer",
+        //     headers: {Authorization: 'Bearer '+ token_string},
+        //     contentType: "application/json; charset=utf-8",
+        //     data: JSON.stringify(totalAnswer),
+        //     success : function(response){
+                
+        //     }
+        // })
         UserAns = [];
         totalAnswer = {};
         clearInterval(interval);
         quiz.style.display = "none";
-        result.style.display = "block";
+        result.style.display = "block"
     }
     for (i = 0; i <= 3; i++) {
         choice_que[i].classList.remove("disabled");
@@ -681,11 +657,8 @@ next_question.addEventListener("click", () => {
 quit.addEventListener("click", () => {
     start.style.display = "block";
     result.style.display = "none";
-});
-
-//Start Again When 'Start Again' Button Will Clicked
-startAgain.addEventListener("click", () => {
-    guide.style.display = "block";
-    result.style.display = "none";
+    count = 0;
+    $("#start").hide();
+    $(".eachSurveyQues"). prop('disabled', false);
 });
 </script>

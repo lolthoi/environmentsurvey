@@ -137,7 +137,7 @@ function showSeminar(seminar){
 				+'<li class="list-inline-item"><a class="text-color" href="#">'+seminar.Subject+'</a></li>'
 				+'</ul>'
 				+'<p><i class="ti-location-pin text-primary mr-2">'+seminar.Location+'</i></p>'
-				+'<a href="seminar-single.html?id='+seminar.ID+'">'
+				+'<a href="seminar-single.html?id='+seminar.ID+'&status=">'
 				+'<h4 class="card-title">'+seminar.Name+'</h4>'
 				+'</a>'
 				+'<p class="card-text mb-4 seminar_desc">'+seminar.Description+' </p>'
