@@ -20,7 +20,9 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     {
         private readonly IRepository<SurveyQuestion> _surveyQuestionRepository;
         private readonly IRepository<UserAnswer> _userAnswerRepository;
-        public SurveyQuestionService(IRepository<SurveyQuestion> surveyQuestionRepository, IRepository<UserAnswer> userAnswerRepository)
+        public SurveyQuestionService(IRepository<SurveyQuestion> surveyQuestionRepository,
+            IRepository<UserAnswer> userAnswerRepository
+            )
         {
             _surveyQuestionRepository = surveyQuestionRepository;
             _userAnswerRepository = userAnswerRepository;

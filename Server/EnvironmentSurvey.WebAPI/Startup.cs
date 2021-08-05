@@ -53,6 +53,10 @@ namespace EnvironmentSurvey.WebAPI
             services.AddScoped<IUserAnswerService, UserAnswerService>();
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<IAnswerService, AnswerService>();
+            services.AddScoped<ISurveyQuestionService, SurveyQuestionService>();
+            services.AddScoped<ISurveyService, SurveyService>();
+            services.AddScoped<IFAQsService, FAQsService>();
+            services.AddScoped<ISupportInfoService, SupportInfoService>();
             services.AddControllers();
             services.AddAuthentication(x =>
             {

@@ -1,4 +1,5 @@
-﻿using EnvironmentSurvey.WebAPI.ClientSide.Models;
+﻿using EnvironmentSurvey.WebAPI.ClientSide.Common;
+using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using EnvironmentSurvey.WebAPI.DataAccess.Domains;
 using EnvironmentSurvey.WebAPI.DataAccess.Extensions;
 using System;
@@ -11,22 +12,23 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     {
         QuestionModel Create(QuestionModel model);
         List<QuestionModel> GetAll();
+        List<QuestionModel> GetAllQuestionBySurveyId(int surveyId);
         QuestionModel GetById(int Id);
         QuestionModel Update(QuestionModel model);
         bool Delete(int Id);
     }
     public class QuestionService : IQuestionService
     {
-        private readonly IRepository<Question> _questionRespository;
-        private readonly IRepository<Answer> _answerRespository;
+        private readonly IRepository<Question> _questionRepository;
+        private readonly IRepository<Answer> _answerRepository;
         private readonly IRepository<SurveyQuestion> _surveyQuestionRepository;
         public QuestionService(
-            IRepository<Question> questionRespository,
-            IRepository<Answer> answerRespository,
+            IRepository<Question> questionRepository,
+            IRepository<Answer> answerRepository,
             IRepository<SurveyQuestion> surveyQuestionRepository)
         {
-            _questionRespository = questionRespository;
-            _answerRespository = answerRespository;
+            _questionRepository = questionRepository;
+            _answerRepository = answerRepository;
             _surveyQuestionRepository = surveyQuestionRepository;
         }
 
@@ -37,25 +39,25 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Question1 = model.Question,
             };
             model.Id = question.Id;
-            _questionRespository.Insert(question);
+            _questionRepository.Insert(question);
             return model;
         }
 
         public bool Delete(int Id)
         {
-            Question question = _questionRespository.Get(Id);
+            Question question = _questionRepository.Get(Id);
             if (question == null)
                 throw new Exception("Question not found");
             else
             {
-                _questionRespository.Delete(question);
+                _questionRepository.Delete(question);
                 return true;
             }
         }
 
         public List<QuestionModel> GetAll()
         {
-            var listAnswer = _answerRespository.GetAll().ToList();
+            var listAnswer = _answerRepository.GetAll().ToList();
             List<AnswerModel> listAnswerModel = new();
             if (listAnswer.Count > 0)
             {
@@ -63,7 +65,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 {
                     Id = x.Id,
                     Answer = x.Answer1,
-                    IsCorrect = x.IsCorrect,
+                    IsCorrect = null,
                     QuestionId = x.QuestionId
                 }).ToList();
             }
@@ -80,7 +82,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 }).ToList();
             }
 
-            var listQuestion = _questionRespository.GetAll().ToList();
+            var listQuestion = _questionRepository.GetAll().ToList();
             if (listQuestion.Count == 0)
                 throw new Exception("There is no question existed");
 
@@ -94,9 +96,9 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             return result;
         }
 
-        public QuestionModel GetById(int Id)
+        public List<QuestionModel> GetAllQuestionBySurveyId(int Id)
         {
-            var listAnswer = _answerRespository.GetAll().Where(x => x.QuestionId == Id).ToList();
+            var listAnswer = _answerRepository.GetAll().ToList();
             List<AnswerModel> listAnswerModel = new();
             if (listAnswer.Count > 0)
             {
@@ -104,13 +106,47 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 {
                     Id = x.Id,
                     Answer = x.Answer1,
-                    IsCorrect = x.IsCorrect,
+                    IsCorrect = null,
+                    QuestionId = x.QuestionId
+                }).ToList();
+            }
+            var listQuestion = _questionRepository.GetAll().ToList();
+
+            var listSurveyQuestion = _surveyQuestionRepository.GetAll().Where(x => x.SurveyId == Id).ToList();
+            if (listSurveyQuestion.Count == 0)
+                throw new Exception("There is no Question of this Survey existed");
+            var result = listQuestion.Where(x => listSurveyQuestion.Select(y => y.QuestionId).Contains(x.Id)).ToList();
+
+            List<QuestionModel> listQuestionModel = new();
+            if (result.Count > 0)
+            {
+                listQuestionModel = result.Select(x => new QuestionModel
+                {
+                    Id = x.Id,
+                    Question = x.Question1,
+                    Answers = listAnswerModel.Count > 0 ? listAnswerModel.Where(y => y.QuestionId == x.Id).ToList() : null,
+                }).ToList();
+            }
+            return listQuestionModel;
+        }
+
+        public QuestionModel GetById(int Id)
+        {
+            var listAnswer = _answerRepository.GetAll().Where(x => x.QuestionId == Id).ToList();
+            List<AnswerModel> listAnswerModel = new();
+            if (listAnswer.Count > 0)
+            {
+                listAnswerModel = listAnswer.Select(x => new AnswerModel
+                {
+                    Id = x.Id,
+                    Answer = x.Answer1,
+                    IsCorrect = null,
                     QuestionId = x.QuestionId
                 }).ToList();
             }
 
             QuestionModel model = new();
-            Question question = _questionRespository.Get(Id);
+            Question question = _questionRepository.Get(Id);
             if (question == null)
                 throw new Exception("Question not found");
             else
@@ -124,13 +160,13 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public QuestionModel Update(QuestionModel model)
         {
-            Question question = _questionRespository.Get(model.Id);
+            Question question = _questionRepository.Get(model.Id);
             if (question == null)
                 throw new Exception("Question not found");
             else
             {
                 question.Question1 = model.Question;
-                _questionRespository.Update(question);
+                _questionRepository.Update(question);
             }
             return model;
         }

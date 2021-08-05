@@ -28,6 +28,7 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserAnswer> UserAnswers { get; set; }
         public virtual DbSet<UserSeminar> UserSeminars { get; set; }
+        public virtual DbSet<SupportInformation> SupportInformations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -67,6 +68,24 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
 
                 entity.Property(e => e.Solution)
                     .IsRequired()
+                    .HasColumnType("text");
+            });
+
+            modelBuilder.Entity<SupportInformation>(entity =>
+            {
+                entity.ToTable("SupportInfo");
+
+                entity.Property(e => e.Company)
+                    .IsRequired()
+                    .HasColumnType("text");
+                entity.Property(e => e.Address)
+                    .IsRequired()
+                    .HasColumnType("text");
+                entity.Property(e => e.CompanyTel)
+                    .HasColumnType("text");
+                entity.Property(e => e.Supporter)
+                    .HasColumnType("text");
+                entity.Property(e => e.SupporterTel)
                     .HasColumnType("text");
             });
 

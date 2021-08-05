@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EnvironmentSurvey.WebAPI.ClientSide.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,5 +12,6 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public int SurveyQuestionId { get; set; }
         public int? AnswerId { get; set; }
         public int UserId { get; set; }
+
     }
 }

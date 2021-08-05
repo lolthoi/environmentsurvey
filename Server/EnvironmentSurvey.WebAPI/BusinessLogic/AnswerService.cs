@@ -1,4 +1,5 @@
-﻿using EnvironmentSurvey.WebAPI.ClientSide.Models;
+﻿using EnvironmentSurvey.WebAPI.ClientSide.Common;
+using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using EnvironmentSurvey.WebAPI.DataAccess.Domains;
 using EnvironmentSurvey.WebAPI.DataAccess.Extensions;
 using System;
@@ -29,7 +30,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             var answer = new Answer
             {
                 Answer1 = model.Answer,
-                IsCorrect = model.IsCorrect,
+                IsCorrect = (int)model.IsCorrect,
                 QuestionId = model.QuestionId,
             };
             model.Id = answer.Id;
@@ -71,7 +72,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 Id = x.Id,
                 Answer = x.Answer1,
-                IsCorrect = x.IsCorrect,
+                IsCorrect = (IsCorrect)x.IsCorrect,
                 QuestionId = x.QuestionId,
                 UserAnswers = listUserAnswerModel.Count > 0 ? listUserAnswerModel.Where(y => y.AnswerId == x.Id).ToList() : null,
             }).ToList();
@@ -101,7 +102,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 model.Id = answer.Id;
                 model.Answer = answer.Answer1;
-                model.IsCorrect = answer.IsCorrect;
+                model.IsCorrect = (IsCorrect)answer.IsCorrect;
                 model.QuestionId = answer.QuestionId;
                 model.UserAnswers = listUserAnswerModel;
             }
@@ -116,7 +117,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             else
             {
                 answer.Answer1 = model.Answer;
-                answer.IsCorrect = model.IsCorrect;
+                answer.IsCorrect = (int)model.IsCorrect;
                 answer.QuestionId = model.QuestionId;
                 _answerRespository.Update(answer);
             }

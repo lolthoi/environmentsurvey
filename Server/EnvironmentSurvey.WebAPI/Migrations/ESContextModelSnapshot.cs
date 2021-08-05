@@ -199,6 +199,44 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                     b.ToTable("Seminars");
                 });
 
+            modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.SupportInformation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CompanyTel")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Supporter")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SupporterTel")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SupportInfo");
+                });
+
             modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.Survey", b =>
                 {
                     b.Property<int>("Id")

@@ -11,12 +11,16 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Ample Admin Lite Template by WrapPixel</title>
+    <title>Create FAQs</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
+    <!-- Datetimepicker -->
+    <link rel="stylesheet" href="plugins/datetimepicker/css/datetimepicker.css" type="text/css" />
+    <!-- SweetAlert -->
+    <link rel="stylesheet" href="plugins/sweetalert/css/sweetalert2.min.css" type="text/css">
     <!-- Custom CSS -->
-   <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -90,20 +94,20 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                         <li class=" in">
-                            <form role="search" class="app-search d-none d-md-block me-3">
+                            <!-- <form role="search" class="app-search d-none d-md-block me-3">
                                 <input type="text" placeholder="Search..." class="form-control mt-0">
                                 <a href="" class="active">
                                     <i class="fa fa-search"></i>
                                 </a>
-                            </form>
+                            </form> -->
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li>
-                            <a class="profile-pic" href="#">
-                                <img src="plugins/images/users/varun.jpg" alt="user-img" width="36"
-                                    class="img-circle"><span class="text-white font-medium">Steave</span></a>
+                            <a class="profile-pic" href="javascript:void(0);">
+                                <img src="" id="user-img" alt="user-img" width="36" class="img-circle"><span
+                                    class="text-white font-medium" id="user-name"></span></a>
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
@@ -124,7 +128,6 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <!-- User Profile-->
                         <li class="sidebar-item pt-2">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
                                 aria-expanded="false">
@@ -140,6 +143,20 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="registration-request.html"
+                                aria-expanded="false">
+                                <i class="fas fa-tasks" aria-hidden="true"></i>
+                                <span class="hide-menu">Registration Request</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-user.html"
+                                aria-expanded="false">
+                                <i class="fas fa-question" aria-hidden="true"></i>
+                                <span class="hide-menu">Question Bank</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-seminar.html"
                                 aria-expanded="false">
                                 <i class="fas fa-calendar-check" aria-hidden="true"></i>
@@ -151,6 +168,27 @@
                                 aria-expanded="false">
                                 <i class="fas fa-book" aria-hidden="true"></i>
                                 <span class="hide-menu">Survey</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-faqs.html"
+                                aria-expanded="false">
+                                <i class="far fa-question-circle" aria-hidden="true"></i>
+                                <span class="hide-menu">FAQs</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="support-infomation.html"
+                                aria-expanded="false">
+                                <i class="far fa-id-card" aria-hidden="true"></i>
+                                <span class="hide-menu">Support Information</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="../Client/index.html"
+                                aria-expanded="false">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                                <span class="hide-menu">Back to Home Page</span>
                             </a>
                         </li>
                     </ul>
@@ -173,7 +211,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Blank Page</h4>
+                        <h4 class="page-title">Create FAQs</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -199,12 +237,29 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="white-box">
-                            <h3 class="box-title">Blank Page</h3>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="#" id="createForm" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="Issue">Issue</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="Issue" id="Issue"
+                                            placeholder="Enter issue">
+                                        <small id="issue-valid" class="text-danger"></small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Solution">Solution</label>
+                                        <textarea class="form-control" name="Solution" id="Solution"
+                                            placeholder="Enter solution"></textarea>
+                                        <small id="solution-valid" class="text-danger"></small>
+                                    </div>
+                                    <button type="button" id="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <a href="list-faqs.html" class="btn btn-block btn-info text-white">Back to List</a>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -222,8 +277,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer text-center"> 2021 © Ample Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a>
+            <footer class="footer text-center"> 2021 © Environment Survey
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -247,8 +301,14 @@
     <script src="js/waves.js"></script>
     <!--Menu sidebar -->
     <script src="js/sidebarmenu.js"></script>
+    <!--Datetimepicker-->
+    <script src="plugins/datetimepicker/js/datetimepicker.js"></script>
+    <!-- SweetAlert -->
+    <script src="plugins/sweetalert/js/sweetalert2.all.min.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.js"></script>
+    <script src="js/viewJs/authorize.js"></script>
+    <script src="js/viewJs/create-faqs.js"></script>
 </body>
 
 </html>
