@@ -15,6 +15,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     {
         Task<string> SeminarRegistration(UserSeminarModel model);
         Task<List<ResUserSemiModel>> getUserSeminarByUser(UserSeminarModel model);
+
+        Task<List<ResUserSemiModel>> getAllSeminarPending();
+
+        Task<string> changeUserSeminarStatus(int option, int userSeminarId);
     }
     public class UserSeminarService : IUserSeminarService
     {
@@ -24,6 +28,46 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         {
             _context = context;
             _seminarService = seminarService; 
+        }
+
+        public async Task<string> changeUserSeminarStatus(int option, int userSeminarId)
+        {
+            try
+            {
+                UserSeminar userSerminar = await _context.UserSeminars.FindAsync(userSeminarId);
+                if(option == 1)
+                {
+                    userSerminar.Status = 1;
+                } else
+                {
+                    userSerminar.Status = 3;
+                }
+                await _context.SaveChangesAsync();
+                return "success";
+            } catch (Exception ex)
+            {
+                return "failed";
+            }
+        }
+
+        public async Task<List<ResUserSemiModel>> getAllSeminarPending()
+        {
+            var list = await _context.UserSeminars.Where(s => s.Status == 2).ToListAsync();
+            List<ResUserSemiModel> returnList = new List<ResUserSemiModel>();
+            foreach(var userSeminar in list)
+            {
+                User user = _context.Users.Find(userSeminar.UserId);
+                Seminar seminar = _context.Seminars.Find(userSeminar.SeminarId);
+                var obj = new ResUserSemiModel
+                {
+                    UserSeminarId = userSeminar.Id,
+                    UserName = user.Username,
+                    UserNumberId = userSeminar.User.NumberId,
+                    seminarName = seminar.Name
+                };
+                returnList.Add(obj);
+            }
+            return returnList.ToList();
         }
 
         public async Task<List<ResUserSemiModel>> getUserSeminarByUser(UserSeminarModel model)

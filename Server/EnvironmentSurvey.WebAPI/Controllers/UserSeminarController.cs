@@ -40,5 +40,21 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             return response;
         }
 
+        [HttpGet]
+        [Route("getAllSeminarPending")]
+        public async Task<List<ResUserSemiModel>> getAll()
+        {
+            var response = await _userSeminarService.getAllSeminarPending();
+            return response;
+        }
+
+        [HttpPost]
+        [Route("changeUserSeminarStatus")]
+        public async Task<string> changeUserSeminarStatus(UserSeminarVerifyModel model)
+        {
+            var response = await _userSeminarService.changeUserSeminarStatus(model.Option, model.UserSeminarId);
+            return response;
+        }
+
     }
 }
