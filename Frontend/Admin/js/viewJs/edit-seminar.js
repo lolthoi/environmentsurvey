@@ -13,6 +13,9 @@ $(document).ready(function () {
         url: domain+"/api/Seminar/Manage/"+id,
         contentType: "application/json; charset=utf-8",
         async:true,
+        headers: {
+          Authorization: "Bearer " + token,
+        },
         success : function(seminar){
             $("#Id").val(id);
             $("#Name").val(seminar.Name);
@@ -24,7 +27,10 @@ $(document).ready(function () {
             $("#preview").attr("src",domain+'/Images/'+seminar.Image);
             $("#Description").val(seminar.Description);
             $("input[name=forUser][value="+seminar.forUser+"]").prop("checked",true);
-        },       
+        },      
+        error: function (response) {
+          window.location.replace("list-seminar.html");
+        } 
     })
     $("#StartTime").datetimepicker({
       format: "Y-m-d H:m:s",

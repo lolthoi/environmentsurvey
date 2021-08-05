@@ -11,7 +11,7 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Create Seminar</title>
+    <title>Edit FAQs</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
@@ -211,7 +211,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Create Seminar</h4>
+                        <h4 class="page-title">Edit FAQs</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -241,68 +241,18 @@
                         <div class="card">
                             <div class="card-body">
                                 <form action="#" id="createForm" enctype="multipart/form-data">
+                                    <input type="hidden" name="Id" id="Id"/>
                                     <div class="form-group">
-                                        <label for="Name">Seminar Name</label>
-                                        <input type="text" autocomplete="off" class="form-control" name="Name" id="Name"
-                                            placeholder="Enter seminar name">
-                                        <small id="name-valid" class="text-danger"></small>
+                                        <label for="Issue">Issue</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="Issue" id="Issue"
+                                            placeholder="Enter issue">
+                                        <small id="issue-valid" class="text-danger"></small>
                                     </div>
                                     <div class="form-group">
-                                        <label for="Author">Author</label>
-                                        <input type="text" autocomplete="off" class="form-control" name="Author"
-                                            id="Author" placeholder="Enter author name">
-                                        <small id="author-valid" class="text-danger"></small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Subject">Subject</label>
-                                        <input type="text" autocomplete="off" class="form-control" name="Subject"
-                                            id="Subject" placeholder="Enter subject">
-                                        <small id="subject-valid" class="text-danger"></small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Location">Location</label>
-                                        <input type="text" autocomplete="off" class="form-control" name="Location"
-                                            id="Location" placeholder="Enter seminar location">
-                                        <small id="location-valid" class="text-danger"></small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="StartTime">Start Time</label>
-                                        <input type="text" autocomplete="off" class="form-control" name="StartTime"
-                                            id="StartTime" placeholder="Enter start time">
-                                        <small id="st-valid" class="text-danger"></small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="EndTime">End Time</label>
-                                        <input type="text" autocomplete="off" class="form-control" name="EndTime"
-                                            id="EndTime" placeholder="Enter end time">
-                                        <small id="et-valid" class="text-danger"></small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="forUser">For User</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="1" name="forUser">
-                                            <label class="form-check-label" for="forUser">
-                                              Employee
-                                            </label>
-                                          </div>
-                                          <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="2" name="forUser">
-                                            <label class="form-check-label" for="forUser">
-                                              Student
-                                            </label>
-                                          </div>
-                                        <small id="forUser-valid" class="text-danger"></small>
-                                    </div>
-                                    <div class="form-group" id="form-group-image">
-                                        <label for="Image">Image</label>
-                                        <input type="file" class="form-control" name="Image" id="Image" onchange="loadFile(event)">
-                                        <small id="image-valid" class="text-danger"></small>  
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Description">Description</label>
-                                        <textarea class="form-control" name="Description" id="Description"
-                                            placeholder="Enter seminar description"></textarea>
-                                        <small id="description-valid" class="text-danger"></small>
+                                        <label for="Solution">Solution</label>
+                                        <textarea class="form-control" name="Solution" id="Solution"
+                                            placeholder="Enter solution"></textarea>
+                                        <small id="solution-valid" class="text-danger"></small>
                                     </div>
                                     <button type="button" id="submit" class="btn btn-primary">Submit</button>
                                 </form>
@@ -310,7 +260,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="list-seminar.html" class="btn btn-block btn-info text-white">Back to List</a>
+                <a href="list-faqs.html" class="btn btn-block btn-info text-white">Back to List</a>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -359,7 +309,7 @@
     <!--Custom JavaScript -->
     <script src="js/custom.js"></script>
     <script src="js/viewJs/authorize.js"></script>
-    <script src="js/viewJs/create-seminar.js"></script>
+    <script src="js/viewJs/edit-faqs.js"></script>
 </body>
 
 </html>

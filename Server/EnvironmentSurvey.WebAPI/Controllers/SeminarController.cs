@@ -44,15 +44,16 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         [Authorize(Roles = "ADMIN")]
         public async Task<List<SeminarModel>> GetListSeminar()
         {
-            var listUser = await _seminarSevice.GetListSeminar();
-            return listUser;
+            var listSeminar = await _seminarSevice.GetListSeminar();
+            return listSeminar;
         }
 
         [HttpGet("Manage/{id:int}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<SeminarModel> getSeminarByIDManage(int id)
         {
-            var user = await _seminarSevice.GetByIDManage(id);
-            return user;
+            var seminar = await _seminarSevice.GetByIDManage(id);
+            return seminar;
         }
 
         [HttpPost]
