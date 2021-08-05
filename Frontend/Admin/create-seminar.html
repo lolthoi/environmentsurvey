@@ -15,8 +15,12 @@
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
+    <!-- Datetimepicker -->
+    <link rel="stylesheet" href="plugins/datetimepicker/css/datetimepicker.css" type="text/css" />
+    <!-- SweetAlert -->
+    <link rel="stylesheet" href="plugins/sweetalert/css/sweetalert2.min.css" type="text/css">
     <!-- Custom CSS -->
-   <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -102,8 +106,8 @@
                         <!-- ============================================================== -->
                         <li>
                             <a class="profile-pic" href="javascript:void(0);">
-                                <img src="" id="user-img" alt="user-img" width="36"
-                                    class="img-circle"><span class="text-white font-medium" id="user-name"></span></a>
+                                <img src="" id="user-img" alt="user-img" width="36" class="img-circle"><span
+                                    class="text-white font-medium" id="user-name"></span></a>
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
@@ -237,11 +241,77 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                
+                                <form action="#" id="createForm" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="Name">Seminar Name</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="Name" id="Name"
+                                            placeholder="Enter seminar name">
+                                        <small id="name-valid" class="text-danger"></small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Author">Author</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="Author"
+                                            id="Author" placeholder="Enter author name">
+                                        <small id="author-valid" class="text-danger"></small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Subject">Subject</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="Subject"
+                                            id="Subject" placeholder="Enter subject">
+                                        <small id="subject-valid" class="text-danger"></small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Location">Location</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="Location"
+                                            id="Location" placeholder="Enter seminar location">
+                                        <small id="location-valid" class="text-danger"></small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="StartTime">Start Time</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="StartTime"
+                                            id="StartTime" placeholder="Enter start time">
+                                        <small id="st-valid" class="text-danger"></small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="EndTime">End Time</label>
+                                        <input type="text" autocomplete="off" class="form-control" name="EndTime"
+                                            id="EndTime" placeholder="Enter end time">
+                                        <small id="et-valid" class="text-danger"></small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="forUser">For User</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" value="1" name="forUser">
+                                            <label class="form-check-label" for="forUser">
+                                              Employee
+                                            </label>
+                                          </div>
+                                          <div class="form-check">
+                                            <input class="form-check-input" type="radio" value="2" name="forUser">
+                                            <label class="form-check-label" for="forUser">
+                                              Student
+                                            </label>
+                                          </div>
+                                        <small id="forUser-valid" class="text-danger"></small>
+                                    </div>
+                                    <div class="form-group" id="form-group-image">
+                                        <label for="Image">Image</label>
+                                        <input type="file" class="form-control" name="Image" id="Image" onchange="loadFile(event)">
+                                        <small id="image-valid" class="text-danger"></small>  
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Description">Description</label>
+                                        <textarea class="form-control" name="Description" id="Description"
+                                            placeholder="Enter seminar description"></textarea>
+                                        <small id="description-valid" class="text-danger"></small>
+                                    </div>
+                                    <button type="button" id="submit" class="btn btn-primary">Submit</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                <a href="list-seminar.html" class="btn btn-block btn-info text-white">Back to List</a>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -283,9 +353,14 @@
     <script src="js/waves.js"></script>
     <!--Menu sidebar -->
     <script src="js/sidebarmenu.js"></script>
+    <!--Datetimepicker-->
+    <script src="plugins/datetimepicker/js/datetimepicker.js"></script>
+    <!-- SweetAlert -->
+    <script src="plugins/sweetalert/js/sweetalert2.all.min.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.js"></script>
     <script src="js/viewJs/authorize.js"></script>
+    <script src="js/viewJs/create-seminar.js"></script>
 </body>
 
 </html>
