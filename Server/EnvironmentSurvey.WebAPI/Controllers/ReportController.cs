@@ -20,7 +20,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
         [HttpGet]
         [Route("getDataReport")]
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<DashboardModel> getDataReport()
         {
             return await _reportSevice.DataDashboard();

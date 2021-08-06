@@ -56,7 +56,7 @@ $(document).ready(function(){
         async:true,
         success : function(response){
 			//console.log(response)
-			if(role == null){
+			if(role == null || role == "ADMIN"){
 				response.forEach(function(seminar) {
 					showSeminar(seminar);
 				});
