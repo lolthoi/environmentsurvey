@@ -42,7 +42,7 @@ $(document).ready(function(){
         async:true,
         success : function(response){
 			//localStorage.setItem("response",response);
-			if(role == null){
+			if(role == null || role == "ADMIN"){
 				response.forEach(function(seminar) {
 					showSeminar(seminar);
 				});
