@@ -12,293 +12,7 @@
 
   <!-- Main Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
-<style>
-  #start {
-    height: 70px;
-    width: 250px;
-    text-align: center;
-    padding: 20px 0;
-    background: #e7f1fa;
-    color: #000;
-    font-size: 23px;
-    font-weight: 700;
-    border-radius: 30px 10px;
-    border: 1px solid #b0c4d8;
-    cursor: pointer;
-/*    display: none;*/
-}
-
-#start:hover {
-    background: #ff5235;
-    color: #e7f1fa;
-}
-
-/*guide Section*/
-#guide,
-#quiz {
-    height: auto;
-    width: 580px;
-    padding: 20px;
-    background: #e7f1fa;
-    border-radius: 30px 10px;
-    border: 1px solid #b0c4d8;
-    display: none;
-}
-
-#guide h2 {
-    font-size: 60px;
-    color: #ff5235;
-}
-
-#guide h4 {
-    height: 50px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-}
-
-#guide #button {
-    height: 50px;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
-
-#guide #button button {
-    height: 50px;
-    width: 120px;
-    margin: 10px 25px;
-    border: none;
-    outline: none;
-    color: #e7f1fa;
-    background: #ff5235;
-    border: 1px solid #b0c4d8;
-    border-radius: 20px 5px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-#guide #button button:last-child {
-    margin: 10px 0;
-}
-
-#guide #button button:hover {
-    background: #e91e3a;
-}
-
-#quiz {
-    /*    display: block;*/
-    height: 480px;
-    position: relative;
-}
-
-#quiz #quiz_header {
-    height: 60px;
-    width: 100%;
-    background: #fafafc;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    border-radius: 30px 0;
-}
-
-#quiz #quiz_header h5 {
-    font-size: 28px;
-    margin: 0 20px;
-    color: #ff5235;
-}
-
-#quiz #quiz_header #timer {
-    height: 50px;
-    width: 200px;
-    background: #ff5235;
-    color: #e7f1fa;
-    border: 1px solid #b0c4d8;
-    font-size: 18px;
-    border-radius: 20px 5px;
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    right: 10px;
-}
-
-#quiz #quiz_header #timer h6 {
-    font-size: 22px;
-    display: grid;
-    place-items: center;
-    color: #fff;
-    margin: 0 10px;
-}
-
-#quiz #quiz_header #timer #time {
-    height: 44px;
-    width: 50px;
-    background: #fff;
-    color: #f69d9e;
-    border: 1px solid #b0c4d8;
-    border-radius: 15px 7px;
-    margin: 2px 0 0 27px;
-}
-
-/*Quiz Questions*/
-#quiz #question {
-    position: absolute;
-    top: 90px;
-    display: flex;
-    flex-direction: row;
-}
-
-#quiz #question h2 {
-    font-size: 27px;
-}
-
-#quiz #question h2:first-child {
-    margin: 0 10px 0 5px;
-}
-
-/*Quiz Options*/
-#quiz #optionList {
-    height: 400px;
-    width: 100%;
-    position: absolute;
-    top: 160px;
-}
-
-#quiz #optionList h4 {
-    height: 50px;
-    width: 535px;
-    background: #ff5235;
-    line-height: 50px;
-    margin: 5px 0;
-    border-radius: 7px;
-    padding: 0 20px;
-    font-size: 20px;
-    color: #fff;
-    overflow: hidden;
-    border: 1px solid #b0c4d8;
-    cursor: pointer;
-}
-
-#quiz #optionList h4:hover {
-    background: #e91e3a;
-}
-
-#quiz #optionList .active {
-    background: #e91e3a;
-}
-
-#quiz #optionList .disabled {
-    pointer-events: none;
-}
-
-/*Answers Section*/
-
-#quiz #answersSection {
-    height: 60px;
-    width: 100%;
-    background: #fafafc;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    border-radius: 30px 0;
-}
-
-#quiz #answersSection h3 {
-    margin: 0px 30px;
-    display: none;
-}
-
-#quiz #answersSection h3:last-child {
-    height: 40px;
-    width: 100px;
-    display: grid;
-    place-items: center;
-    background: #ff5235;
-    position: absolute;
-    right: 0;
-    color: #fff;
-    border: 1px solid #b0c4d8;
-    font-size: 18px;
-    border-radius: 20px 5px;
-    cursor: pointer;
-    margin: 0 20px;
-}
-
-#quiz #answersSection h3:hover {
-    background: #e91e3a;
-}
-
-#quiz #answersSection h3:first-child:hover {
-    background: none;
-}
-
-/*Result Section*/
-#container #result {
-    height: 500px;
-    width: 450px;
-    padding: 20px;
-    background: #e7f1fa;
-    border-radius: 30px 10px;
-    border: 1px solid #b0c4d8;
-    overflow: hidden;
-    position: relative;
-        display: none;
-}
-
-#container #result i {
-    font-size: 180px;
-    color: #ff5235;
-    position: absolute;
-    top: 30px;
-    left: 120px;
-}
-
-#container #result h6 {
-    height: 40px;
-    width: 87%;
-    font-size: 25px;
-    position: absolute;
-    text-align: center;
-    top: 235px;
-}
-
-#container #result #points {
-    font-size: 30px;
-    top: 275px;
-}
-
-#container #result button {
-    height: 60px;
-    width: 260px;
-    border: none;
-    outline: none;
-    background: #ff5235;
-    color: #e7f1fa;
-    position: absolute;
-    left: 105px;
-    top: 335px;
-    border: 1px solid #b0c4d8;
-    border-radius: 20px 5px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-#container #result button:last-child {
-    top: 405px;
-}
-
-#container #result button:hover {
-    background: #e91e3a;
-}
-
-	</style>
+  <link href="css/listSurvey.css" rel="stylesheet">
 
 <section class="section pt-0">
   <div class="container">
@@ -313,91 +27,68 @@
   </div>
 </section>
 <!-- courses -->
-<section class="section">
-  <div id="container">
-        <!--    Start Section     -->
-        <div id="start" tabindex="1" style="display: none;">Start Quiz</div>
 
-        <!--    Guide Section    -->
-        <div id="guide">
-            <h2>Quiz Guide</h2>
-            <h4>1. You Have Only 15 Seconds For Each Questions.</h4>
-            <h4>2. Once You Select Your Answer.It Can't Be Undone.</h4>
-            <h4>3. You'll Get Points On The Basic Of Your Correct Answers.</h4>
-            <h4>4. You Can't Exit From The Quiz While You Are Playing.</h4>
-            <div id="button">
-                <button id="exit">Exit</button>
-                <button onclick="countQuestion()" id="continue">Continue</button>
-            </div>
-        </div>
-
-        <!--    Quiz Section    -->
-        <div id="quiz">
-            <div id="quiz_header">
-                <h5>Amazing Quiz App</h5>
-                <div id="timer">
-                    <h6>Time Left</h6>
-                    <h6 id="time">00</h6>
-                </div>
-            </div>
-
-            <!--     Quiz Questions  -->
-
-            <div id="question">
-                <h2 id="questionNo"></h2>
-                <h2 id="questionText"></h2>
-            </div>
-
-            <!--       Quiz Choices   -->
-
-            <div id="optionList">
-                <h4 class="choice_que" id="option1"></h4>
-                <h4 class="choice_que" id="option2"></h4>
-                <h4 class="choice_que" id="option3"></h4>
-                <h4 class="choice_que" id="option4"></h4>
-            </div>
-
-            <!--  Answers Section-->
-
-            <div id="answersSection">
-                <h3 id="total_correct" style="display: block !important;" >0 Of ${questionData.length} Questions</h3>
-                <h3 onclick="countQuestion()" id="next_question">Next</h3>
-            </div>
-        </div>
-        <!--   Result Section  -->
-        <div id="result">
-            <i class="fas fa-trophy"></i>
-            <h6>You Are Completed The Quiz</h6>
-            <h6 id="points">Congrast</h6>
-            <button id="quit">Quit Quiz</button>
-        </div>
-    </div>
-</section>
-
-<div class="modal fade" id="aaa" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="pop-up" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 20vh;">
   <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content rounded-0 border-0 p-4">
-          <div class="modal-header border-0">
-              <h3>Login</h3>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
+      <div class="modal-content rounded-0 border-0 p-4" style="background-color: transparent;;">
           <div class="modal-body">
-              <form action="#" class="row">
-                  <span id="message" class="hiddenField" style="color: red;"></span>
-                  <div class="col-12">
-                      <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Username">
-                  </div>
-                  <div class="col-12">
-                      <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password">
-                  </div>
-                  <div class="col-12">
-                      <button type="button" id="loginButton" class="btn btn-primary">LOGIN</button>
-                  </div>
-              </form>
-              <p>Not have an Account? <a href="register.html">Click Here</a></p>
-              
+              <div id="container">
+                    
+            
+                    <!--    Guide Section    -->
+                    <div id="guide">
+                        <h2>Quiz Guide</h2>
+                        <h4>1. You Have Only 15 Seconds For Each Questions.</h4>
+                        <h4>2. Once You Select Your Answer.It Can't Be Undone.</h4>
+                        <h4>3. You'll Get Points On The Basic Of Your Correct Answers.</h4>
+                        <h4>4. You Can't Exit From The Quiz While You Are Playing.</h4>
+                        <div id="button">
+                            <button id="exit">Exit</button>
+                            <button onclick="countQuestion()" id="continue">Continue</button>
+                        </div>
+                    </div>
+            
+                    <!--    Quiz Section    -->
+                    <div id="quiz">
+                        <div id="quiz_header">
+                            <h5>Amazing Quiz App</h5>
+                            <div id="timer">
+                                <h6>Time Left</h6>
+                                <h6 id="time">00</h6>
+                            </div>
+                        </div>
+            
+                        <!--     Quiz Questions  -->
+            
+                        <div id="question">
+                            <h2 id="questionNo"></h2>
+                            <h2 id="questionText"></h2>
+                        </div>
+            
+                        <!--       Quiz Choices   -->
+            
+                        <div id="optionList">
+                            <h4 class="choice_que" id="option1"></h4>
+                            <h4 class="choice_que" id="option2"></h4>
+                            <h4 class="choice_que" id="option3"></h4>
+                            <h4 class="choice_que" id="option4"></h4>
+                        </div>
+            
+                        <!--  Answers Section-->
+            
+                        <div id="answersSection">
+                            <h3 id="total_correct" style="display: block !important;" >0 Of ${questionData.length} Questions</h3>
+                            <h3 onclick="countQuestion()" id="next_question">Next</h3>
+                        </div>
+                    </div>
+                    <!--   Result Section  -->
+                    <div id="result">
+                        <i class="fas fa-trophy"></i>
+                        <h6>You Are Completed The Quiz</h6>
+                        <h6 id="points">Congrast</h6>
+                        <button id="quit">Quit Quiz</button>
+                    </div>
+                </div>
           </div>
       </div>
   </div>
@@ -416,304 +107,4 @@
 <script src="plugins/venobox/venobox.min.js"></script>
 <!-- filter -->
 <script src="plugins/filterizr/jquery.filterizr.min.js"></script>
-<script>
-
-// var domen = "https://localhost:44304";
-// var token = localStorage.getItem('token');
-// var role = localStorage.getItem("role");
-// var username = localStorage.getItem("username");
-
-// const queryString = window.location.search;
-// const urlParams = new URLSearchParams(queryString);
-// const id = urlParams.get('id');
-// const status = urlParams.get('status');
-
-$(document).ready(function(){
-	$.ajax({
-			type : "GET",
-			url: domen+"/api/Seminar/"+id+"/Survey",
-			headers: {
-				Authorization: 'Bearer '+token
-			},
-			contentType: "application/json; charset=utf-8",
-			datatype:"json",
-			async:false,
-			success : function(response){
-				showSurvey(response);
-			},       
-		});
-  });
-  function showSurvey(res){
-    res.forEach(showEachSurvey);
-  }
-
-  function showEachSurvey(eachSurvey){
-    let startDateOfSurvey = new Date(Date.parse(eachSurvey.StartDate)).toString();
-    var date = new Date(startDateOfSurvey); // Date 2011-05-09T06:08:45.178Z
-    var year = date.getFullYear();
-    var month = ("0" + (date.getMonth() + 1)).slice(-2);
-    var day = ("0" + date.getDate()).slice(-2);
-
-    let endDateOfSurvey = new Date(Date.parse(eachSurvey.EndDate)).toString();
-    var dateEnd = new Date(startDateOfSurvey); // Date 2011-05-09T06:08:45.178Z
-    var yearEnd = dateEnd.getFullYear();
-    var monthEnd = ("0" + (dateEnd.getMonth() + 1)).slice(-2);
-    var dayEnd = ("0" + dateEnd.getDate()).slice(-2);
-    $('#listSurveyData').append(
-      '<div class="col-lg-3 col-sm-6 mb-5">'
-        +'<div class="card p-0 border-primary rounded-0 hover-shadow">'
-          +'<div class="card-body">'
-            +'<ul class="list-inline mb-2">'
-              +'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+`${year}-${month}-${day}`+'</li>'
-              +'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+`${yearEnd}-${monthEnd}-${dayEnd}`+'</li>'
-              +'<li class="list-inline-item"><a class="text-color">'+eachSurvey.Name+'</a></li>'
-              +'</ul>'
-              +'<button onclick="startQuestion('+eachSurvey.Id+')" value="" class="eachSurveyQues button_startbtn btn-primary btn-sm">Start</button>'
-            +'</div>'
-          +'</div>'
-      +'</div>'
-    );
-  }
-
-let questionData = []
-let idSurveyPost ;
-var token = localStorage.getItem("token")
-  function copyData(res){
-    questionData = res
-  }
-
-let startSurvey = document.getElementById('startSurvey');
-//Start Section
-let start = document.querySelector("#start");
-
-//guide Section
-let guide = document.querySelector("#guide");
-let exit = document.querySelector("#exit");
-let continueBtn = document.querySelector("#continue");
-
-//Quiz Section
-let quiz = document.querySelector("#quiz");
-let time = document.querySelector("#time");
-
-//question Section
-let questionNo = document.querySelector("#questionNo");
-let questionText = document.querySelector("#questionText");
-
-//Multiple Choices Of Questions
-let option1 = document.querySelector("#option1");
-let option2 = document.querySelector("#option2");
-let option3 = document.querySelector("#option3");
-let option4 = document.querySelector("#option4");
-
-//correct and next Button
-let total_correct = document.querySelector("#total_correct");
-let next_question = document.querySelector("#next_question");
-
-//Result Section
-let result = document.querySelector("#result");
-let points = document.querySelector("#points");
-let quit = document.querySelector("#quit");
-let startAgain = document.querySelector("#startAgain");
-
-//Get All 'H4' From Quiz Section (MCQS)
-let choice_que = document.querySelectorAll(".choice_que");
-
-
-let index = 0;
-let timer = 15;
-let interval = 0;
-
-//total points
-let correct = 0;
-
-//store Answer Value
-let UserAns = [];
-let common = function(id){
-	let index = 0;
-	let timer = 15;
-	let interval = 0;
-	start.style.display = "block";
-    guide.style.display = "none";
-	clearInterval(interval);
-    quiz.style.display = "none";
-}
-
-function startQuestion(idSurvey){
-  idSurveyPost = idSurvey;
-  $("#start").show();
-  $(".eachSurveyQues"). prop('disabled', true);
-  document.getElementById("start").focus();
-  $.ajax({
-			type : "GET",
-			url: domen+"/api/Survey/"+idSurvey+"/Question",
-			headers: {
-				Authorization: 'Bearer '+token
-			},
-			contentType: "application/json; charset=utf-8",
-			datatype:"json",
-			async:false,
-			success : function(response){
-				copyData(response);
-			},       
-		});
-}
-//what happen when 'Start' Button Will Click
-start.addEventListener("click", () => {
-  document.getElementById("guide").focus();
-  start.style.display = "none";
-  guide.style.display = "block";
-});
-
-//what happen when 'Exit' Button Will Click
-exit.addEventListener("click", () => {
-  $("#start").hide();
-  guide.style.display = "none";
-  document.getElementById("focusWhenCloseQuestion").focus();
-  $(".eachSurveyQues"). prop('disabled', false);
-});
-
-
-//Creating Timer For Quiz Timer Section
-
-let countDown = () => {
-    if (timer === 0) {
-        clearInterval(interval);
-        next_question.click();
-    } else {
-        timer--;
-        time.innerText = timer;
-    }
-}
-
-//setInterval(countDown,1000);
-
-function loadData() {
-    questionNo.innerText = index + 1 + ". ";
-    questionText.innerText = questionData[index].Question;
-    document.getElementById("questionText").value = questionData[index].Id
-    option1.innerText = questionData[index].Answers[0].Answer;
-    document.getElementById("option1").value = questionData[index].Answers[0].Id;
-    option2.innerText = questionData[index].Answers[1].Answer;
-    document.getElementById("option2").value = questionData[index].Answers[1].Id;
-    option3.innerText = questionData[index].Answers[2].Answer;
-    document.getElementById("option3").value = questionData[index].Answers[2].Id;
-    option4.innerText = questionData[index].Answers[3].Answer;
-    document.getElementById("option4").value = questionData[index].Answers[3].Id;
-
-    //    timer start
-    timer = 15;
-}
-
-let count = 0;
-function countQuestion(){
-  count++;
-}
-//what happen when 'Continue' Button Will Click
-continueBtn.addEventListener("click", () => {
-  
-    quiz.style.display = "block";
-    guide.style.display = "none";
-
-    interval = setInterval(countDown, 1000);
-    loadData();
-    total_correct.innerHTML = count+ ` Of ${questionData.length} Questions`;
-
-    //    remove All Active Classes When Continue Button Will Click
-
-    choice_que.forEach(removeActive => {
-        removeActive.classList.remove("active");
-    })
-
-    
-});
-
-option1.addEventListener("click", () => {
-  UserAns.push({
-    "SurveyQuestionId": idSurveyPost,
-    "AnswerId": document.getElementById("option1").value
-})});
-
-option2.addEventListener("click", () => {
-  UserAns.push({
-    "SurveyQuestionId": idSurveyPost,
-    "AnswerId": document.getElementById("option2").value,
-  })});
-option3.addEventListener("click", () => {
-  UserAns.push({
-    "SurveyQuestionId": idSurveyPost,
-    "AnswerId": document.getElementById("option3").value
-  })});
-option4.addEventListener("click", () => {
-  UserAns.push({
-    "SurveyQuestionId": idSurveyPost,
-    "AnswerId": document.getElementById("option4").value
-  })});
-
-choice_que.forEach((choices, choiceNo) => {
-    choices.addEventListener("click", () => {
-        choices.classList.add("active");
-        
-        
-        //disable All Options When User Select An Option
-        for (i = 0; i <= 3; i++) {
-            choice_que[i].classList.add("disabled");
-        }
-    })
-});
-
-////what happen when 'Next' Button Will Click
-next_question.addEventListener("click", () => {
-    //    if index is less then questionData.length
-    if (index !== questionData.length - 1) {
-        index++;
-        choice_que.forEach(removeActive => {
-            removeActive.classList.remove("active");
-        })
-        total_correct.innerHTML = count+ ` Of ${questionData.length} Questions`;
-        //question
-        loadData();
-        //result
-        total_correct.style.display = "block";
-        clearInterval(interval);
-        interval = setInterval(countDown, 1000);
-    } else {
-        index = 0;
-        //when Quiz Question Complete Display Result Section
-        let totalAnswer = {
-          "ListAnser" : UserAns,
-          "UserName": null,
-          "SurveyId":null,
-          "SerminarId":null
-        }
-        console.log(totalAnswer)
-        // call api đẩy data ở đây
-        // $.ajax({
-        //     type : "POST",
-        //     url: domen+"/api/UserAnswer",
-        //     headers: {Authorization: 'Bearer '+ token_string},
-        //     contentType: "application/json; charset=utf-8",
-        //     data: JSON.stringify(totalAnswer),
-        //     success : function(response){
-                
-        //     }
-        // })
-        UserAns = [];
-        totalAnswer = {};
-        clearInterval(interval);
-        quiz.style.display = "none";
-        result.style.display = "block"
-    }
-    for (i = 0; i <= 3; i++) {
-        choice_que[i].classList.remove("disabled");
-    }
-})
-
-//what happen when 'Quit' Button Will Click
-quit.addEventListener("click", () => {
-    start.style.display = "block";
-    result.style.display = "none";
-    count = 0;
-    $("#start").hide();
-    $(".eachSurveyQues"). prop('disabled', false);
-});
-</script>
+<script src="js/viewJs/listSurvey.js"></script>
