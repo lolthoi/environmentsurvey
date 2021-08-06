@@ -10,5 +10,10 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public int TotalPage { get; set; }
+        public PaginationClientModel()
+        {
+            this.PageNumber = 1;
+            this.PageSize = 6;
+        }
     }
 }

@@ -14,7 +14,9 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public int TotalRequestSeminars { get; set; }
         public int TotalNewRequestSeminars { get; set; }
         public string  Top1Seminar { get; set; }
+        public int Top1SeminarCount { get; set; }
         public string Top1SeminarPerDay { get; set; }
+        public int Top1SeminarPerDayCount { get; set; }
         public int TotalAwards { get; set; }
 
     }

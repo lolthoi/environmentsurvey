@@ -116,6 +116,7 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
+                        <!-- User Profile-->
                         <li class="sidebar-item pt-2">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
                                 aria-expanded="false">
@@ -131,7 +132,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="registration-request.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-user.html"
                                 aria-expanded="false">
                                 <i class="fas fa-tasks" aria-hidden="true"></i>
                                 <span class="hide-menu">Registration Request</span>
@@ -159,14 +160,14 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-faqs.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-survey.html"
                                 aria-expanded="false">
                                 <i class="far fa-question-circle" aria-hidden="true"></i>
                                 <span class="hide-menu">FAQs</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="support-infomation.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-survey.html"
                                 aria-expanded="false">
                                 <i class="far fa-id-card" aria-hidden="true"></i>
                                 <span class="hide-menu">Support Information</span>
@@ -198,9 +199,9 @@
             <!-- ============================================================== -->
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <!-- <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title">Dashboard</h4>
-                    </div>
+                    </div> -->
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
                             <!-- <ol class="breadcrumb ms-auto">
@@ -226,50 +227,134 @@
                 <!-- ============================================================== -->
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-md-12">
-                        <div class="white-box analytics-info">
-                            <h3 class="box-title">Total Visit</h3>
-                            <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                <li>
-                                    <div id="sparklinedash"><canvas width="67" height="30"
-                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                                    </div>
-                                </li>
-                                <li class="ms-auto"><span class="counter text-success">659</span></li>
-                            </ul>
-                        </div>
+                            <h3 class="text-center">TODAY</h3>
+                            <div class="white-box analytics-info">
+                                <h3 class="box-title">Total new Users</h3>
+                                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                    <li>
+                                        <div id="sparklinedash"><canvas width="67" height="30"
+                                                style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                        </div>
+                                    </li>
+                                    <li class="ms-auto"><span class="counter text-success" id="newUser"></span></li>
+                                </ul>
+                            </div>
+                            <div class="white-box analytics-info">
+                                <h3 class="box-title">Total new request Seminars</h3>
+                                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                    <li>
+                                        <div id="sparklinedash2"><canvas width="67" height="30"
+                                                style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                        </div>
+                                    </li>
+                                    <li class="ms-auto"><span class="counter text-purple" id="newReqSeminars"></span></li>
+                                </ul>
+                            </div>
+                            <div class="white-box analytics-info">
+                                <h3 class="box-title">Top 1 Seminar(Registered)</h3>
+                                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                    <li >
+                                        <p style="font-size: 20px; font-weight: 600; margin:0 0 0 8px !important ; align-items: center;" id="top1SeminarDay"></p>
+                                    </li>
+                                    <li class="ms-auto"><span class="counter text-info" id="top1SeminarDayCount"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                                              
                     </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="white-box analytics-info">
-                            <h3 class="box-title">Total Page Views</h3>
-                            <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                <li>
-                                    <div id="sparklinedash2"><canvas width="67" height="30"
-                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                                    </div>
-                                </li>
-                                <li class="ms-auto"><span class="counter text-purple">869</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="white-box analytics-info">
-                            <h3 class="box-title">Unique Visitor</h3>
-                            <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                <li>
-                                    <div id="sparklinedash3"><canvas width="67" height="30"
-                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                                    </div>
-                                </li>
-                                <li class="ms-auto"><span class="counter text-info">911</span>
-                                </li>
-                            </ul>
+                    <div class="col-lg-8">
+                        <h3 class="text-center">ALL TIME</h3>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="white-box analytics-info">
+                                    <h3 class="box-title">Total Users</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li>
+                                            <div id="sparklinedash4"><canvas width="67" height="30"
+                                                    style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </li>
+                                        <li class="ms-auto"><span class="counter text-info" id="users"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="white-box analytics-info">
+                                    <h3 class="box-title">Total Seminars</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li>
+                                            <div id="sparklinedash3"><canvas width="67" height="30"
+                                                    style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </li>
+                                        <li class="ms-auto"><span class="counter text-info" id="seminars"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="white-box analytics-info">
+                                    <h3 class="box-title">Total Request Seminars</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li>
+                                            <div id="sparklinedash6"><canvas width="67" height="30"
+                                                    style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </li>
+                                        <li class="ms-auto"><span class="counter text-info" id="reqSeminars"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="white-box analytics-info">
+                                    <h3 class="box-title">Total Surveys</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li>
+                                            <div id="sparklinedash7"><canvas width="67" height="30"
+                                                    style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </li>
+                                        <li class="ms-auto"><span class="counter text-info" id="surveys"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="white-box analytics-info">
+                                    <h3 class="box-title">Top 1 seminar (Registerd) </h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li >
+                                            <p style="font-size: 20px; font-weight: 600; margin:0 0 0 8px !important ; align-items: center;" id="top1seminar"></p>
+                                        </li>
+                                        <li class="ms-auto">
+                                            <span class="counter text-info" id="top1seminarCount"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="white-box analytics-info">
+                                    <h3 class="box-title">The Awards are given</h3>
+                                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                        <li>
+                                            <div id="sparklinedash5"><canvas width="67" height="30"
+                                                    style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </li>
+                                        <li class="ms-auto"><span class="counter text-info" id="Awards"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- ============================================================== -->
                 <!-- PRODUCTS YEARLY SALES -->
                 <!-- ============================================================== -->
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                         <div class="white-box">
                             <h3 class="box-title">Products Yearly Sales</h3>
@@ -290,11 +375,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- ============================================================== -->
                 <!-- RECENT SALES -->
                 <!-- ============================================================== -->
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="white-box">
                             <div class="d-md-flex mb-3">
@@ -375,19 +460,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- ============================================================== -->
                 <!-- Recent Comments -->
                 <!-- ============================================================== -->
-                <div class="row">
-                    <!-- .col -->
+                <!-- <div class="row">
+                  
                     <div class="col-md-12 col-lg-8 col-sm-12">
                         <div class="card white-box p-0">
                             <div class="card-body">
                                 <h3 class="box-title mb-0">Recent Comments</h3>
                             </div>
                             <div class="comment-widgets">
-                                <!-- Comment Row -->
+                               
                                 <div class="d-flex flex-row comment-row p-3 mt-0">
                                     <div class="p-2"><img src="plugins/images/users/varun.jpg" alt="user" width="50" class="rounded-circle"></div>
                                     <div class="comment-text ps-2 ps-md-3 w-100">
@@ -400,7 +485,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Comment Row -->
+                                
                                 <div class="d-flex flex-row comment-row p-3">
                                     <div class="p-2"><img src="plugins/images/users/genu.jpg" alt="user" width="50" class="rounded-circle"></div>
                                     <div class="comment-text ps-2 ps-md-3 active w-100">
@@ -414,7 +499,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Comment Row -->
+                                
                                 <div class="d-flex flex-row comment-row p-3">
                                     <div class="p-2"><img src="plugins/images/users/ritesh.jpg" alt="user" width="50" class="rounded-circle"></div>
                                     <div class="comment-text ps-2 ps-md-3 w-100">
@@ -545,8 +630,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.col -->
-                </div>
+                   
+                </div> -->
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->

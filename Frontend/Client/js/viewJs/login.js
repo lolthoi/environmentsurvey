@@ -20,6 +20,7 @@ $(document).ready(function(){
                 localStorage.setItem('role', response.authenModel.Role);
                 localStorage.setItem('token', response.authenModel.Token);
                 localStorage.setItem('userId', response.authenModel.UserId);
+                
                 //window.location.href = 'index.html';
                 if(response.authenModel.Role == "ADMIN"){
                     window.location.href = "/Admin/dashboard.html";

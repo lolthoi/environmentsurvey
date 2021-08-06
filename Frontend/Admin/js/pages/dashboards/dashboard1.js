@@ -33,7 +33,6 @@ $(function () {
         showArea: true
     });
 
-
     var chart = [chart];
 
     var sparklineLogin = function () {
@@ -100,6 +99,46 @@ $(function () {
         sparkResize = setTimeout(sparklineLogin, 500);
     });
     sparklineLogin();
+});
+
+var domen = "https://localhost:44304";
+var token = localStorage.getItem('token');
+var role = localStorage.getItem("role");
+var username = localStorage.getItem("username");
+
+$(document).ready(function(){
+    $.ajax({
+        type : "GET",
+        headers: {
+			Authorization: 'Bearer '+token
+		},
+        url: domen+"/api/Report/getDataReport",
+        contentType: "application/json; charset=utf-8",
+        async:true,
+        success : function(response){
+            $('#newUser').html(response.TotalNewUsers);
+            $('#newReqSeminars').html(response.TotalNewRequestSeminars);
+            $('#users').html(response.TotalUsers);
+            $('#reqSeminars').html(response.TotalRequestSeminars);
+            $('#surveys').html(response.TotalSurveys);
+            $('#seminars').html(response.TotalSeminars);    
+            $('#Awards').html(response.TotalSurveys*3);
+            if(response.Top1Seminar == ""){
+                $('#top1seminar').html("No request Register");
+            }else{
+                $('#top1seminar').html(response.Top1Seminar);
+            }
+            
+            if(response.Top1SeminarPerDay == ""){
+                $('#top1SeminarDay').html("No request Register");
+            }else{
+                $('#top1SeminarDay').html(response.Top1SeminarPerDay);   
+            }
+              
+            $('#top1SeminarDayCount').html(response.Top1SeminarPerDayCount);      
+            $('#top1seminarCount').html(response.Top1SeminarCount);      
+        },       
+    })
 });
 
 
