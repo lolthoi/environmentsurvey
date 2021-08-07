@@ -14,6 +14,9 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     {
         List<SurveyModel> GetAllSurveyBySeminarId(int seminarId);
         SurveyModel Create(SurveyModel model);
+        SurveyModel Update(SurveyModel model);
+        SurveyModel GetById(int Id);
+        bool Delete(int Id);
     }
     public class SurveyService : ISurveyService
     {
@@ -39,6 +42,71 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             _surveyRespository.Insert(survey);
             model.Id = survey.Id;
             return model;
+        }
+
+        public SurveyModel Update(SurveyModel model)
+        {
+            Survey survey = _surveyRespository.Get(model.Id);
+            if (survey == null)
+                throw new Exception("Survey not found");
+            else
+            {
+                survey.Name = model.Name;
+                survey.StartDate = model.StartDate;
+                survey.EndTime = model.EndDate;
+                survey.Status = (int)model.Status;
+                survey.SerminarId = model.SeminarId;
+                survey.Description = model.Description;
+                _surveyRespository.Update(survey);
+            }
+            return model;
+        }
+
+        public SurveyModel GetById(int Id)
+        {
+            var listResult = _resultRespository.GetAll().ToList();
+            List<ResultModel> listResultModel = new();
+            if (listResult.Count > 0)
+            {
+                listResultModel = listResult.Select(x => new ResultModel
+                {
+                    Id = x.Id,
+                    surveyId = x.SurveyId,
+                    point = x.Point,
+                    SubmitTime = x.SubmitTime,
+                    UserId = x.UserId
+                }).ToList();
+            }
+            SurveyModel surveyModel = new();
+            Survey survey = _surveyRespository.Get(Id);
+            if (survey == null)
+                throw new Exception("Survey not found");
+            else
+            {
+                surveyModel.Id = survey.Id;
+                surveyModel.Name = survey.Name;
+                surveyModel.StartDate = survey.StartDate;
+                surveyModel.EndDate = survey.EndTime;
+                surveyModel.Status = (SurveyStatus)survey.Status;
+                surveyModel.SeminarId = survey.SerminarId;
+                surveyModel.Description = survey.Description;
+                surveyModel.Results = listResultModel.Count > 0 ? listResultModel.Where(x => x.surveyId == survey.Id).ToList() : null;
+            };
+            return surveyModel;
+        }
+
+        public bool Delete(int Id)
+        {
+            Survey survey = _surveyRespository.Get(Id);
+            if (survey == null)
+                throw new Exception("Survey not found");
+            else
+            {
+                var listResult = _resultRespository.GetAll().Where(x => x.SurveyId == Id).ToList();
+                _resultRespository.DeleteRange(listResult);
+                _surveyRespository.Delete(survey);
+                return true;
+            }
         }
 
         public List<SurveyModel> GetAllSurveyBySeminarId(int seminarId)
@@ -74,3 +142,4 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         }
     }
 }
+

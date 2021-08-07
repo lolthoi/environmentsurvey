@@ -125,6 +125,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     Id = x.Id,
                     Question = x.Question1,
                     Answers = listAnswerModel.Count > 0 ? listAnswerModel.Where(y => y.QuestionId == x.Id).ToList() : null,
+                    SurveyQuestionId = x.SurveyQuestions.GroupBy(x => x.Id).Select(t => t.Key).ToList().Count == 1
+                        ? x.SurveyQuestions.GroupBy(x => x.Id).Select(t => t.Key).ToList().FirstOrDefault() : null,
                 }).ToList();
             }
             return listQuestionModel;

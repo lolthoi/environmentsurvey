@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EnvironmentSurvey.WebAPI.DataAccess.Extensions
@@ -11,6 +12,7 @@ namespace EnvironmentSurvey.WebAPI.DataAccess.Extensions
         void Insert(T entity);
         void Update(T entity);
         void Delete(T entity);
+        void DeleteRange(List<T> entities);
     }
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
@@ -64,5 +66,19 @@ namespace EnvironmentSurvey.WebAPI.DataAccess.Extensions
             entity.DeletedDate = DateTime.Now;
             context.SaveChanges();
         }
+
+        public void DeleteRange(List<T> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException("entities");
+            }
+            entities.ForEach(entity =>
+            {
+                entity.DeletedDate = DateTime.Now;
+            });
+            context.SaveChanges();
+        }
+
     }
 }

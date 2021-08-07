@@ -15,9 +15,11 @@ namespace EnvironmentSurvey.WebAPI.Controllers
     public class UserAnswerController : ControllerBase
     {
         private readonly IUserAnswerService _userAnswerService;
-        public UserAnswerController(IUserAnswerService userAnswerService)
+        private readonly IResultService _resultService;
+        public UserAnswerController(IUserAnswerService userAnswerService, IResultService resultService)
         {
             _userAnswerService = userAnswerService;
+            _resultService = resultService;
         }
         // GET: api/<UserAnswerController>
         [HttpGet]
@@ -35,9 +37,18 @@ namespace EnvironmentSurvey.WebAPI.Controllers
 
         // POST api/<UserAnswerController>
         [HttpPost]
-        public ActionResult<List<UserAnswerModel>> Create(List<UserAnswerModel> model)
+        public ActionResult<bool> Create(List<UserAnswerModel> model)
         {
-            return _userAnswerService.Create(model);
+            try
+            {
+                _userAnswerService.Create(model);
+                _resultService.SaveResult(model);
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         // DELETE api/<UserAnswerController>/5

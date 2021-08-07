@@ -20,10 +20,25 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         {
             return _surveyService.GetAllSurveyBySeminarId(id);
         }
+        [HttpGet("{id:int}")]
+        public ActionResult<SurveyModel> GetById(int id)
+        {
+            return _surveyService.GetById(id);
+        }
         [HttpPost]
         public ActionResult<SurveyModel> Create(SurveyModel model)
         {
             return _surveyService.Create(model);
+        }
+        [HttpPut]
+        public ActionResult<SurveyModel> Update(SurveyModel model)
+        {
+            return _surveyService.Update(model);
+        }
+        [HttpDelete("{id:int}")]
+        public ActionResult<bool> Delete(int id)
+        {
+            return _surveyService.Delete(id);
         }
     }
 }
