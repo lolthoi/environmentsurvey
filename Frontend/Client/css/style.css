@@ -1152,3 +1152,7 @@ link:focus,
   background: rgb(54, 54, 243) !important;
   color:white;
 }
+
+.disableLink{
+  pointer-events: none;
+}

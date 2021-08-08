@@ -120,7 +120,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public async Task<List<UserModel>> GetAll()
         {
-            var listUser = await _context.Users.ToListAsync();
+            var listUser = await _context.Users.Where(u=> !u.Role.Equals("ADMIN")).ToListAsync();
             var userModels = listUser.Select(x => new UserModel
             {
                 ID = x.Id,

@@ -5,15 +5,21 @@ using System.Threading.Tasks;
 
 namespace EnvironmentSurvey.WebAPI.ClientSide.Models
 {
-    public class PaginationClientModel
+    public class PaginationClientModel 
     {
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-        public int TotalPage { get; set; }
-        public PaginationClientModel()
+        const int maxPageSize = 50;
+        public int PageNumber { get; set; } = 1;
+        private int _pageSize = 2;
+        public int PageSize
         {
-            this.PageNumber = 1;
-            this.PageSize = 6;
+            get
+            {
+                return _pageSize;
+            }
+            set
+            {
+                _pageSize = (value > maxPageSize) ? maxPageSize : value;
+            }
         }
     }
 }

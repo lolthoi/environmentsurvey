@@ -2,8 +2,16 @@ var domen = "https://localhost:44304";
 var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
 var token = localStorage.getItem("token")
-
+console.log(role);
+var totalPage1 ='';
 $(document).ready(function(){
+	callAjax(pageNumber = 1);
+	pagination(pageNumber = 1, totalPage1 );
+})
+function getTotal(total){
+	totalPage1 = total;
+}
+function callAjax(pageNumber){
 	var data = {
 		Username : username,		
 	}	
@@ -12,81 +20,71 @@ $(document).ready(function(){
 	{
 		listUserSeminar = response;
 	}
-	
-	$.ajax({
-		type : "POST",
-		url: domen+"/api/UserSeminar/getUserSeminarByUser",
-		headers: {
-			Authorization: 'Bearer '+token
-		},
-		contentType: "application/json; charset=utf-8",
-		data: JSON.stringify(data),
-		datatype:"json",
-		async:false,
-		success : function(response){
-			doWork(response);
-		},       
-	});
-	
-	
+	if(role != null && token!= null && username!= null){
+		$.ajax({
+			type : "POST",
+			url: domen+"/api/UserSeminar/getUserSeminarByUser",
+			headers: {
+				Authorization: 'Bearer '+token
+			},
+			contentType: "application/json; charset=utf-8",
+			data: JSON.stringify(data),
+			datatype:"json",
+			async:false,
+			success : function(response){
+				doWork(response);
+			},       
+		});
+	}
 	// get all seminar
 	var dataSearch = {
-		Search_key : $('#search_key').val(),		
+		Search_key : $('#search_key').val(),	
+		Role : role != null ? role:""
 	}
+	var totalPage = "";
+	function getTotalPage(total){
+		totalPage = total;		
+	}
+	
 	$.ajax({
         type : "POST",
-        url: domen+"/api/Seminar",
+        url: domen+"/api/Seminar?PageNumber="+pageNumber+"&PageSize=3",
         contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(dataSearch),
 		datatype:"json",
-        async:true,
+        async:false,
         success : function(response){
+			getTotalPage(response.TotalPage);
 			//localStorage.setItem("response",response);
 			if(role == null || role == "ADMIN"){
-				response.forEach(function(seminar) {
-					showSeminar(seminar);
+				response.ListData.forEach(function(seminar) {
+					showSeminar(seminar);					
 				});
-			}  
-			//var lstseminar = [];          
-			if(role == "STUDENT"){
+				$('#currentPage').html(response.PageNumber)
+			}else{
 				let lsUserSeminarID =  listUserSeminar.map(item => {return item.SeminarId});
-				let listSeminar  = response.filter(item=> !lsUserSeminarID.includes(item.ID));
+				let listSeminar  = response.ListData.filter(item=> !lsUserSeminarID.includes(item.ID));
 				listSeminar.forEach(function(seminar) {
-					if(seminar.forUser == 1){
-						showSeminar(seminar);
-					}
+					showSeminar(seminar);
 					
 				});				
-			}
-			if(role == "EMPLOYEE"){
-				let lsUserSeminarID =  listUserSeminar.map(item => {return item.SeminarId});
-				let listSeminar  = response.filter(item=> !lsUserSeminarID.includes(item.ID));
-				listSeminar.forEach(function(seminar) {
-					if(seminar.forUser == 1){
-						showSeminar(seminar);
-					}
-					
-				});
-				listSeminar.forEach(function(seminar) {
-					if(seminar.forUser == 0){
-						showSeminar(seminar);
-					}
-					
-				});
-			}
-        },       
+			}			
+        },  
+		     
     })
-
+	//console.log(totalPage)
+	getTotal(totalPage)
 	$('#search_key').on('input', function(){
 		clearSeminar();
 		var dataSearch = {
-			Search_key : $(this).val(),		
+			Search_key : $(this).val(),	
+			Role : role!=null ? role:""
 			
 		}
 		console.log($(this).val());
 		$.ajax({
 			type : "POST",
-			url: domen+"/api/Seminar",
+			url: domen+"/api/Seminar?PageNumber="+pageNumber+"&PageSize=3",
 			contentType: "application/json; charset=utf-8",
 			data: JSON.stringify(dataSearch),
 			datatype:"json",
@@ -94,42 +92,26 @@ $(document).ready(function(){
 			success : function(response){
 				console.log("response "+response);
 				if(role == null || role == "ADMIN"){
-					response.forEach(function(seminar) {
-						showSeminar(seminar);
+					response.ListData.forEach(function(seminar) {
+						showSeminar(seminar);					
 					});
-				}  
-				//var lstseminar = [];          
-				if(role == "STUDENT"){
+					$('#currentPage').html(response.PageNumber)
+				}else{
 					let lsUserSeminarID =  listUserSeminar.map(item => {return item.SeminarId});
-					let listSeminar  = response.filter(item=> !lsUserSeminarID.includes(item.ID));
+					let listSeminar  = response.ListData.filter(item=> !lsUserSeminarID.includes(item.ID));
 					listSeminar.forEach(function(seminar) {
-						if(seminar.forUser == 1){
-							showSeminar(seminar);
-						}
+						showSeminar(seminar);
 						
 					});				
-				}
-				if(role == "EMPLOYEE"){
-					let lsUserSeminarID =  listUserSeminar.map(item => {return item.SeminarId});
-					let listSeminar  = response.filter(item=> !lsUserSeminarID.includes(item.ID));
-					listSeminar.forEach(function(seminar) {
-						if(seminar.forUser == 1){
-							showSeminar(seminar);
-						}
-						
-					});
-					listSeminar.forEach(function(seminar) {
-						if(seminar.forUser == 0){
-							showSeminar(seminar);
-						}
-						
-					});
 				}
 			},       
 		})
 	});
-})
 
+}
+
+
+//?PageNumber=2&PageSize=2
 //show seminar
 function showSeminar(seminar){
 	$('#seminar').append(
@@ -154,5 +136,40 @@ function showSeminar(seminar){
 }
 function clearSeminar(){
 	$('#seminar').empty();
+}
+
+//pagination
+function pagination(pageNumber = 1,totalPage){
+	$('#currentPage').html(pageNumber);
+	if(pageNumber == totalPage){
+		$('#nextPage').addClass('disableLink');
+	}
+	if(pageNumber == 1){
+		$('#previousPage').addClass('disableLink');
+	}	
+	$('#nextPage').click(function(){
+		console.log(pageNumber);
+		console.log(totalPage);
+		pageNumber++
+		clearSeminar();
+		if(pageNumber <= totalPage){
+			callAjax(pageNumber);	
+			if(pageNumber == totalPage){
+				$(this).addClass('disableLink');
+				$('#previousPage').removeClass('disableLink');
+			}
+		}			
+	});
+	$('#previousPage').click(function(){
+		pageNumber--;
+		clearSeminar();
+		if(pageNumber >= 1){
+			callAjax(pageNumber);	
+			if(pageNumber <= 1){
+				$(this).addClass('disableLink');
+				$('#nextPage').removeClass('disableLink');
+			}
+		}
+	})
 }
 

@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace EnvironmentSurvey.WebAPI.ClientSide.Models
+{
+    public class ResponsePagedModel
+    {
+        public List<SeminarModel> ListData { get; set; }
+        public int PageNumber { get; set; }
+        public int TotalPage { get; set; }
+    }
+}

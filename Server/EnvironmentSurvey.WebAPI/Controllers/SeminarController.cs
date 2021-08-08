@@ -26,9 +26,9 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         [HttpPost]
         //[Authorize(Roles = "ADMIN,STUDENT,EMPLOYEE")]
         //[Authorize(Roles ="ADMIN")]
-        public async Task<List<SeminarModel>> getAll(SearchModel model)
+        public async Task<ResponsePagedModel> getAll(SearchModel model, [FromQuery] PaginationClientModel paginationClientModel)
         {
-            var listUser = await _seminarSevice.GetAll(model.Search_key);
+            var listUser = await _seminarSevice.GetAll(model, paginationClientModel);
             return listUser;
         }
 

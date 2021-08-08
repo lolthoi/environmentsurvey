@@ -18,7 +18,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
     public interface ISeminarService
     {
-        public Task<List<SeminarModel>> GetAll(string key);
+        public Task<ResponsePagedModel> GetAll(SearchModel model, PaginationClientModel paginationClientModel);
         public Task<SeminarModel> GetByID(int id);
         public Task<SeminarModel> GetByIDManage(int id);
         public Task<List<SeminarModel>> GetListSeminar();
@@ -78,26 +78,72 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             return false;
         }
 
-        public async Task<List<SeminarModel>> GetAll(string key)
+        public async Task<ResponsePagedModel> GetAll(SearchModel model, PaginationClientModel paginationClientModel)
         {
+            var key = model.Search_key;
+            var role = model.Role;
             List<Seminar> listSeminar = new List<Seminar>();
-            listSeminar = listSeminar.Where(s => !s.DeletedDate.HasValue).ToList();
-            DateTime dateTime = DateTime.Now;
-            var pageNumber = 3;
-            var pageSize = 1;
-
-            if (key == "")
+            if(key == "")
             {
-                listSeminar = await _context.Seminars.Where(s => s.StartDate > dateTime)
-                    .OrderByDescending(s => s.CreatedDate)
-                    /*.Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize)*/
-                    .ToListAsync();
+                listSeminar = await _context.Seminars.Where(s => !s.DeletedDate.HasValue).ToListAsync();
             }
             else
             {
-                listSeminar = await _context.Seminars.Where(s => s.StartDate > dateTime)
+                
+                 listSeminar = await _context.Seminars//.Where(s => s.StartDate > dateTime)
+                             .Where(s => s.Name.Contains(key) || s.Author.Contains(key) || s.Subject.Contains(key) || s.Description.Contains(key)).ToListAsync();
+            }
+            
+            int totalPage = (int)Math.Ceiling(listSeminar.Count() / (double)paginationClientModel.PageSize);
+            DateTime dateTime = DateTime.Now;
+            
+
+            if (key == "" && role.Equals("ADMIN") || key == "" && role == "")
+            {
+                listSeminar = await _context.Seminars//.Where(s => s.StartDate > dateTime)
+                    .OrderByDescending(s => s.CreatedDate)
+                    .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                    .Take(paginationClientModel.PageSize)
+                    .ToListAsync();
+            }
+            else if (key == "" && role.Equals("STUDENT"))
+            {
+                listSeminar = await _context.Seminars.Where(s=> s.forUser == 2)//.Where(s => s.StartDate > dateTime)
+                    .OrderByDescending(s => s.CreatedDate)
+                    .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                    .Take(paginationClientModel.PageSize)
+                    .ToListAsync();
+            }
+            else if (key == "" && role.Equals("EMPLOYEE"))
+            {
+                listSeminar = await _context.Seminars.Where(s => s.forUser == 1)//.Where(s => s.StartDate > dateTime)
+                    .OrderByDescending(s => s.CreatedDate)
+                    .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                    .Take(paginationClientModel.PageSize)
+                    .ToListAsync();
+            }
+            else if (key != "" && role.Equals("ADMIN") || key != "" && role == "")
+            {
+                listSeminar = await _context.Seminars//.Where(s => s.StartDate > dateTime)
+                                  .Where(s => s.Name.Contains(key) || s.Author.Contains(key) || s.Subject.Contains(key) || s.Description.Contains(key))
+                                 .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                                 .Take(paginationClientModel.PageSize)
+                                .OrderByDescending(s => s.CreatedDate).ToListAsync();
+            }
+            else if (key != "" && role.Equals("STUDENT"))
+            {
+                listSeminar = await _context.Seminars.Where(s => s.forUser == 1)//.Where(s => s.StartDate > dateTime
+                                 .Where(s => s.Name.Contains(key) || s.Author.Contains(key) || s.Subject.Contains(key) || s.Description.Contains(key))
+                                .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                                 .Take(paginationClientModel.PageSize)
+                                .OrderByDescending(s => s.CreatedDate).ToListAsync();
+            }
+            else if (key != "" && role.Equals("EMPLOYEE"))
+            {
+                listSeminar = await _context.Seminars.Where(s => s.forUser == 2)//.Where(s => s.StartDate > dateTime)
                                 .Where(s => s.Name.Contains(key) || s.Author.Contains(key) || s.Subject.Contains(key) || s.Description.Contains(key))
+                                .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                                 .Take(paginationClientModel.PageSize)
                                 .OrderByDescending(s => s.CreatedDate).ToListAsync();
             }
             var seminarModel = listSeminar.Select(x => new SeminarModel
@@ -113,7 +159,13 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 StartDate = x.StartDate.ToString("yyyy-MM-dd"),
                 EndDate = x.EndTime.ToString("yyyy-MM-dd")
             });
-            return seminarModel.ToList();
+            var responsePagedModel = new  ResponsePagedModel
+            {
+                ListData = seminarModel.ToList(),
+                PageNumber = paginationClientModel.PageNumber,
+                TotalPage = totalPage
+            };
+            return responsePagedModel;
         }
 
         public async Task<SeminarModel> GetByID(int id)

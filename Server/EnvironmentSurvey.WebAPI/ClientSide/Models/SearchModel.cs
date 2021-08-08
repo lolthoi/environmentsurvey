@@ -10,6 +10,6 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public string Search_key { get; set; }
         public string Username { get; set; }
         public int Status { get; set; }
-        public int Role { get; set; }
+        public string Role { get; set; }
     }
 }

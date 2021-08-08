@@ -45,11 +45,12 @@ $(document).ready(function(){
 
 	// get all seminar
 	var dataSearch = {
-		Search_key : "",		
+		Search_key : "",
+		Role : role != null ? role:""		
 	}
 	$.ajax({
         type : "POST",
-        url: domen+"/api/Seminar",
+        url: domen+"/api/Seminar?PageNumber=1&PageSize=3",
         contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(dataSearch),
 		datatype:"json",
@@ -57,37 +58,18 @@ $(document).ready(function(){
         success : function(response){
 			//console.log(response)
 			if(role == null || role == "ADMIN"){
-				response.forEach(function(seminar) {
-					showSeminar(seminar);
+				response.ListData.forEach(function(seminar) {
+					showSeminar(seminar);					
 				});
-			}  
-			//var lstseminar = [];          
-			if(role == "STUDENT"){
+				$('#currentPage').html(response.PageNumber)
+			}else{
 				let lsUserSeminarID =  listUserSeminar.map(item => {return item.SeminarId});
-				let listSeminar  = response.filter(item=> !lsUserSeminarID.includes(item.ID));
+				let listSeminar  = response.ListData.filter(item=> !lsUserSeminarID.includes(item.ID));
 				listSeminar.forEach(function(seminar) {
-					if(seminar.forUser == 1){
-						showSeminar(seminar);
-					}
+					showSeminar(seminar);
 					
 				});				
-			}
-			if(role == "EMPLOYEE"){
-				let lsUserSeminarID =  listUserSeminar.map(item => {return item.SeminarId});
-				let listSeminar  = response.filter(item=> !lsUserSeminarID.includes(item.ID));
-				listSeminar.forEach(function(seminar) {
-					if(seminar.forUser == 1){
-						showSeminar(seminar);
-					}
-					
-				});
-				listSeminar.forEach(function(seminar) {
-					if(seminar.forUser == 0){
-						showSeminar(seminar);
-					}
-					
-				});
-			}
+			}	
         },       
     })
 });
