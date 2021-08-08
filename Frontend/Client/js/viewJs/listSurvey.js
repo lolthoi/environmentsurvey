@@ -209,7 +209,7 @@ let countDown = () => {
 function loadData() {
     questionNo.innerText = index + 1 + ". ";
     questionText.innerText = questionData[index].Question;
-    document.getElementById("questionText").value = questionData[index].Id
+    document.getElementById("questionText").value = questionData[index].SurveyQuestionId;
     option1.innerText = questionData[index].Answers[0].Answer;
     document.getElementById("option1").value = questionData[index].Answers[0].Id;
     option2.innerText = questionData[index].Answers[1].Answer;
@@ -248,26 +248,26 @@ continueBtn.addEventListener("click", () => {
 
 option1.addEventListener("click", () => {
   UserAns.push({
-    "SurveyQuestionId": idSurveyPost,
+    "SurveyQuestionId": document.getElementById("questionText").value,
     "AnswerId": document.getElementById("option1").value,
     "UserId": localStorage.getItem("userId")
 })});
 
 option2.addEventListener("click", () => {
   UserAns.push({
-    "SurveyQuestionId": idSurveyPost,
+    "SurveyQuestionId": document.getElementById("questionText").value,
     "AnswerId": document.getElementById("option2").value,
     "UserId": localStorage.getItem("userId")
   })});
 option3.addEventListener("click", () => {
   UserAns.push({
-    "SurveyQuestionId": idSurveyPost,
+    "SurveyQuestionId": document.getElementById("questionText").value,
     "AnswerId": document.getElementById("option3").value,
     "UserId": localStorage.getItem("userId")
   })});
 option4.addEventListener("click", () => {
   UserAns.push({
-    "SurveyQuestionId": idSurveyPost,
+    "SurveyQuestionId": document.getElementById("questionText").value,
     "AnswerId": document.getElementById("option4").value,
     "UserId": localStorage.getItem("userId")
   })});
