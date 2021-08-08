@@ -23,3 +23,11 @@
     border: 3px solid white;
     box-shadow: inset 0px 0px 100px -70px #111;
   }
+
+  .disableLink{
+    pointer-events: none;
+    cursor: none;
+  }
+  #nextPage, #previousPage{
+    cursor: pointer;
+  }

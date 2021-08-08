@@ -82,71 +82,46 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         {
             var key = model.Search_key;
             var role = model.Role;
+            DateTime dateTime = DateTime.Now;
             List<Seminar> listSeminar = new List<Seminar>();
-            if(key == "")
+
+            var query = _context.Seminars.Where(s => !s.DeletedDate.HasValue).OrderByDescending(s => s.CreatedDate);
+            if(model.FromDate == "" && model.ToDate == "" && model.Search_key == "" && role =="" || model.FromDate == "" && model.ToDate == "" && model.Search_key == "" && role == "ADMIN")
             {
-                listSeminar = await _context.Seminars.Where(s => !s.DeletedDate.HasValue).ToListAsync();
+               
             }
-            else
+            if(model.Search_key != "")
             {
                 
-                 listSeminar = await _context.Seminars//.Where(s => s.StartDate > dateTime)
-                             .Where(s => s.Name.Contains(key) || s.Author.Contains(key) || s.Subject.Contains(key) || s.Description.Contains(key)).ToListAsync();
+                query = (IOrderedQueryable<Seminar>)query.Where(u => u.Name.Contains(key) || u.Author.Contains(key) || u.Location.Contains(key) || u.Subject.Contains(key));
             }
-            
-            int totalPage = (int)Math.Ceiling(listSeminar.Count() / (double)paginationClientModel.PageSize);
-            DateTime dateTime = DateTime.Now;
-            
+            if(model.FromDate != "")
+            {
+                DateTime fromDate = Convert.ToDateTime(model.FromDate);
+                query = (IOrderedQueryable<Seminar>)query.Where(s => s.StartDate >= fromDate);
+            }
+            if(model.ToDate != "")
+            {
+                DateTime toDate = Convert.ToDateTime(model.ToDate);
+                query = (IOrderedQueryable<Seminar>)query.Where(s => s.StartDate <= toDate);
+            }
+            if(model.Role == "STUDENT")
+            {
+                query = (IOrderedQueryable<Seminar>)query.Where(s => s.forUser == 2);//.Where(s => s.StartDate > dateTime);
+            }
+            if (model.Role == "EMPLOYEE")
+            {
+                query = (IOrderedQueryable<Seminar>)query.Where(s => s.forUser == 1);//.Where(s => s.StartDate > dateTime);
+            }
 
-            if (key == "" && role.Equals("ADMIN") || key == "" && role == "")
-            {
-                listSeminar = await _context.Seminars//.Where(s => s.StartDate > dateTime)
-                    .OrderByDescending(s => s.CreatedDate)
-                    .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
-                    .Take(paginationClientModel.PageSize)
-                    .ToListAsync();
-            }
-            else if (key == "" && role.Equals("STUDENT"))
-            {
-                listSeminar = await _context.Seminars.Where(s=> s.forUser == 2)//.Where(s => s.StartDate > dateTime)
-                    .OrderByDescending(s => s.CreatedDate)
-                    .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
-                    .Take(paginationClientModel.PageSize)
-                    .ToListAsync();
-            }
-            else if (key == "" && role.Equals("EMPLOYEE"))
-            {
-                listSeminar = await _context.Seminars.Where(s => s.forUser == 1)//.Where(s => s.StartDate > dateTime)
-                    .OrderByDescending(s => s.CreatedDate)
-                    .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
-                    .Take(paginationClientModel.PageSize)
-                    .ToListAsync();
-            }
-            else if (key != "" && role.Equals("ADMIN") || key != "" && role == "")
-            {
-                listSeminar = await _context.Seminars//.Where(s => s.StartDate > dateTime)
-                                  .Where(s => s.Name.Contains(key) || s.Author.Contains(key) || s.Subject.Contains(key) || s.Description.Contains(key))
-                                 .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
-                                 .Take(paginationClientModel.PageSize)
-                                .OrderByDescending(s => s.CreatedDate).ToListAsync();
-            }
-            else if (key != "" && role.Equals("STUDENT"))
-            {
-                listSeminar = await _context.Seminars.Where(s => s.forUser == 1)//.Where(s => s.StartDate > dateTime
-                                 .Where(s => s.Name.Contains(key) || s.Author.Contains(key) || s.Subject.Contains(key) || s.Description.Contains(key))
-                                .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
-                                 .Take(paginationClientModel.PageSize)
-                                .OrderByDescending(s => s.CreatedDate).ToListAsync();
-            }
-            else if (key != "" && role.Equals("EMPLOYEE"))
-            {
-                listSeminar = await _context.Seminars.Where(s => s.forUser == 2)//.Where(s => s.StartDate > dateTime)
-                                .Where(s => s.Name.Contains(key) || s.Author.Contains(key) || s.Subject.Contains(key) || s.Description.Contains(key))
-                                .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
-                                 .Take(paginationClientModel.PageSize)
-                                .OrderByDescending(s => s.CreatedDate).ToListAsync();
-            }
-            var seminarModel = listSeminar.Select(x => new SeminarModel
+            listSeminar = await query.ToListAsync();
+            int totalPage = (int)Math.Ceiling(listSeminar.Count() / (double)paginationClientModel.PageSize);
+            var listSeminarClient = await query
+                                    .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                                     .Take(paginationClientModel.PageSize)
+                                    .ToListAsync();
+
+            var seminarModel = listSeminarClient.Select(x => new SeminarModel
             {
                 ID = x.Id,
                 Name = x.Name,

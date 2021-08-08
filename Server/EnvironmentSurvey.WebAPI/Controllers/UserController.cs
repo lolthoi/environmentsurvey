@@ -26,12 +26,11 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             hostingEnvironment = hostingEnv;
         }
 
-        [HttpGet]
-        [Authorize(Roles="ADMIN")]
-        //[Authorize(Roles ="ADMIN")]
-        public async Task<List<UserModel>> getAll()
+        [HttpPost]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<ResponsePagedModel> getAll(SearchModel model, [FromQuery] PaginationClientModel paginationClientModel)
         {
-            var listUser = await _userService.GetAll();
+            var listUser = await _userService.GetAll(model, paginationClientModel);
             return listUser;
         }
         [HttpPost]
@@ -94,7 +93,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         [Authorize(Roles = "ADMIN")]
         public async Task<string> delete(int id)
         {

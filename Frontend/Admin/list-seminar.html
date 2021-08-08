@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="plugins/sweetalert/css/sweetalert2.min.css" type="text/css">
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -234,11 +235,51 @@
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
+            <div class="container" style="padding:0 25px; margin-top: 20px;">
+                <a href="create-seminar.html" class="btn btn-block btn-primary mb-3">Create Seminar</a>
+                <div class="row">  
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="Subject">Search key</label>
+                            <input type="text" autocomplete="off" class="form-control" name="Search_key"
+                                id="Search_key" placeholder="Enter key to search">
+                            <small id="subject-valid" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="StartTime">Start Date</label>
+                            <input type="date" autocomplete="off" class="form-control" name="StartTime"
+                                id="FromDate">
+                            <small id="st-valid" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="EndTime">End Date</label>
+                            <input type="date" autocomplete="off" class="form-control" name="EndTime"
+                                id="ToDate" >
+                            <small id="et-valid" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div style="margin-top:28px">
+                            <button type="button" id="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div style="margin-top:28px">
+                            <button type="button" id="reset" class="btn btn-primary">Reset</button>
+                        </div>
+                    </div>
+                    
+                </div>                                            
+            </div>
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <a href="create-seminar.html" class="btn btn-block btn-primary mb-3">Create Seminar</a>
+                
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -269,6 +310,19 @@
                                         </tr>
                                     </tfoot>
                                 </table>
+                                <div aria-label="..." style="margin-left: 426px;" id="paginationPage">
+                                    <ul class="pagination ">
+                                      <li class="page-item ">
+                                        <a class="page-link" id="previousPage"  tabindex="-1">Previous</a>
+                                      </li>
+                                      <li class="page-item active">
+                                        <a class="page-link" href="#" id="currentPage"><span class="sr-only" ></span></a>
+                                      </li>
+                                      <li class="page-item">
+                                        <a class="page-link" id="nextPage">Next</a>
+                                      </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -3,37 +3,69 @@ var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
 var token = localStorage.getItem("token");
 // get list seminar
-function getList() {
+
+var totalPage = '';
+
+$(document).ready(function(){
+  getList(pageNumber = 1);
+  pagination(pageNumber = 1, totalPage );
+  console.log(totalPage)
+})
+
+$('#submit').click(function(){
+  ClearData();
+  getList(pageNumber = 1);
+  pagination(pageNumber = 1, totalPage );
+})
+
+$('#reset').click(function(){
+  $('#Search_key').val('');
+  $('#FromDate').val('');
+  $('#ToDate').val('');
+  $('#role').val('')
+  ClearData();
+  getList(pageNumber = 1);
+  pagination(pageNumber = 1, totalPage );
+})
+
+function getTotalPage(response){
+  totalPage = response;
+}
+
+
+function getList(pageNumber) {
+  var dataSearch = {
+    Search_key: $('#Search_key').val(),
+    FromDate : $('#FromDate').val(),
+    ToDate : $('#ToDate').val(),
+    Role : $('#role :selected').val()
+  }
   $.ajax({
-    type: "GET",
-    url: domain + "/api/User",
+    type: "POST",
+    url: domain + "/api/User?PageNumber="+pageNumber+"&PageSize=6",
     headers: {
       Authorization: "Bearer " + token,
     },
     contentType: "application/json; charset=utf-8",
-    async: true,
+    data: JSON.stringify(dataSearch),
+		datatype:"json",
+    async: false,
     success: function (response) {
-      response.forEach(function (user) {
+      getTotalPage(response.TotalPage);
+      if(response.ListUser.length == 0){
+        $("#list-seminar tbody ").append(
+          "<tr>" +
+            '<td colspan="6" class="text-center"> No data</td>' +
+          "</tr>"
+        )};
+      response.ListUser.forEach(function (user) {
         showUser(user);
       });
-      $("#list-seminar")
-        .DataTable({
-          responsive: true,
-          lengthChange: true,
-          autoWidth: true,
-          lengthMenu: [
-            [10, 25, 50, -1],
-            [10, 25, 50, "All"],
-          ],
-          ordering: false,
-        })
-        .buttons()
-        .container()
-        .appendTo("#list-seminar_wrapper .col-md-6:eq(0)");
+      $('#currentPage').html(response.PageNumber);
     },
   });
 }
-getList();
+
 $(document).on("click", 'button[id^="delete"]', function () {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -44,7 +76,7 @@ $(document).on("click", 'button[id^="delete"]', function () {
   });
   swalWithBootstrapButtons
     .fire({
-      title: "Delete Seminar",
+      title: "Delete User",
       text: "Are you sure to delete this record?",
       icon: "warning",
       showCancelButton: true,
@@ -55,7 +87,7 @@ $(document).on("click", 'button[id^="delete"]', function () {
         Id = this.id.replace("delete", "");
         $.ajax({
           type: "DELETE",
-          url: domain + "/api/Seminar/Delete/" + Id,
+          url: domain + "/api/User/Delete/" + Id,
           headers: {
             Authorization: "Bearer " + token,
           },
@@ -115,8 +147,45 @@ function showUser(user) {
       '<td class="text-center">'+
       '<button type="button" class="btn btn-block btn-danger text-white" id="delete' +
       user.ID +
-      '">Delete</button> ' +
+      '"><i class="fa fa-trash"></i></button> ' +
       '</td>' +
       "</tr>"
   );
+}
+
+function ClearData(){
+  $("#list-seminar tbody").empty();
+}
+
+//pagination
+function pagination(pageNumber = 1, totalPage){
+	$('#currentPage').html(pageNumber);
+	if(pageNumber == totalPage){
+		$('#nextPage').addClass('disableLink');
+	}
+	if(pageNumber == 1){
+		$('#previousPage').addClass('disableLink');
+	}	
+	$('#nextPage').click(function(){
+		pageNumber++
+		ClearData()
+		if(pageNumber <= totalPage){
+			getList(pageNumber);	
+			if(pageNumber == totalPage){
+				$(this).addClass('disableLink');
+				$('#previousPage').removeClass('disableLink');
+			}
+		}			
+	});
+	$('#previousPage').click(function(){
+		pageNumber--;
+		ClearData();
+		if(pageNumber >= 1){
+			getList(pageNumber);	
+			if(pageNumber <= 1){
+				$(this).addClass('disableLink');
+				$('#nextPage').removeClass('disableLink');
+			}
+		}
+	})
 }

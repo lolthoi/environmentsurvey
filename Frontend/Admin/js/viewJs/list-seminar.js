@@ -2,38 +2,67 @@ var domain = "https://localhost:44304";
 var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
 var token = localStorage.getItem("token");
+
+var totalPage = '';
+
+$(document).ready(function(){
+  getList(pageNumber = 1);
+  pagination(pageNumber = 1, totalPage );
+  console.log(totalPage)
+})
+
+$('#submit').click(function(){
+  ClearData();
+  getList(pageNumber = 1);
+  pagination(pageNumber = 1, totalPage );
+})
+
+$('#reset').click(function(){
+  $('#Search_key').val('');
+  $('#FromDate').val('');
+  $('#ToDate').val('');
+  ClearData();
+  getList(pageNumber = 1);
+  pagination(pageNumber = 1, totalPage );
+})
+
+function getTotalPage(response){
+  totalPage = response;
+}
+
 // get list seminar
-function getList() {
+function getList(pageNumber) {
+  var dataSearch = {
+    Search_key: $('#Search_key').val(),
+    FromDate : $('#FromDate').val(),
+    ToDate : $('#ToDate').val(),
+    Role : ""
+  }
   $.ajax({
-    type: "GET",
-    url: domain + "/api/Seminar",
+    type: "POST",
+    url: domain + "/api/Seminar?PageNumber="+pageNumber+"&PageSize=6",
     headers: {
       Authorization: "Bearer " + token,
     },
     contentType: "application/json; charset=utf-8",
-    async: true,
+    data: JSON.stringify(dataSearch),
+		datatype:"json",
+    async: false,
     success: function (response) {
-      response.forEach(function (seminar) {
+      getTotalPage(response.TotalPage);
+      if(response.ListData.length == 0){
+        $("#list-seminar tbody ").append(
+          "<tr>" +
+            '<td colspan="7" class="text-center"> No data</td>' +
+          "</tr>"
+        )};
+      response.ListData.forEach(function (seminar) {
         showSeminar(seminar);
       });
-      $("#list-seminar")
-        .DataTable({
-          responsive: true,
-          lengthChange: true,
-          autoWidth: true,
-          lengthMenu: [
-            [10, 25, 50, -1],
-            [10, 25, 50, "All"],
-          ],
-          ordering: false,
-        })
-        .buttons()
-        .container()
-        .appendTo("#list-seminar_wrapper .col-md-6:eq(0)");
+      $('#currentPage').html(response.PageNumber);
     },
   });
 }
-getList();
 if (sessionStorage.getItem("createResponse") == "Success") {
   sessionStorage.removeItem("createResponse");
   const swalWithBootstrapButtons = Swal.mixin({
@@ -139,13 +168,50 @@ function showSeminar(seminar) {
       "</td>" +
       '<td><a href="edit-seminar.html?id=' +
       seminar.ID +
-      '" class="btn btn-block btn-warning">Edit</a> ' +
+      '" class="btn btn-block btn-warning"><i class=" ti-pencil"></i></a> ' +
       '<button type="button" class="btn btn-block btn-danger text-white" id="delete' +
       seminar.ID +
-      '">Delete</button> ' +
+      '"><i class="fa fa-trash"></i></button> ' +
       '<a href="../Client/seminar-single.html?id=' +
       seminar.ID +
-      '&status=2" class="btn btn-block btn-info text-white" target="_blank">Detail</a></td>' +
+      '&status=" class="btn btn-block btn-info text-white" target="_blank"><i class=" ti-book"></i></a></td>' +
       "</tr>"
   );
+}
+
+function ClearData(){
+  $("#list-seminar tbody").empty();
+}
+
+//pagination
+function pagination(pageNumber = 1, totalPage){
+	$('#currentPage').html(pageNumber);
+	if(pageNumber == totalPage){
+		$('#nextPage').addClass('disableLink');
+	}
+	if(pageNumber == 1){
+		$('#previousPage').addClass('disableLink');
+	}	
+	$('#nextPage').click(function(){
+		pageNumber++
+		ClearData()
+		if(pageNumber <= totalPage){
+			getList(pageNumber);	
+			if(pageNumber == totalPage){
+				$(this).addClass('disableLink');
+				$('#previousPage').removeClass('disableLink');
+			}
+		}			
+	});
+	$('#previousPage').click(function(){
+		pageNumber--;
+		ClearData();
+		if(pageNumber >= 1){
+			getList(pageNumber);	
+			if(pageNumber <= 1){
+				$(this).addClass('disableLink');
+				$('#nextPage').removeClass('disableLink');
+			}
+		}
+	})
 }
