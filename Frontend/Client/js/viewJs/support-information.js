@@ -7,10 +7,10 @@ $(document).ready(function () {
         async:true,
         success : function(si){
             $("#companyName").html(si.Company);
-            $("#companyTel").html('<a href="tel:'+si.CompanyTel+'" class="text-color">'+si.CompanyTel+'</a></span>');
+            $("#companyTel").html(si.CompanyTel);
             $("#companyAddress").html(si.Address);
             $("#supporterName").html(si.Supporter);
-            $("#supporterTel").html('<a href="tel:'+si.SupporterTel+'" class="text-color">'+si.SupporterTel+'</a></span>');
+            $("#supporterTel").html(si.SupporterTel);
         },      
         error: function (response) {
           console.log(response);

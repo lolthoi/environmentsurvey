@@ -1156,3 +1156,34 @@ link:focus,
 .disableLink{
   pointer-events: none;
 }
+
+/*support information*/
+.support-info {
+  padding: 20px;
+  background: #ffbc3b no-repeat center;
+  background-size: cover;
+}
+.support-info h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+}
+.support-info p {
+  margin-bottom: 15px;
+}
+.support-info ul li h5 {
+  font-size: 16px;
+  color: #fff;
+  font-weight: 300;
+  padding-right: 16px;
+  padding-left: 25px;
+  line-height: 24px;
+  position: relative;
+}
+.support-info ul li h5 i {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  padding-right: 6px;
+  color: #fff;
+}

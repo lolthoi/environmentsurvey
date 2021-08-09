@@ -39,145 +39,148 @@
   </div>
   <!-- preloader end -->
 
-<!-- header -->
-<header class="fixed-top header">
-  <!-- top header -->
-  <!-- navbar -->
-  <div class="navigation w-100">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-dark p-0">
-        <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
-        <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation"
-          aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+  <!-- header -->
+  <header class="fixed-top header">
+    <!-- top header -->
+    <!-- navbar -->
+    <div class="navigation w-100">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark p-0">
+          <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
+          <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation"
+            aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <div class="collapse navbar-collapse" id="navigation">
-          <ul class="navbar-nav ml-auto text-center">
-            <li class="nav-item active">
-              <a class="nav-link" href="index.html">HOME</a>
-            </li>
-            <li class="nav-item @@about">
-              <a class="nav-link" href="about.html">SEMINAR</a>
-            </li>
-            <li class="nav-item @@courses">
-              <a class="nav-link" href="courses.html">SUPPORT</a>
-            </li>
-            <li class="nav-item @@events">
-              <a class="nav-link" href="events.html">FAGS</a>
-            </li>
-            <li class="nav-item @@contact">
-              <a class="nav-link" href="contact.html">CONTACT</a>
-            </li>
-            <li class="nav-item dropdown view profile">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                
-              </a>
-              <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Update Profile</a>
-                <a class="dropdown-item" href="#">Change Password</a>
-                <a class="dropdown-item" href="#">History</a>
-                <a class="dropdown-item logout" href="#">Logout</a>
-              </div>
-            </li>
-            
-            <li class="nav-item @@login login">
-              <a class="nav-link"  data-toggle="modal" data-target="#loginModal">LOGIN</a>
-            </li>           
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </div>
-</header>
-<!-- /header -->
-<!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content rounded-0 border-0 p-4">
-          <div class="modal-header border-0">
-              <h3>Login</h3>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
+          <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto text-center">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">HOME</a>
+              </li>
+              <li class="nav-item @@about">
+                <a class="nav-link" href="about.html">SEMINAR</a>
+              </li>
+              <li class="nav-item @@courses">
+                <a class="nav-link" href="courses.html">SUPPORT</a>
+              </li>
+              <li class="nav-item @@events">
+                <a class="nav-link" href="events.html">FAGS</a>
+              </li>
+              <li class="nav-item @@contact">
+                <a class="nav-link" href="contact.html">CONTACT</a>
+              </li>
+              <li class="nav-item dropdown view profile">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+
+                </a>
+                <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Update Profile</a>
+                  <a class="dropdown-item" href="#">Change Password</a>
+                  <a class="dropdown-item" href="#">History</a>
+                  <a class="dropdown-item logout" href="#">Logout</a>
+                </div>
+              </li>
+
+              <li class="nav-item @@login login">
+                <a class="nav-link" data-toggle="modal" data-target="#loginModal">LOGIN</a>
+              </li>
+            </ul>
           </div>
-          <div class="modal-body">
-              <form action="#" class="row">
-                  <span id="message" class="hiddenField" style="color: red;"></span>
-                  <div class="col-12">
-                      <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Username">
-                  </div>
-                  <div class="col-12">
-                      <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password">
-                  </div>
-                  <div class="col-12">
-                      <button type="button" id="loginButton" class="btn btn-primary">LOGIN</button>
-                  </div>
-              </form>
-              <p>Not have an Account? <a href="register.html">Click Here</a></p>
-              
-          </div>
+        </nav>
       </div>
-  </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+    </div>
+  </header>
+  <!-- /header -->
+  <!-- Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content rounded-0 border-0 p-4">
-            <div class="modal-header border-0">
-                <h3>Login</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="#" class="row">
-                    <div class="col-12">
-                        <input type="text" class="form-control mb-3" id="loginPhone" name="loginPhone" placeholder="Phone">
-                    </div>
-                    <div class="col-12">
-                        <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Name">
-                    </div>
-                    <div class="col-12">
-                        <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password">
-                    </div>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary">LOGIN</button>
-                    </div>
-                </form>
-            </div>
+      <div class="modal-content rounded-0 border-0 p-4">
+        <div class="modal-header border-0">
+          <h3>Login</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    </div>
-</div>
+        <div class="modal-body">
+          <form action="#" class="row">
+            <span id="message" class="hiddenField" style="color: red;"></span>
+            <div class="col-12">
+              <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Username">
+            </div>
+            <div class="col-12">
+              <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword"
+                placeholder="Password">
+            </div>
+            <div class="col-12">
+              <button type="button" id="loginButton" class="btn btn-primary">LOGIN</button>
+            </div>
+          </form>
+          <p>Not have an Account? <a href="register.html">Click Here</a></p>
 
-<!-- page title -->
-<section class="page-title-section overlay" data-background="images/backgrounds/page-title.jpg">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8">
-        <ul class="list-inline custom-breadcrumb">
-          <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Support Information</a></li>
-          <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
-        </ul>
-        <!-- <p class="text-lighten">Do you have other questions? Don't worry, there aren't any dumb questions. Just fill out the form below and we'll get back to you as soon as possible.</p> -->
-        <p class="text-lighten">Do you have other questions? Please contact support for more information.</p>
+        </div>
       </div>
     </div>
   </div>
-</section>
-<!-- /page title -->
+  <!-- Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content rounded-0 border-0 p-4">
+        <div class="modal-header border-0">
+          <h3>Login</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="#" class="row">
+            <div class="col-12">
+              <input type="text" class="form-control mb-3" id="loginPhone" name="loginPhone" placeholder="Phone">
+            </div>
+            <div class="col-12">
+              <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Name">
+            </div>
+            <div class="col-12">
+              <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword"
+                placeholder="Password">
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">LOGIN</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!-- contact -->
-<section class="section bg-gray">
-  <div class="container">
-    <!-- <div class="row">
+  <!-- page title -->
+  <section class="page-title-section overlay" data-background="images/backgrounds/page-title.jpg">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <ul class="list-inline custom-breadcrumb">
+            <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Support
+                Information</a></li>
+            <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
+          </ul>
+          <!-- <p class="text-lighten">Do you have other questions? Don't worry, there aren't any dumb questions. Just fill out the form below and we'll get back to you as soon as possible.</p> -->
+          <p class="text-lighten">Do you have other questions? Please contact support for more information.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /page title -->
+
+  <!-- contact -->
+  <section class="section bg-gray">
+    <div class="container">
+      <!-- <div class="row">
       <div class="col-lg-12">
         <h2 class="section-title">Contact Us</h2>
       </div>
     </div> -->
-    <div class="row">
-      <!-- <div class="col-lg-7 mb-4 mb-lg-0">
+      <div class="row">
+        <!-- <div class="col-lg-7 mb-4 mb-lg-0">
         <form action="#">
           <input type="text" class="form-control mb-3" id="name" name="name" placeholder="Your Name">
           <input type="email" class="form-control mb-3" id="mail" name="mail" placeholder="Your Email">
@@ -186,172 +189,204 @@
           <button type="submit" value="send" class="btn btn-primary">SEND MESSAGE</button>
         </form>
       </div> -->
-      <!-- <div class="col-lg-5">
+        <!-- <div class="col-lg-5">
         <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae voluptates doloremque veniam temporibus porro culpa ipsa, nisi soluta minima saepe laboriosam debitis nesciunt. Dolore, labore. Accusamus nulla sed cum aliquid exercitationem debitis error harum porro maxime quo iusto aliquam dicta modi earum fugiat, vel possimus commodi, deleniti et veniam, fuga ipsum praesentium. Odit unde optio nulla ipsum quae obcaecati! Quod esse natus quibusdam asperiores quam vel, tempore itaque architecto ducimus expedita</p>
         <a href="tel:+8802057843248" class="text-color h5 d-block">+880 20 5784 3248</a>
         <a href="mailto:yourmail@email.com" class="mb-5 text-color h5 d-block">yourmail@email.com</a>
         <p>71 Shelton Street<br>London WC2H 9JQ England</p>
       </div> -->
-      <div class="col-sm-2 mb-3"></div>
-      <div class="col-sm-8 mb-3">
-        <div class="card bg-info">
-          <div class="card-header">
-            <h5 class="card-title text-white">Company Name: <span id="companyName"></span></h5>
+        <div class="col-lg-6 col-sm-12">
+          <div class="support-info">
+            <h2>COMPANY INFO</h2>
+            <ul>
+              <li>
+                <h5>
+                  <i class="fas fa-address-card"></i>
+                  Name: <span id="companyName"></span>
+                </h5>
+              </li>
+              <li>
+                <h5>
+                  <i class="fas fa-map-marker-alt"></i>
+                  Address: <span id="companyAddress"></span>
+                </h5>
+              </li>
+              <li>
+                <h5>
+                  <i class="fas fa-phone-square"></i>
+                  Phone: <span id="companyTel"></span>
+              </li>
+            </ul>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Address: <span id="companyAddress"></li>
-            <li class="list-group-item">Tel: <span id="companyTel"></li>
-          </ul>
         </div>
-      </div>
-      <div class="col-sm-2 mb-3"></div>
-      <div class="col-sm-2"></div>
-      <div class="col-sm-8">
-        <div class="card bg-info">
-          <div class="card-header">
-            <h5 class="card-title text-white">Supporter</h5>
+        <div class="col-lg-6 col-sm-12">
+          <div class="support-info">
+            <h2>SUPPORTER INFO</h2>
+            <ul>
+              <li>
+                <h5>
+                  <i class="fas fa-address-card"></i>
+                  Name: <span id="supporterName"></span>
+                </h5>
+              </li>
+              <li>
+                <h5>
+                  <i class="fas fa-phone-square"></i>
+                  Phone: <span id="supporterTel"></span>
+                </h5>
+              </li>
+              <li>
+                <h5><i class="fas fa-envelope"></i>
+                  Email: environmentsurvey@gmail.com
+                </h5>
+              </li>
+            </ul>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Name: <span id="supporterName"></span></li>
-            <li class="list-group-item">Tel: <span id="supporterTel"></span></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-sm-2"></div>
-    </div>
-  </div>
-</section>
-<!-- /contact -->
-
-<!-- gmap -->
-<section style="height:500px">
-  <div class="map">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.0968141835715!2d105.78009371488338!3d21.028811885998298!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313455f9bdf0e1c7%3A0x26caee8e7662dd9b!2zRlBUIEFwdGVjaCBIw6AgTuG7mWk!5e0!3m2!1svi!2s!4v1619406375261!5m2!1svi!2s" width="100%" height="500px"></iframe>
-  </div>
-</section>
-<!-- /gmap -->
-
-<!-- footer -->
-<footer>
-  <!-- newsletter -->
-  <div class="newsletter">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-9 ml-auto bg-primary py-5 newsletter-block">
-          <h3 class="text-white">Subscribe Now</h3>
-          <form action="#">
-            <div class="input-wrapper">
-              <input type="email" class="form-control border-0" id="newsletter" name="newsletter" placeholder="Enter Your Email...">
-              <button type="submit" value="send" class="btn btn-primary">Join</button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
-  </div>
-  <!-- footer content -->
-  <div class="footer bg-footer section border-bottom">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-sm-8 mb-5 mb-lg-0">
-          <!-- logo -->
-          <a class="logo-footer" href="index.html"><img class="img-fluid mb-4" src="images/logo.png" alt="logo"></a>
-          <ul class="list-unstyled">
-            <li class="mb-2">23621 15 Mile Rd #C104, Clinton MI, 48035, New York, USA</li>
-            <li class="mb-2">+1 (2) 345 6789</li>
-            <li class="mb-2">+1 (2) 345 6789</li>
-            <li class="mb-2">contact@yourdomain.com</li>
-          </ul>
-        </div>
-        <!-- company -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">COMPANY</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="about.html">About Us</a></li>
-            <li class="mb-3"><a class="text-color" href="teacher.html">Our Teacher</a></li>
-            <li class="mb-3"><a class="text-color" href="contact.html">Contact</a></li>
-            <li class="mb-3"><a class="text-color" href="blog.html">Blog</a></li>
-          </ul>
-        </div>
-        <!-- links -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">LINKS</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="courses.html">Courses</a></li>
-            <li class="mb-3"><a class="text-color" href="event.html">Events</a></li>
-            <li class="mb-3"><a class="text-color" href="gallary.html">Gallary</a></li>
-            <li class="mb-3"><a class="text-color" href="faqs.html">FAQs</a></li>
-          </ul>
-        </div>
-        <!-- support -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">SUPPORT</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="#">Forums</a></li>
-            <li class="mb-3"><a class="text-color" href="#">Documentation</a></li>
-            <li class="mb-3"><a class="text-color" href="#">Language</a></li>
-            <li class="mb-3"><a class="text-color" href="#">Release Status</a></li>
-          </ul>
-        </div>
-        <!-- support -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">RECOMMEND</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="#">WordPress</a></li>
-            <li class="mb-3"><a class="text-color" href="#">LearnPress</a></li>
-            <li class="mb-3"><a class="text-color" href="#">WooCommerce</a></li>
-            <li class="mb-3"><a class="text-color" href="#">bbPress</a></li>
-          </ul>
+  </section>
+  <!-- /contact -->
+
+  <!-- gmap -->
+  <section style="height:500px">
+    <div class="map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.0968141835715!2d105.78009371488338!3d21.028811885998298!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313455f9bdf0e1c7%3A0x26caee8e7662dd9b!2zRlBUIEFwdGVjaCBIw6AgTuG7mWk!5e0!3m2!1svi!2s!4v1619406375261!5m2!1svi!2s"
+        width="100%" height="500px"></iframe>
+    </div>
+  </section>
+  <!-- /gmap -->
+
+  <!-- footer -->
+  <footer>
+    <!-- newsletter -->
+    <div class="newsletter">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9 ml-auto bg-primary py-5 newsletter-block">
+            <h3 class="text-white">Subscribe Now</h3>
+            <form action="#">
+              <div class="input-wrapper">
+                <input type="email" class="form-control border-0" id="newsletter" name="newsletter"
+                  placeholder="Enter Your Email...">
+                <button type="submit" value="send" class="btn btn-primary">Join</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- copyright -->
-  <div class="copyright py-4 bg-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-7 text-sm-left text-center">
-          <p class="mb-0">Copyright
-            <script>
-              var CurrentYear = new Date().getFullYear()
-              document.write(CurrentYear)
-            </script> 
-            © themefisher</p>
-        </div>
-        <div class="col-sm-5 text-sm-right text-center">
-          <ul class="list-inline">
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-facebook text-primary"></i></a></li>
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-twitter-alt text-primary"></i></a></li>
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-linkedin text-primary"></i></a></li>
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-instagram text-primary"></i></a></li>
-          </ul>
+    <!-- footer content -->
+    <div class="footer bg-footer section border-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-sm-8 mb-5 mb-lg-0">
+            <!-- logo -->
+            <a class="logo-footer" href="index.html"><img class="img-fluid mb-4" src="images/logo.png" alt="logo"></a>
+            <ul class="list-unstyled">
+              <li class="mb-2">23621 15 Mile Rd #C104, Clinton MI, 48035, New York, USA</li>
+              <li class="mb-2">+1 (2) 345 6789</li>
+              <li class="mb-2">+1 (2) 345 6789</li>
+              <li class="mb-2">contact@yourdomain.com</li>
+            </ul>
+          </div>
+          <!-- company -->
+          <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+            <h4 class="text-white mb-5">COMPANY</h4>
+            <ul class="list-unstyled">
+              <li class="mb-3"><a class="text-color" href="about.html">About Us</a></li>
+              <li class="mb-3"><a class="text-color" href="teacher.html">Our Teacher</a></li>
+              <li class="mb-3"><a class="text-color" href="contact.html">Contact</a></li>
+              <li class="mb-3"><a class="text-color" href="blog.html">Blog</a></li>
+            </ul>
+          </div>
+          <!-- links -->
+          <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+            <h4 class="text-white mb-5">LINKS</h4>
+            <ul class="list-unstyled">
+              <li class="mb-3"><a class="text-color" href="courses.html">Courses</a></li>
+              <li class="mb-3"><a class="text-color" href="event.html">Events</a></li>
+              <li class="mb-3"><a class="text-color" href="gallary.html">Gallary</a></li>
+              <li class="mb-3"><a class="text-color" href="faqs.html">FAQs</a></li>
+            </ul>
+          </div>
+          <!-- support -->
+          <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+            <h4 class="text-white mb-5">SUPPORT</h4>
+            <ul class="list-unstyled">
+              <li class="mb-3"><a class="text-color" href="#">Forums</a></li>
+              <li class="mb-3"><a class="text-color" href="#">Documentation</a></li>
+              <li class="mb-3"><a class="text-color" href="#">Language</a></li>
+              <li class="mb-3"><a class="text-color" href="#">Release Status</a></li>
+            </ul>
+          </div>
+          <!-- support -->
+          <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+            <h4 class="text-white mb-5">RECOMMEND</h4>
+            <ul class="list-unstyled">
+              <li class="mb-3"><a class="text-color" href="#">WordPress</a></li>
+              <li class="mb-3"><a class="text-color" href="#">LearnPress</a></li>
+              <li class="mb-3"><a class="text-color" href="#">WooCommerce</a></li>
+              <li class="mb-3"><a class="text-color" href="#">bbPress</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
-<!-- /footer -->
+    <!-- copyright -->
+    <div class="copyright py-4 bg-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-7 text-sm-left text-center">
+            <p class="mb-0">Copyright
+              <script>
+                var CurrentYear = new Date().getFullYear()
+                document.write(CurrentYear)
+              </script>
+              © themefisher
+            </p>
+          </div>
+          <div class="col-sm-5 text-sm-right text-center">
+            <ul class="list-inline">
+              <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i
+                    class="ti-facebook text-primary"></i></a></li>
+              <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i
+                    class="ti-twitter-alt text-primary"></i></a></li>
+              <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i
+                    class="ti-linkedin text-primary"></i></a></li>
+              <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i
+                    class="ti-instagram text-primary"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- /footer -->
 
-<!-- jQuery -->
-<script src="plugins/jQuery/jquery.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="plugins/bootstrap/bootstrap.min.js"></script>
-<!-- slick slider -->
-<script src="plugins/slick/slick.min.js"></script>
-<!-- aos -->
-<script src="plugins/aos/aos.js"></script>
-<!-- venobox popup -->
-<script src="plugins/venobox/venobox.min.js"></script>
-<!-- filter -->
-<script src="plugins/filterizr/jquery.filterizr.min.js"></script>
-<!-- google map -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
-<script src="plugins/google-map/gmap.js"></script>
-
-<!-- Main Script -->
-<script src="js/script.js"></script>
-<script src="js/viewJs/authorize.js"></script>
-<script src="js/viewJs/login.js"></script>
-<script src="js/viewJs/support-information.js"></script>
+  <!-- jQuery -->
+  <script src="plugins/jQuery/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="plugins/bootstrap/bootstrap.min.js"></script>
+  <!-- slick slider -->
+  <script src="plugins/slick/slick.min.js"></script>
+  <!-- aos -->
+  <script src="plugins/aos/aos.js"></script>
+  <!-- venobox popup -->
+  <script src="plugins/venobox/venobox.min.js"></script>
+  <!-- filter -->
+  <script src="plugins/filterizr/jquery.filterizr.min.js"></script>
+  <!-- google map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
+  <script src="plugins/google-map/gmap.js"></script>
+  <!-- font awesome -->
+  <script src="https://kit.fontawesome.com/6b76ce7f78.js" crossorigin="anonymous"></script>
+  <!-- Main Script -->
+  <script src="js/script.js"></script>
+  <script src="js/viewJs/authorize.js"></script>
+  <script src="js/viewJs/login.js"></script>
+  <script src="js/viewJs/support-information.js"></script>
 </body>
+
 </html>

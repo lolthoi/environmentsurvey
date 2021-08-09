@@ -17,7 +17,10 @@ function getList() {
         .DataTable({
           responsive: true,
           lengthChange: true,
-          autoWidth: true,
+          autoWidth: false,
+          columnDefs: [
+            { targets: [0, 1], width: "44%"}
+          ],
           lengthMenu: [
             [10, 25, 50, -1],
             [10, 25, 50, "All"],
