@@ -23,3 +23,26 @@
     border: 3px solid white;
     box-shadow: inset 0px 0px 100px -70px #111;
   }
+
+  .box{
+    width: 100%;
+    height: 350px;
+    border: 1px solid #111 ;
+  }
+
+  #serachBox{
+    height: 10%;
+  }
+
+  .boxSelect{
+    padding-top: 5%;
+    width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+    border: hidden;
+  }
+
+  .arrowButton{
+    
+    margin-top: 20%;
+  }
