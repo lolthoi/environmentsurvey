@@ -1,6 +1,7 @@
 ﻿using EnvironmentSurvey.WebAPI.BusinessLogic;
 using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace EnvironmentSurvey.WebAPI.Controllers
@@ -26,12 +27,12 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             return _surveyService.GetById(id);
         }
         [HttpPost]
-        public ActionResult<SurveyModel> Create(SurveyModel model)
+        public ActionResult<bool> Create(SurveyModel model)
         {
             return _surveyService.Create(model);
         }
         [HttpPut]
-        public ActionResult<SurveyModel> Update(SurveyModel model)
+        public ActionResult<bool> Update(SurveyModel model)
         {
             return _surveyService.Update(model);
         }

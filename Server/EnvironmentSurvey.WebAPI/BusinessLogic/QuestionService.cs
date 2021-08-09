@@ -34,9 +34,28 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public QuestionModel Create(QuestionModel model)
         {
+            var listAnswer = new List<Answer>();
+            if (model.Answers.Count < 2)
+            {
+                throw new Exception("Not enough answers for this question");
+            }
+            else
+            {
+                foreach (var item in model.Answers)
+                {
+                    Answer answer = new()
+                    {
+                        Answer1 = item.Answer,
+                        IsCorrect = (int)item.IsCorrect,
+                        QuestionId = item.QuestionId,
+                    };
+                    listAnswer.Add(answer);
+                }
+            }
             var question = new Question
             {
                 Question1 = model.Question,
+                Answers = listAnswer,
             };
             model.Id = question.Id;
             _questionRepository.Insert(question);

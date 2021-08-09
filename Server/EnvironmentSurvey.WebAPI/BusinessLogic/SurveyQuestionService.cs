@@ -10,7 +10,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
     public interface ISurveyQuestionService
     {
-        SurveyQuestionModel Create(SurveyQuestionModel model);
+        List<SurveyQuestionModel> Create(List<SurveyQuestionModel> model);
         List<SurveyQuestionModel> GetAll();
         SurveyQuestionModel GetById(int Id);
         SurveyQuestionModel Update(SurveyQuestionModel model);
@@ -27,15 +27,18 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             _surveyQuestionRepository = surveyQuestionRepository;
             _userAnswerRepository = userAnswerRepository;
         }
-        public SurveyQuestionModel Create(SurveyQuestionModel model)
+        public List<SurveyQuestionModel> Create(List<SurveyQuestionModel> model)
         {
-            var surveyQuestion = new SurveyQuestion
+            foreach (var item in model)
             {
-                SurveyId = model.SurveyId,
-                QuestionId = model.QuestionId
-            };
-            _surveyQuestionRepository.Insert(surveyQuestion);
-            model.Id = surveyQuestion.Id;
+                var surveyQuestion = new SurveyQuestion
+                {
+                    SurveyId = item.SurveyId,
+                    QuestionId = item.QuestionId
+                };
+                _surveyQuestionRepository.Insert(surveyQuestion);
+                item.Id = surveyQuestion.Id;
+            }
             return model;
         }
 

@@ -22,7 +22,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             return _surveyQuestionService.GetAll();
         }
         [HttpPost]
-        public ActionResult<SurveyQuestionModel> Create(SurveyQuestionModel model)
+        public ActionResult<List<SurveyQuestionModel>> Create(List<SurveyQuestionModel> model)
         {
             return _surveyQuestionService.Create(model);
         }

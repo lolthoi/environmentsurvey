@@ -13,8 +13,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     public interface ISurveyService
     {
         List<SurveyModel> GetAllSurveyBySeminarId(int seminarId);
-        SurveyModel Create(SurveyModel model);
-        SurveyModel Update(SurveyModel model);
+        bool Create(SurveyModel model);
+        bool Update(SurveyModel model);
         SurveyModel GetById(int Id);
         bool Delete(int Id);
     }
@@ -28,7 +28,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             _resultRespository = resultRespository;
         }
 
-        public SurveyModel Create(SurveyModel model)
+        public bool Create(SurveyModel model)
         {
             var survey = new Survey
             {
@@ -41,10 +41,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             };
             _surveyRespository.Insert(survey);
             model.Id = survey.Id;
-            return model;
+            return true;
         }
 
-        public SurveyModel Update(SurveyModel model)
+        public bool Update(SurveyModel model)
         {
             Survey survey = _surveyRespository.Get(model.Id);
             if (survey == null)
@@ -59,7 +59,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 survey.Description = model.Description;
                 _surveyRespository.Update(survey);
             }
-            return model;
+            return true;
         }
 
         public SurveyModel GetById(int Id)
