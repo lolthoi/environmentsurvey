@@ -11,5 +11,7 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public string Username { get; set; }
         public int Status { get; set; }
         public string Role { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
     }
 }

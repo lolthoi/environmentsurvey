@@ -15,7 +15,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
     public interface IUserService
     {
-        Task<List<UserModel>> GetAll();
+        Task<ResponsePagedModel> GetAll(SearchModel model, PaginationClientModel paginationClientModel);
         Task<List<UserModel>> Search(String key);
         Task<UserModel> GetUserByID(int user_ID);
         Task<UserModel> GetUserByName(string userName);
@@ -108,20 +108,50 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             }
             try
             {
-                _context.Users.Remove(user);
+                user.DeletedDate = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
                 return "Delete Success";
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return "Delete error";
             }
         }
 
-        public async Task<List<UserModel>> GetAll()
-        {
-            var listUser = await _context.Users.Where(u=> !u.Role.Equals("ADMIN")).ToListAsync();
-            var userModels = listUser.Select(x => new UserModel
+        public async Task<ResponsePagedModel> GetAll(SearchModel model, PaginationClientModel paginationClientModel)
+        {           
+            var query = _context.Users.Where(u => !u.Role.Equals("ADMIN") && !u.DeletedDate.HasValue).OrderByDescending(u => u.CreatedDate);
+            if (model.FromDate == "" && model.ToDate == "" && model.Role == "" && model.Search_key == "")
+            {
+                
+            }
+            if(model.FromDate != "")
+            {
+                DateTime fromDate = Convert.ToDateTime(model.FromDate);
+                query = (IOrderedQueryable<User>)query.Where(u => u.CreatedDate >= fromDate);
+            }
+            if(model.ToDate != "")
+            {
+                DateTime toDate = Convert.ToDateTime(model.ToDate);
+                query = (IOrderedQueryable<User>)query.Where(u => u.CreatedDate <= toDate);
+            }
+            if(model.Search_key != "")
+            {
+                var key = model.Search_key;
+                query = (IOrderedQueryable<User>)query.Where(u => u.Username.Contains(key) || u.FirstName.Contains(key) || u.LastName.Contains(key) || u.Email.Contains(key));
+            }
+            if(model.Role != "")
+            {
+                query = (IOrderedQueryable<User>)query.Where(u => u.Role.Equals(model.Role));
+            }
+
+            var listUser = await query.ToListAsync();
+            int totalPage = (int)Math.Ceiling(listUser.Count() / (double)paginationClientModel.PageSize);
+            var listUserClient = await query
+                                  .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                                  .Take(paginationClientModel.PageSize)
+                                  .ToListAsync();
+            var userModels = listUserClient.Select(x => new UserModel
             {
                 ID = x.Id,
                 NumberId = x.NumberId,
@@ -136,7 +166,14 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Status = x.Status,
 
             });
-            return userModels.ToList();
+
+            var responsePagedModel = new ResponsePagedModel
+            {
+                ListUser = userModels.ToList(),
+                PageNumber = paginationClientModel.PageNumber,
+                TotalPage = totalPage
+            };
+            return responsePagedModel;
         }
 
         public async Task<UserModel> GetUserByID(int user_ID)

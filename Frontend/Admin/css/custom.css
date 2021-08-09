@@ -46,3 +46,11 @@
     
     margin-top: 20%;
   }
+  
+  .disableLink{
+    pointer-events: none;
+    cursor: none;
+  }
+  #nextPage, #previousPage{
+    cursor: pointer;
+  }

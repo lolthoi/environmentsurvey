@@ -2,7 +2,6 @@ var domen = "https://localhost:44304";
 var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
 var token = localStorage.getItem("token")
-console.log(role);
 var totalPage1 ='';
 $(document).ready(function(){
 	callAjax(pageNumber = 1);
@@ -39,7 +38,9 @@ function callAjax(pageNumber){
 	// get all seminar
 	var dataSearch = {
 		Search_key : $('#search_key').val(),	
-		Role : role != null ? role:""
+		Role : role != null ? role:"",
+		FromDate : "",
+		ToDate : ""
 	}
 	var totalPage = "";
 	function getTotalPage(total){
@@ -78,8 +79,9 @@ function callAjax(pageNumber){
 		clearSeminar();
 		var dataSearch = {
 			Search_key : $(this).val(),	
-			Role : role!=null ? role:""
-			
+			Role : role!=null ? role:"",
+			FromDate : "",
+			ToDate : ""
 		}
 		console.log($(this).val());
 		$.ajax({
@@ -100,9 +102,9 @@ function callAjax(pageNumber){
 					let lsUserSeminarID =  listUserSeminar.map(item => {return item.SeminarId});
 					let listSeminar  = response.ListData.filter(item=> !lsUserSeminarID.includes(item.ID));
 					listSeminar.forEach(function(seminar) {
-						showSeminar(seminar);
-						
-					});				
+						showSeminar(seminar);						
+					});	
+					$('#currentPage').html(response.PageNumber)			
 				}
 			},       
 		})

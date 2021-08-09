@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="plugins/sweetalert/css/sweetalert2.min.css" type="text/css">
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -215,6 +216,7 @@
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title">List Seminar</h4>
                     </div>
+                    
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
                             <!-- <ol class="breadcrumb ms-auto">
@@ -234,11 +236,59 @@
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
+            <div class="container" style="padding:0 25px; margin-top: 20px;">
+                <div class="row">  
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="Subject">Search key</label>
+                            <input type="text" autocomplete="off" class="form-control" name="Search_key"
+                                id="Search_key" placeholder="Enter key to search">
+                            <small id="subject-valid" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="StartTime">From Date</label>
+                            <input type="date" autocomplete="off" class="form-control" name="StartTime"
+                                id="FromDate">
+                            <small id="st-valid" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="EndTime">To Date</label>
+                            <input type="date" autocomplete="off" class="form-control" name="EndTime"
+                                id="ToDate" >
+                            <small id="et-valid" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="Role">Role</label>
+                            <select class="form-control mb-3" id="role">
+                                <option value="">All</option>
+                                <option value="STUDENT">Student</option>
+                                <option value="EMPLOYEE">Teacher</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div class="col-md-1">
+                        <div style="margin-top:28px">
+                            <button type="button" id="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div style="margin-top:28px">
+                            <button type="button" id="reset" class="btn btn-primary">Reset</button>
+                        </div>
+                    </div>
+                    
+                </div>                                            
+            </div>
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <a href="create-seminar.html" class="btn btn-block btn-primary mb-3">Create Seminar</a>
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -255,6 +305,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <span class="text-center" id="messageData"></span>
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -267,6 +318,19 @@
                                         </tr>
                                     </tfoot>
                                 </table>
+                                <div aria-label="..." style="margin-left: 426px;" id="paginationPage">
+                                    <ul class="pagination ">
+                                      <li class="page-item ">
+                                        <a class="page-link" id="previousPage"  tabindex="-1">Previous</a>
+                                      </li>
+                                      <li class="page-item active">
+                                        <a class="page-link" href="#" id="currentPage"><span class="sr-only" ></span></a>
+                                      </li>
+                                      <li class="page-item">
+                                        <a class="page-link" id="nextPage">Next</a>
+                                      </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -326,7 +390,11 @@
     <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- SweetAlert -->
+        
+    <script src="plugins/datetimepicker/js/datetimepicker.js"></script>
+    
     <script src="plugins/sweetalert/js/sweetalert2.all.min.js"></script>
+
     <!--Custom JavaScript -->
     <script src="js/custom.js"></script>
     <script src="js/viewJs/authorize.js"></script>

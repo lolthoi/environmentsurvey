@@ -46,7 +46,9 @@ $(document).ready(function(){
 	// get all seminar
 	var dataSearch = {
 		Search_key : "",
-		Role : role != null ? role:""		
+		Role : role!=null ? role:"",
+		FromDate : "",
+		ToDate : ""		
 	}
 	$.ajax({
         type : "POST",
