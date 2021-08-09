@@ -1,14 +1,20 @@
 var domen = "https://localhost:44304";
 var tempList = null;
 
+var token = localStorage.getItem("token");
+var url_string = window.location + "";
+var url = new URL(url_string);
+var seminarId = url.searchParams.get("seminarId");
+
 $(document).ready(function(){
-    var url_string = window.location + "";
-    var url = new URL(url_string);
-    var seminarId = url.searchParams.get("seminarId");
+    
 
     $.ajax({
         type: "GET",
         url: domen+"/api/Seminar/"+seminarId,
+        headers: {
+            Authorization: "Bearer " + token,
+        },
         contentType: "application/json; charset=utf-8",
         datatype:"json",
         async: true,
@@ -20,6 +26,9 @@ $(document).ready(function(){
     $.ajax({
         type: "GET",
         url: domen+"/api/Seminar/"+seminarId+"/Survey",
+        headers: {
+            Authorization: "Bearer " + token,
+        },
         contentType: "application/json; charset=utf-8",
         datatype:"json",
         async: true,
@@ -46,7 +55,8 @@ function addRowData(Id, No, Survey, StartTime, EndTime, Des, Status){
             +'<td>'+Des+'</td>'
             +'<td>'+statusStr+'</td>'
             +'<td>'
-                +'<a href="sesfdf" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="far fa-edit"></i></a>'
+                +'<a href="add-survey.html?seminarId='+seminarId+'&surveyId='+Id+'" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="far fa-edit"></i></a>'
+                +'<a href="addQuestion-survey.html?seminarId='+seminarId+'&surveyId='+Id+'" style="text-decoration:none;margin-left:10px;" data-toggle="tooltip" data-placement="top" title="List Question"><i class="fas fa-list"></i></a>'
                 +'<a href="#" onclick="deleteEvent('+Id+'); return false;" style="text-decoration:none; margin-left:10px;" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></a>'
             +'</td>'
         +'</tr>'
@@ -72,6 +82,9 @@ function deleteEvent(surveyId){
     $.ajax({
         type: "DELETE",
         url: domen+"/api/Survey/"+surveyId,
+        headers: {
+            Authorization: "Bearer " + token,
+        },
         contentType: "application/json; charset=utf-8",
         datatype:"json",
         async: true,

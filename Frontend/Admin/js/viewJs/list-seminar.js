@@ -174,7 +174,11 @@ function showSeminar(seminar) {
       '"><i class="fa fa-trash"></i></button> ' +
       '<a href="../Client/seminar-single.html?id=' +
       seminar.ID +
-      '&status=" class="btn btn-block btn-info text-white" target="_blank"><i class=" ti-book"></i></a></td>' +
+      '&status=" class="btn btn-block btn-info text-white" target="_blank"><i class=" ti-book"></i></a> '+
+      '<a href="list-survey.html?seminarId=' +
+      seminar.ID +
+      '" class="btn btn-block btn-warning"><i class="fas fa-list"></i></a>'+
+      '</td>' +
       "</tr>"
   );
 }
