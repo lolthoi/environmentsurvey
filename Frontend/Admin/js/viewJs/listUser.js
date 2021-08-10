@@ -3,12 +3,26 @@ var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
 var token = localStorage.getItem("token");
 // get list seminar
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const filter = urlParams.get('filter');
 
 var totalPage = '';
 
 $(document).ready(function(){
+  ClearData();
   getList(pageNumber = 1);
   pagination(pageNumber = 1, totalPage );
+  console.log("loading")
+  if(filter){
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    $('#FromDate').val(today);
+    $('#submit').click();
+    console.log("auto click")
+  }
 })
 
 $('#submit').click(function(){
