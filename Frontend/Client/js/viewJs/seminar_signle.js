@@ -10,7 +10,7 @@ const status = urlParams.get('status');
 
 
 $(document).ready(function(){
-	
+	$('#loadListSurvey').load("listSurvey.html");
 	$.ajax({
         type : "GET",
         url: domen+"/api/Seminar/"+id,
@@ -25,8 +25,6 @@ $(document).ready(function(){
             }else{
               showSeminarDetailRegisteringOrDecline(seminar);
             }
-
-            
         },       
     })
 })
@@ -91,13 +89,7 @@ function showSeminarDetail(seminar){
      +'</div>'
      +'<div class="col-12 mb-4">'
        +'<h3 class="mb-3">Survey</h3>'
-       +'<ul class="list-styled">'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-       +'</ul>'
+       +'<div id="loadListSurvey"></div>'
      +'</div>'
      +'<div class="col-12 mb-4">'
       +'<button type="button" class="btn btn-primary btn-sm button_register" data-name="'+seminar.Name+'" ">Register Now</button>'
@@ -168,12 +160,6 @@ function showSeminarDetailRegisteringOrDecline(seminar){
      +'<div class="col-12 mb-4">'
        +'<h3 class="mb-3">Survey</h3>'
        +'<ul class="list-styled">'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-         +'<li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae obcaecati unde nulla? Lorem, ipsum dolor. Lorem, ipsum.</li>'
-       +'</ul>'
      +'</div>'      
      +'</div>'
    +'</div>'
@@ -239,16 +225,10 @@ function showSeminarDetailRegistered(seminar){
      +'</div>'
      +'<div class="col-12 mb-4">'
        +'<h3 class="mb-3">Survey</h3>'
-       +'<div id="loadListSurvey"></div>'
      +'</div>'
-     +'<div class="col-12 mb-4">'
-      +'<button type="button" class="btn takeSurvey btn-sm take_survey" data-endDate="'+seminar.EndDate+'" ">Take a Survey</button>'
-     +'</div>'
-       
      +'</div>'
    +'</div>'
 	)
-  $('#loadListSurvey').load("listSurvey.html");
 }
 
 $(document).ready(function() {
@@ -297,7 +277,6 @@ $(document).ready(function() {
 						$('#message_register_seminar').css("color","tomato");
 						$('#registerModal').modal('hide');
 						$('#registerSeminarModal').modal('show');
-						
 					}
 				}, 
 
@@ -321,7 +300,6 @@ $(document).ready(function() {
         $('#message_register_seminar').css("color","green");
         $('#registerSeminarModal').modal('show');
       }
-			
 		}	
 	});
 	

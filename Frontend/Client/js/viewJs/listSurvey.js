@@ -12,6 +12,7 @@ $(document).ready(function(){
 			async:false,
 			success : function(response){
 				showSurvey(response);
+        console.log(response)
 			},       
 		});
   });
@@ -72,9 +73,9 @@ $(document).ready(function(){
         +'<div class="card p-0 border-primary rounded-0 hover-shadow">'
           +'<div class="card-body">'
             +'<ul class="list-inline mb-2">'
-              +'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+`${year}-${month}-${day}`+'</li>'
-              +'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+`${yearEnd}-${monthEnd}-${dayEnd}`+'</li>'
-              +'<li class="list-inline-item"><a class="text-color">'+eachSurvey.Name+'</a></li>'
+              +'<li class="list-inline-item">Start time: <i class="ti-calendar mr-1 text-color"></i>'+`${year}-${month}-${day}`+'</li>'
+              +'<li class="list-inline-item" style="margin-bottom : 10px">End time: <i class="ti-calendar mr-1 text-color"></i>'+`${yearEnd}-${monthEnd}-${dayEnd}`+'</li>'
+              +'<li class="list-inline-item" style="font-weight:bold !important"><a class="text-color">'+eachSurvey.Name+'</a></li>'
               +'<li class="list-inline-item"><a class="text-color">'+eachSurvey.Description+'</a></li>'
               +'</ul>'
               +'<button id="start" style="margin-left:25%" onclick="startQuestion('+eachSurvey.Id+')" value="" class="eachSurveyQues button_startbtn btn-primary btn-sm">Start</button>'
@@ -88,9 +89,9 @@ $(document).ready(function(){
         +'<div class="card p-0 border-primary rounded-0 hover-shadow">'
           +'<div class="card-body">'
             +'<ul class="list-inline mb-2">'
-              +'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+`${year}-${month}-${day}`+'</li>'
-              +'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+`${yearEnd}-${monthEnd}-${dayEnd}`+'</li>'
-              +'<li class="list-inline-item"><a class="text-color">'+eachSurvey.Name+'</a></li>'
+              +'<li class="list-inline-item">Start time: <i class="ti-calendar mr-1 text-color"></i>'+`${year}-${month}-${day}`+'</li>'
+              +'<li class="list-inline-item" style="margin-bottom : 10px">End time: <i class="ti-calendar mr-1 text-color"></i>'+`${yearEnd}-${monthEnd}-${dayEnd}`+'</li>'
+              +'<li class="list-inline-item"><a class="text-color" style="font-weight:bold !important">'+eachSurvey.Name+'</a></li>'
               +'<li class="list-inline-item"><a class="text-color">'+eachSurvey.Description+'</a></li>'
               +'</ul>'
             +'</div>'
