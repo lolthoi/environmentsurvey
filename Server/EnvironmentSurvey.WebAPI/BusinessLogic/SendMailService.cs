@@ -14,8 +14,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     public interface ISendMailService
     {
         Task SendMail(MailModel mailContent);
-
         Task SendWelcomeEmailAsync(string email, string subject, string username, string token);
+        Task SendEmailConfirm(string email, string subject, string username, string message);
     }
     public class SendMailService : ISendMailService
     {
@@ -71,6 +71,22 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             await smtp.SendAsync(email);
 
             smtp.Disconnect(true);
+        }
+
+        public async Task SendEmailConfirm(string email, string subject, string username, string message)
+        {
+            string FilePath = Directory.GetCurrentDirectory() + "\\Templates\\ConfirmRegSeminarTemp.html";
+            StreamReader str = new StreamReader(FilePath);
+            string MailText = str.ReadToEnd();
+            str.Close();
+            MailText = MailText.Replace("[Username]", username);
+            MailText = MailText.Replace("[Message]", message);
+
+            MailModel mailContent = new MailModel();
+            mailContent.To = email;
+            mailContent.Subject = subject;
+            mailContent.Body = MailText;
+            await SendMail(mailContent);
         }
     }
 }

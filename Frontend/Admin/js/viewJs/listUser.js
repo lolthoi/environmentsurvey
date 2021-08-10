@@ -9,7 +9,6 @@ var totalPage = '';
 $(document).ready(function(){
   getList(pageNumber = 1);
   pagination(pageNumber = 1, totalPage );
-  console.log(totalPage)
 })
 
 $('#submit').click(function(){
@@ -104,7 +103,7 @@ $(document).on("click", 'button[id^="delete"]', function () {
             swalWithBootstrapButtons.fire("Delete Success", "", "success");
             $("#list-seminar").DataTable().clear().destroy();
             $("#list-seminar tbody").empty();
-            getList();
+            getList(pageNumber = 1);
           },
           error: function (response) {
             const swalWithBootstrapButtons = Swal.mixin({

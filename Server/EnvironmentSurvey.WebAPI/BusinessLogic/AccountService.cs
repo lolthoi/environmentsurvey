@@ -39,7 +39,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         private async Task<User> GetUser(string UserName, string Password)
         {
-            var account = _context.Users.SingleOrDefault(u => u.Username.Equals(UserName));
+            var account = _context.Users.SingleOrDefault(u => u.Username.Equals(UserName) && !u.DeletedDate.HasValue);
             if (account == null || !BC.Verify(Password, account.Password))
                 return await Task.FromResult<User>(null);
             else

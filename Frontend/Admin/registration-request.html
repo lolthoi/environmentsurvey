@@ -11,14 +11,19 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Ample Admin Lite Template by WrapPixel</title>
+    <title>List Seminar</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- SweetAlert -->
+    <link rel="stylesheet" href="plugins/sweetalert/css/sweetalert2.min.css" type="text/css">
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -37,6 +42,12 @@
             <div class="lds-pos"></div>
         </div>
     </div>
+    <!-- model load -->
+    <div class="modal " id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered text-center" role="document">
+          <div class="loader"></div>
+        </div>
+      </div>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -92,20 +103,20 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                         <li class=" in">
-                            <form role="search" class="app-search d-none d-md-block me-3">
+                            <!-- <form role="search" class="app-search d-none d-md-block me-3">
                                 <input type="text" placeholder="Search..." class="form-control mt-0">
                                 <a href="" class="active">
                                     <i class="fa fa-search"></i>
                                 </a>
-                            </form>
+                            </form> -->
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li>
-                            <a class="profile-pic" href="#">
-                                <img src="plugins/images/users/varun.jpg" alt="user-img" width="36"
-                                    class="img-circle"><span class="text-white font-medium">Steave</span></a>
+                            <a class="profile-pic" href="javascript:void(0);">
+                                <img src="" id="user-img" alt="user-img" width="36"
+                                    class="img-circle"><span class="text-white font-medium" id="user-name"></span></a>
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
@@ -126,7 +137,6 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <!-- User Profile-->
                         <li class="sidebar-item pt-2">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
                                 aria-expanded="false">
@@ -170,14 +180,14 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-survey.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-faqs.html"
                                 aria-expanded="false">
                                 <i class="far fa-question-circle" aria-hidden="true"></i>
                                 <span class="hide-menu">FAQs</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-survey.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="support-infomation.html"
                                 aria-expanded="false">
                                 <i class="far fa-id-card" aria-hidden="true"></i>
                                 <span class="hide-menu">Support Information</span>
@@ -197,14 +207,6 @@
             </div>
             <!-- End Sidebar scroll-->
         </aside>
-
-        <!-- modal loading -->
-        <div class="modal" id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered text-center" role="document">
-            <div class="loader"></div>
-            </div>
-        </div>
-
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -218,7 +220,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Blank Page</h4>
+                        <h4 class="page-title">List Register Seminar Pending</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -239,41 +241,91 @@
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
+            <div class="container" style="padding:0 25px; margin-top: 20px;">
+                <div class="row"> 
+                    <div class="col-md-7"></div> 
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="Subject">Search key</label>
+                            <input type="text" autocomplete="off" class="form-control" name="Search_key"
+                                id="Search_key" placeholder="Enter key to search">
+                            <small id="subject-valid" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="StartTime">Start Date</label>
+                            <input type="date" autocomplete="off" class="form-control" name="StartTime"
+                                id="FromDate">
+                            <small id="st-valid" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="EndTime">End Date</label>
+                            <input type="date" autocomplete="off" class="form-control" name="EndTime"
+                                id="ToDate" >
+                            <small id="et-valid" class="text-danger"></small>
+                        </div>
+                    </div> -->
+                    <div class="col-md-1">
+                        <div style="margin-top:28px">
+                            <button type="button" id="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div style="margin-top:28px">
+                            <button type="button" id="reset" class="btn btn-primary">Reset</button>
+                        </div>
+                    </div>
+                    
+                </div>                                            
+            </div>
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            
-                            <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="listSurveyPending" class="table table-bordered table-striped">
+                                <table id="list-seminar" class="table table-bordered table-striped">
                                     <thead>
-                                    <tr>
-                                      <th>No</th>
-                                      <th>Seminar</th>
-                                      <th>User</th>
-                                      <th>Id Number</th>
-                                      <th style="width:12%;">Action</th>
-                                    </tr>
+                                        <tr>
+                                            <th style="width:25%">Seminar Name</th>
+                                            <th style="width:17%">User</th>
+                                            <th style="width:25%">Full Name</th>
+                                            <th style="width:17%">User ID Number</th>
+                                            <th style="width:10%"></th>
+                                        </tr>
                                     </thead>
-                                    <tbody id="listSeminarTbody">
-                                    
+                                    <tbody>
                                     </tbody>
                                     <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Seminar</th>
-                                        <th>User</th>
-                                        <th>Id Number</th>
-                                        <th>Action</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Seminar Name</th>
+                                            <th>User</th>
+                                            <th>Full Name</th>
+                                            <th>User ID Number</th>
+                                            <th></th>
+                                        </tr>
                                     </tfoot>
-                                  </table>
+                                </table>
+                                <div aria-label="..." style="margin-left: 426px;" id="paginationPage">
+                                    <ul class="pagination ">
+                                      <li class="page-item ">
+                                        <a class="page-link" id="previousPage"  tabindex="-1">Previous</a>
+                                      </li>
+                                      <li class="page-item active">
+                                        <a class="page-link" href="#" id="currentPage"><span class="sr-only" ></span></a>
+                                      </li>
+                                      <li class="page-item">
+                                        <a class="page-link" id="nextPage">Next</a>
+                                      </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <!-- /.card-body -->
                         </div>
                     </div>
                 </div>
@@ -294,8 +346,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer text-center"> 2021 © Ample Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a>
+            <footer class="footer text-center"> 2021 © Environment Survey
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -319,8 +370,21 @@
     <script src="js/waves.js"></script>
     <!--Menu sidebar -->
     <script src="js/sidebarmenu.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <!-- DataTables -->
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="plugins/jszip/jszip.min.js"></script>
+    <script src="plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- SweetAlert -->
+    <script src="plugins/sweetalert/js/sweetalert2.all.min.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.js"></script>
     <script src="js/viewJs/authorize.js"></script>
