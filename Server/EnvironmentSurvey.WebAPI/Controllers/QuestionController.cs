@@ -35,12 +35,12 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             return _questionService.GetAllQuestionBySurveyId(id);
         }
         [HttpPost]
-        public ActionResult<QuestionModel> Create(QuestionModel model)
+        public ActionResult<bool> Create(QuestionModel model)
         {
             return _questionService.Create(model);
         }
         [HttpPut]
-        public ActionResult<QuestionModel> Update(QuestionModel model)
+        public ActionResult<bool> Update(QuestionModel model)
         {
             return _questionService.Update(model);
         }

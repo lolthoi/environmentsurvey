@@ -10,11 +10,11 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
     public interface IQuestionService
     {
-        QuestionModel Create(QuestionModel model);
+        bool Create(QuestionModel model);
         List<QuestionModel> GetAll();
         List<QuestionModel> GetAllQuestionBySurveyId(int surveyId);
         QuestionModel GetById(int Id);
-        QuestionModel Update(QuestionModel model);
+        bool Update(QuestionModel model);
         bool Delete(int Id);
     }
     public class QuestionService : IQuestionService
@@ -32,34 +32,33 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             _surveyQuestionRepository = surveyQuestionRepository;
         }
 
-        public QuestionModel Create(QuestionModel model)
+        public bool Create(QuestionModel model)
         {
-            var listAnswer = new List<Answer>();
-            if (model.Answers.Count < 2)
+            if (model.Answers.Count < 4)
             {
                 throw new Exception("Not enough answers for this question");
             }
             else
             {
+                var question = new Question
+                {
+                    Question1 = model.Question,
+                };
+                model.Id = question.Id;
+                _questionRepository.Insert(question);
+
                 foreach (var item in model.Answers)
                 {
                     Answer answer = new()
                     {
                         Answer1 = item.Answer,
                         IsCorrect = (int)item.IsCorrect,
-                        QuestionId = item.QuestionId,
+                        QuestionId = model.Id,
                     };
-                    listAnswer.Add(answer);
+                    _answerRepository.Insert(answer);
                 }
             }
-            var question = new Question
-            {
-                Question1 = model.Question,
-                Answers = listAnswer,
-            };
-            model.Id = question.Id;
-            _questionRepository.Insert(question);
-            return model;
+            return true;
         }
 
         public bool Delete(int Id)
@@ -70,8 +69,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             else
             {
                 _questionRepository.Delete(question);
-                return true;
+                var listAnswer = _answerRepository.GetAll().Where(x => x.QuestionId == Id).ToList();
+                _answerRepository.DeleteRange(listAnswer);
             }
+            return true;
         }
 
         public List<QuestionModel> GetAll()
@@ -179,7 +180,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             return model;
         }
 
-        public QuestionModel Update(QuestionModel model)
+        public bool Update(QuestionModel model)
         {
             Question question = _questionRepository.Get(model.Id);
             if (question == null)
@@ -188,8 +189,21 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 question.Question1 = model.Question;
                 _questionRepository.Update(question);
+                var listAnswer = _answerRepository.GetAll().Where(x => x.QuestionId == model.Id).ToList();
+                foreach (var item in model.Answers)
+                {
+                    var answer = listAnswer.Where(x => x.Id == item.Id).FirstOrDefault(); ;
+                    if (answer == null)
+                        throw new Exception("Answer not found");
+                    else
+                    {
+                        answer.Answer1 = item.Answer;
+                        answer.IsCorrect = (int)item.IsCorrect;
+                        _answerRepository.Update(answer);
+                    };
+                }
             }
-            return model;
+            return true;
         }
     }
 }
