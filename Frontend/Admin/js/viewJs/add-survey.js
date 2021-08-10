@@ -48,85 +48,80 @@ $(document).ready(function(){
         },
     });
 
-    $("#surveyName").focusout(function(){
-        validateName();
-    })
-
     $("#saveForm").click(function(){
-        validateDate();
-        if(surveyId == null){
-            var data = {
-                SeminarId : seminarId,
-                Name: $("#surveyName").val(),
-                Description: $("#des").val(),
-                StartDate: $("#startTime").val(),
-                EndDate: $("#endTime").val()
+        if(validateName() && validateDate()){
+            if(surveyId == null){
+                var data = {
+                    SeminarId : seminarId,
+                    Name: $("#surveyName").val(),
+                    Description: $("#des").val(),
+                    StartDate: $("#startTime").val(),
+                    EndDate: $("#endTime").val()
+                }
+                $.ajax({
+                    type: "POST",
+                    url: domen+"/api/Survey",
+                    headers: {
+                        Authorization: "Bearer " + token,
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data : JSON.stringify(data),
+                    datatype:"json",
+                    async: true,
+                    success: function(response) {
+                        if(response == true){
+                            window.location.href = "/Admin/list-survey.html?seminarId="+seminarId;
+                        }
+                    },
+                });
+            } else {
+                var data = {
+                    Id : surveyId,
+                    SeminarId : seminarId,
+                    Name: $("#surveyName").val(),
+                    Description: $("#des").val(),
+                    StartDate: $("#startTime").val(),
+                    EndDate: $("#endTime").val()
+                }
+                $.ajax({
+                    type: "PUT",
+                    url: domen+"/api/Survey",
+                    headers: {
+                        Authorization: "Bearer " + token,
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data : JSON.stringify(data),
+                    datatype:"json",
+                    async: true,
+                    success: function(response) {
+                        if(response == true){
+                            window.location.href = "/Admin/list-survey.html?seminarId="+seminarId;
+                        }
+                    },
+                });
             }
-            $.ajax({
-                type: "POST",
-                url: domen+"/api/Survey",
-                headers: {
-                    Authorization: "Bearer " + token,
-                },
-                contentType: "application/json; charset=utf-8",
-                data : JSON.stringify(data),
-                datatype:"json",
-                async: true,
-                success: function(response) {
-                    if(response == true){
-                        window.location.href = "/Admin/list-survey.html?seminarId="+seminarId;
-                    }
-                },
-            });
-        } else {
-            var data = {
-                Id : surveyId,
-                SeminarId : seminarId,
-                Name: $("#surveyName").val(),
-                Description: $("#des").val(),
-                StartDate: $("#startTime").val(),
-                EndDate: $("#endTime").val()
-            }
-            $.ajax({
-                type: "PUT",
-                url: domen+"/api/Survey",
-                headers: {
-                    Authorization: "Bearer " + token,
-                },
-                contentType: "application/json; charset=utf-8",
-                data : JSON.stringify(data),
-                datatype:"json",
-                async: true,
-                success: function(response) {
-                    if(response == true){
-                        window.location.href = "/Admin/list-survey.html?seminarId="+seminarId;
-                    }
-                },
-            });
         }
+        
     });
-
-    
-
 })
 
 function validateName(){
     if($("#surveyName").val() == ""){
         $("#issue-name").text("Please insert survey name.");
-        $("#saveForm").attr("disabled", true);
+        return false;
     } else {
         $("#issue-name").text("");
-        $("#saveForm").removeAttr("disabled");
+        return true;
     }
 }
 
 function validateDate(){
     if($("#startTime").val() == ""){
         $("#issue-datetime").text("Please select time for survey.");
-        $("#saveForm").attr("disabled", true);
+        return false;
     } else {
         $("#issue-datetime").text("");
-        $("#saveForm").removeAttr("disabled");
+        return true;
     }
 }
 
