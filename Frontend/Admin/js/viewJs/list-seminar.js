@@ -171,9 +171,9 @@ function showSeminar(seminar) {
       '<button type="button" class="btn btn-block btn-danger text-white" id="delete' +
       seminar.ID +
       '"><i class="fa fa-trash"></i></button> ' +
-      '<a href="add-survey.html?seminarId=' +
+      '<a href="list-survey.html?seminarId=' +
       seminar.ID +
-      '" class="btn btn-block btn-info text-white" target="_blank"><i class=" ti-plus"></i></a>' +
+      '" class="btn btn-block btn-info text-white" target="_blank"><i class="fas fa-list"></i></a> ' +
       '<a href="../Client/seminar-single.html?id=' +
       seminar.ID +
       '&status=" class="btn btn-block btn-info text-white" target="_blank"><i class=" ti-book"></i></a></td>' +
