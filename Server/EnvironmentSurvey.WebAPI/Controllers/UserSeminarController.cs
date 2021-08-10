@@ -40,11 +40,11 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             return response;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("getAllSeminarPending")]
-        public async Task<List<ResUserSemiModel>> getAll()
+        public async Task<ResponsePagedModel> getAll(SearchModel model, [FromQuery] PaginationClientModel paginationClientModel)
         {
-            var response = await _userSeminarService.getAllSeminarPending();
+            var response = await _userSeminarService.getAllSeminarPending(model, paginationClientModel);
             return response;
         }
 

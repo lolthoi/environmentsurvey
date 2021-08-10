@@ -8,7 +8,6 @@ var totalPage = '';
 $(document).ready(function(){
   getList(pageNumber = 1);
   pagination(pageNumber = 1, totalPage );
-  console.log(totalPage)
 })
 
 $('#submit').click(function(){
@@ -123,7 +122,7 @@ $(document).on("click", 'button[id^="delete"]', function () {
             swalWithBootstrapButtons.fire("Delete Success", "", "success");
             $("#list-seminar").DataTable().clear().destroy();
             $("#list-seminar tbody").empty();
-            getList();
+            getList(pageNumber=1);
           },
           error: function (response) {
             const swalWithBootstrapButtons = Swal.mixin({
@@ -174,11 +173,7 @@ function showSeminar(seminar) {
       '"><i class="fa fa-trash"></i></button> ' +
       '<a href="../Client/seminar-single.html?id=' +
       seminar.ID +
-      '&status=" class="btn btn-block btn-info text-white" target="_blank"><i class=" ti-book"></i></a> '+
-      '<a href="list-survey.html?seminarId=' +
-      seminar.ID +
-      '" class="btn btn-block btn-warning"><i class="fas fa-list"></i></a>'+
-      '</td>' +
+      '&status=" class="btn btn-block btn-info text-white" target="_blank"><i class=" ti-book"></i></a></td>' +
       "</tr>"
   );
 }
