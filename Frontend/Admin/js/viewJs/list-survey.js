@@ -7,8 +7,8 @@ var url = new URL(url_string);
 var seminarId = url.searchParams.get("seminarId");
 
 $(document).ready(function(){
+    $("#addNewSurvey").attr("href","add-survey.html?seminarId="+seminarId);
     
-
     $.ajax({
         type: "GET",
         url: domen+"/api/Seminar/"+seminarId,
@@ -55,9 +55,9 @@ function addRowData(Id, No, Survey, StartTime, EndTime, Des, Status){
             +'<td>'+Des+'</td>'
             +'<td>'+statusStr+'</td>'
             +'<td>'
-                +'<a href="add-survey.html?seminarId='+seminarId+'&surveyId='+Id+'" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="far fa-edit"></i></a>'
-                +'<a href="addQuestion-survey.html?seminarId='+seminarId+'&surveyId='+Id+'" style="text-decoration:none;margin-left:10px;" data-toggle="tooltip" data-placement="top" title="List Question"><i class="fas fa-list"></i></a>'
-                +'<a href="#" onclick="deleteEvent('+Id+'); return false;" style="text-decoration:none; margin-left:10px;" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></a>'
+                +'<a href="add-survey.html?seminarId='+seminarId+'&surveyId='+Id+'" class="btn btn-block btn-warning" data-toggle="tooltip" data-placement="top" title="Edit Survey"><i class=" ti-pencil"></i></a>  '
+                +'<a href="addQuestion-survey.html?seminarId='+seminarId+'&surveyId='+Id+'" class="btn btn-block btn-info text-white" data-toggle="tooltip" data-placement="top" title="List Question"><i class="fas fa-list"></i></a> '
+                +'<button type="button" class="btn btn-block btn-danger text-white" id="delete'+Id+'" data-toggle="tooltip" data-placement="top" title="Delete Survey"><i class="fa fa-trash"></i></button>'
             +'</td>'
         +'</tr>'
     )
@@ -78,26 +78,66 @@ function convertDate(string){
     return converted;
 }
 
-function deleteEvent(surveyId){
-    $.ajax({
-        type: "DELETE",
-        url: domen+"/api/Survey/"+surveyId,
-        headers: {
-            Authorization: "Bearer " + token,
-        },
-        contentType: "application/json; charset=utf-8",
-        datatype:"json",
-        async: true,
-        success: function(response) {
-            if(response == true){
-                for(var i=0; i<tempList.length; i++){
-                    if(tempList[i].Id === surveyId){
+$(document).on("click", 'button[id^="delete"]', function () {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success mx-3",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons
+      .fire({
+        title: "Delete Question",
+        text: "Are you sure to delete this record?",
+        icon: "warning",
+        showCancelButton: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          swal.showLoading();
+          surveyId = this.id.replace("delete", "");
+          $.ajax({
+            type: "DELETE",
+            url: domen+"/api/Survey/"+surveyId,
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+            contentType: "application/json; charset=utf-8",
+            async: true,
+            success: function (response) {
+              const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: "btn btn-success",
+                  cancelButton: "btn btn-danger mr-3",
+                },
+                buttonsStyling: false,
+              });
+              swalWithBootstrapButtons.fire("Delete Success", "", "success");
+              var surveyIdNum = Number.parseInt(surveyId);
+              for(var i=0; i<tempList.length; i++){
+                    if(tempList[i].Id === surveyIdNum){
                         tempList.splice(i,1);
                     }
-                }
-                showListPending(tempList);
-            }
-        },
-    });
-}
-
+              }
+              showListPending(tempList);
+            },
+            error: function (response) {
+              const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: "btn btn-success",
+                  cancelButton: "btn btn-danger mr-3",
+                },
+                buttonsStyling: false,
+              });
+              swalWithBootstrapButtons.fire(
+                "Delete Failed",
+                "Something went wrong please try again later",
+                "error"
+              );
+            },
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+      });
+  });

@@ -1,13 +1,16 @@
 var domen = "https://localhost:44304";
 var token = localStorage.getItem("token");
 
+var url_string = window.location + "";
+var url = new URL(url_string);
+var seminarId = url.searchParams.get("seminarId");
+var surveyId = url.searchParams.get("surveyId");
+
 $(document).ready(function(){
-    var url_string = window.location + "";
-    var url = new URL(url_string);
-    var seminarId = url.searchParams.get("seminarId");
-    var surveyId = url.searchParams.get("surveyId");
 
     if(surveyId != null){
+        $("#page-title").text("Edit Survey");
+
         $.ajax({
             type: "GET",
             url: domen+"/api/Survey/"+surveyId,
@@ -26,6 +29,7 @@ $(document).ready(function(){
                 formatDatePicker();
             },
         });
+        $("#saveForm").removeAttr("disabled");
     } else {
         formatDatePicker();
     }

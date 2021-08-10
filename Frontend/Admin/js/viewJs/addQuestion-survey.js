@@ -80,8 +80,30 @@ $(document).ready(function(){
                 }
             },
         });
-    })
-})
+    });
+
+    $("#serachBox1").keyup(function(){
+        var search = $("#serachBox1").val();
+        if(search != ""){
+            searchAllQuestion(search);
+        } else {
+            $("#questions").html("");
+            loadAllQuestion(tempList);
+        }
+    });
+
+    $("#serachBox2").keyup(function(){
+        var search = $("#serachBox2").val();
+        if(search != ""){
+            searchAllSelectQuestion(search);
+        } else {
+            $("#questionSelected").html("");
+            loadSelectedQuestion(selectList);
+        }
+    });
+
+
+});
 
 function loadAllQuestion(list){
     $("#questions").html("");
@@ -108,7 +130,6 @@ function addSelectedQuestion(){
         if(tempList[i].Id == questionId){
             var removeObject = tempList.splice(i,1);
             selectList.push(removeObject[0]);
-            
         }
     }
     loadAllQuestion(tempList);
@@ -141,17 +162,27 @@ function convertData(){
     return data;
 }
 
-// function filterResponseList(){
-//     for (let i = 0; i < tempList.length; i++) {
-//         var listSurveyQuestion = tempList[i].SurveyQuestions;
-//         console.log(listSurveyQuestion);
-//         for (let j = 0; j < listSurveyQuestion.length; j++) {
-//             if(listSurveyQuestion[j].SurveyId === surveyId){
-//                 var removeObject = tempList.splice(i,1);
-//                 selectList.push(removeObject[0]);
-//                 break;
-//             }
-//         }
-//     }
-// }
+function searchAllQuestion(search){
+    var searchList = [];
+    tempList.forEach(e => {
+        var check = e.Question.search(search);
+        if(check >= 0){
+            searchList.push(e);
+        }
+    })
+    $("#questions").html("");
+    loadAllQuestion(searchList);
+}
+
+function searchAllSelectQuestion(search){
+    var searchList = [];
+    selectList.forEach(e => {
+        var check = e.Question.search(search);
+        if(check >= 0){
+            searchList.push(e);
+        }
+    })
+    $("#questionSelected").html("");
+    loadSelectedQuestion(searchList);
+}
 
