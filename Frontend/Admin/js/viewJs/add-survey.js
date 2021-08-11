@@ -65,8 +65,7 @@ $(document).ready(function(){
                         Authorization: "Bearer " + token,
                     },
                     contentType: "application/json; charset=utf-8",
-                    data : JSON.stringify(data),
-                    datatype:"json",
+                    data : data,
                     async: true,
                     success: function(response) {
                         if(response == true){

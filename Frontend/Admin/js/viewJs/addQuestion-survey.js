@@ -1,6 +1,6 @@
 var domen = "https://localhost:44304";
-var tempList = null;
-var selectList = [];
+var selectedList = [];
+var listForSelect = [];
 
 var url_string = window.location + "";
 var url = new URL(url_string);
@@ -35,21 +35,24 @@ $(document).ready(function(){
         async: true,
         success: function(response) {
             console.log(response);
-            tempList = response;
-            for (let i = 0; i < tempList.length; i++) {
-                var listSurveyQuestion = tempList[i].SurveyQuestions;
+            for (let i = 0; i < response.length;i++) {
+                var listSurveyQuestion = response[i].SurveyQuestions;
+                var flag = 0;
                 for (let j = 0; j < listSurveyQuestion.length; j++) {
                     var surveyIdinside = listSurveyQuestion[j].SurveyId;
                     if(surveyIdinside === surveyId){
                         console.log("da chay");
-                        var removeObject = tempList.splice(i,1);
-                        selectList.push(removeObject[0]);
+                        selectedList.push(response[i]);
+                        flag = 1;
                         break;
                     }
                 }
+                if(flag === 0){
+                    listForSelect.push(response[i]);
+                }
             }
-            loadAllQuestion(tempList);
-            loadSelectedQuestion(selectList);
+            loadAllQuestion(listForSelect);
+            loadSelectedQuestion(selectedList);
         },
     });
 
@@ -65,14 +68,13 @@ $(document).ready(function(){
         var data = convertData();
 
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: domen+"/api/SurveyQuestion",
             headers: {
                 Authorization: "Bearer " + token,
             },
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
-            datatype:"json",
             async: true,
             success: function(response) {
                 if(response == true){
@@ -88,7 +90,7 @@ $(document).ready(function(){
             searchAllQuestion(search);
         } else {
             $("#questions").html("");
-            loadAllQuestion(tempList);
+            loadAllQuestion(listForSelect);
         }
     });
 
@@ -98,7 +100,7 @@ $(document).ready(function(){
             searchAllSelectQuestion(search);
         } else {
             $("#questionSelected").html("");
-            loadSelectedQuestion(selectList);
+            loadSelectedQuestion(selectedList);
         }
     });
 
@@ -126,33 +128,33 @@ function loadSelectedQuestion(list){
 function addSelectedQuestion(){
     var selectedRow = document.getElementById("questions");
     var questionId = selectedRow.value;
-    for (let i = 0; i < tempList.length; i++) {
-        if(tempList[i].Id == questionId){
-            var removeObject = tempList.splice(i,1);
-            selectList.push(removeObject[0]);
+    for (let i = 0; i < listForSelect.length; i++) {
+        if(listForSelect[i].Id == questionId){
+            var removeObject = listForSelect.splice(i,1);
+            selectedList.push(removeObject[0]);
         }
     }
-    loadAllQuestion(tempList);
-    loadSelectedQuestion(selectList);
+    loadAllQuestion(listForSelect);
+    loadSelectedQuestion(selectedList);
 }
 
 function removeSelectedQuestion(){
     var selectedRow = document.getElementById("questionSelected");
     var questionId = selectedRow.value;
-    for (let i = 0; i < selectList.length; i++) {
-        if(selectList[i].Id == questionId){
-            var removeObject = selectList.splice(i,1);
-            tempList.push(removeObject[0]);
+    for (let i = 0; i < selectedList.length; i++) {
+        if(selectedList[i].Id == questionId){
+            var removeObject = selectedList.splice(i,1);
+            listForSelect.push(removeObject[0]);
             
         }
     }
-    loadAllQuestion(tempList);
-    loadSelectedQuestion(selectList);
+    loadAllQuestion(listForSelect);
+    loadSelectedQuestion(selectedList);
 }
 
 function convertData(){
     var data = [];
-    selectList.forEach(e => {
+    selectedList.forEach(e => {
         var surveyQuestionModel = {
             SurveyId : surveyId,
             QuestionId : e.Id
@@ -164,7 +166,7 @@ function convertData(){
 
 function searchAllQuestion(search){
     var searchList = [];
-    tempList.forEach(e => {
+    listForSelect.forEach(e => {
         var check = e.Question.search(search);
         if(check >= 0){
             searchList.push(e);
@@ -176,7 +178,7 @@ function searchAllQuestion(search){
 
 function searchAllSelectQuestion(search){
     var searchList = [];
-    selectList.forEach(e => {
+    selectedList.forEach(e => {
         var check = e.Question.search(search);
         if(check >= 0){
             searchList.push(e);

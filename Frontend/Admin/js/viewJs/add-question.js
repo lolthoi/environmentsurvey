@@ -4,6 +4,7 @@ var token = localStorage.getItem("token");
 var url_string = window.location + "";
 var url = new URL(url_string);
 var questionId = url.searchParams.get("questionId");
+var flag = 0;
 
 $(document).ready(function(){
     if(questionId != null){
@@ -27,37 +28,37 @@ $(document).ready(function(){
 
     $("#question").focusout(function(){
         validateQuestion();
+        validateAnswer();
     })
 
     $(".answer").focusout(function(){
         changestatusAnswer();
+        validateAnswer();
     })
 
-
     $("#saveQuestion").click(function(){
-        if(validateAnswer()){
-            var data = {
-                Question : $("#question").val(),
-                Answers : returnData()
-            }
-            
-            // $.ajax({
-            //     type: "POST",
-            //     url: domen+"/api/Question",
-            //     headers: {
-            //         Authorization: "Bearer " + token,
-            //     },
-            //     contentType: "application/json; charset=utf-8",
-            //     data : JSON.stringify(data),
-            //     datatype:"json",
-            //     async: true,
-            //     success: function(response) {
-            //         if(response == true){
-            //             window.location.href = "/Admin/list-survey.html?seminarId="+seminarId;
-            //         }
-            //     },
-            // });
+        var data = {
+            Question : $("#question").val(),
+            Answers : returnData()
         }
+        console.log(data);
+        
+        // $.ajax({
+        //     type: "POST",
+        //     url: domen+"/api/Question",
+        //     headers: {
+        //         Authorization: "Bearer " + token,
+        //     },
+        //     contentType: "application/json; charset=utf-8",
+        //     data : JSON.stringify(data),
+        //     datatype:"json",
+        //     async: true,
+        //     success: function(response) {
+        //         if(response == true){
+        //             window.location.href = "/Admin/list-survey.html?seminarId="+seminarId;
+        //         }
+        //     },
+        // });
     })
 
 })
@@ -78,6 +79,10 @@ function changestatusAnswer(){
     
     if(row.value != ""){
         $("#correct"+rowId).removeAttr("disabled");
+        if(flag === 0){
+            $("#correct"+rowId).attr("checked",true);
+            flag = 1;
+        }
     } else {
         $("#correct"+rowId).attr("disabled", true);
     }
@@ -92,9 +97,12 @@ function validateAnswer(){
         }
     }
     if(count >= 2){
-        return true;
+        $("#issue-answer").text("");
+        $("#saveQuestion").removeAttr("disabled");
+    } else {
+        $("#issue-answer").text("Please insert 2 answers.");
+        $("#saveQuestion").attr("disabled", true);
     }
-    return false;
 }
 
 // trả về data list model answer
@@ -107,12 +115,14 @@ function returnData(){
             var rowId = listAns[i].id.substring(3);
             if($("#correct"+rowId).prop("checked")){
                 var model = {
+                    Id: $("#ansId"+rowId).val(),
                     Answer : listAns[i].value,
                     isCorrect : 1
                 }
                 listAnswerModel.push(model);
             } else {
                 var model = {
+                    Id: $("#ansId"+rowId).val(),
                     Answer : listAns[i].value,
                     isCorrect : 2
                 }
@@ -128,13 +138,15 @@ function returnData(){
 function loadDataQuestionModel(model){
     $("#question").val(model.Question);
     var listAns = model.Answers;
-    console.log(listAns);
     for (let i = 0; i < listAns.length; i++) {
         var j = i+1;
         $("#ans"+j).val(listAns[i].Answer);
+        $("#correct"+j).removeAttr("disabled");
         if(listAns[i].IsCorrect === 1){
             $("#correct"+j).attr("checked", true);
-            $("#correct"+j).removeAttr("disabled");
+        }
+        if(questionId != null){
+            $("#ansId"+j).val(listAns[i].Id);
         }
     }
 }
