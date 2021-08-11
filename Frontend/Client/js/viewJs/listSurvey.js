@@ -66,8 +66,8 @@ $(document).ready(function(){
         if(element.seminarID == id && element.status == 1)
         check = true ;
     });
-
-    if(nowTs >= Date.parse(eachSurvey.StartDate) && nowTs <= Date.parse(eachSurvey.EndDate) && check){
+    console.log(role)
+    if((nowTs >= Date.parse(eachSurvey.StartDate) && nowTs <= Date.parse(eachSurvey.EndDate) && check) || role == "ADMIN"){
       $('#listSurveyData').append(
       '<div class="col-lg-3 col-sm-6 mb-5">'
         +'<div class="card p-0 border-primary rounded-0 hover-shadow">'
