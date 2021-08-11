@@ -37,13 +37,12 @@ namespace EnvironmentSurvey.WebAPI.Controllers
 
         // POST api/<UserAnswerController>
         [HttpPost]
-        public ActionResult<bool> Create(List<UserAnswerModel> model)
+        public ActionResult<ResultModel> Create(List<UserAnswerModel> model)
         {
             try
             {
                 _userAnswerService.Create(model);
-                _resultService.SaveResult(model);
-                return true;
+                return _resultService.SaveResult(model);
             }
             catch (Exception e)
             {
