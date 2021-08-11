@@ -33,9 +33,8 @@ $(document).ready(function(){
         datatype:"json",
         async: true,
         success: function(response) {
-            console.log(response);
-            tempList = response;
-            showListPending(response);
+          tempList = response;
+          showListPending(response);
         },
     });
 

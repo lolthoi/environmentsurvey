@@ -125,19 +125,23 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 }).ToList();
             }
             var listSurvey = _surveyRespository.GetAll().Where(x => x.SerminarId == seminarId).ToList();
-            if (listSurvey.Count == 0)
-                throw new Exception("There is no Survey of this Seminar existed");
-            var result = listSurvey.Select(x => new SurveyModel
+            List<SurveyModel> result = new List<SurveyModel>();
+            if (listSurvey.Count > 0) 
             {
-                Id = x.Id,
-                Name = x.Name,
-                StartDate = x.StartDate,
-                EndDate = x.EndTime,
-                Status = (SurveyStatus)x.Status,
-                SeminarId = x.SerminarId,
-                Description = x.Description,
-                Results = listResultModel.Count > 0 ? listResultModel.Where(y => y.surveyId == x.Id).ToList() : null,
-            }).ToList();
+                result = listSurvey.Select(x => new SurveyModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    StartDate = x.StartDate,
+                    EndDate = x.EndTime,
+                    Status = (SurveyStatus)x.Status,
+                    SeminarId = x.SerminarId,
+                    Description = x.Description,
+                    Results = listResultModel.Count > 0 ? listResultModel.Where(y => y.surveyId == x.Id).ToList() : null,
+                }).ToList();
+            }
+                
+            
             return result;
         }
     }
