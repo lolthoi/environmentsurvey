@@ -14,6 +14,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         List<QuestionModel> GetAll();
         List<QuestionModel> GetAllQuestionBySurveyId(int surveyId);
         QuestionModel GetById(int Id);
+        QuestionModel GetByIdForAdmin(int Id);
         bool Update(QuestionModel model);
         bool Delete(int Id);
     }
@@ -163,6 +164,34 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     Id = x.Id,
                     Answer = x.Answer1,
                     IsCorrect = null,
+                    QuestionId = x.QuestionId
+                }).ToList();
+            }
+
+            QuestionModel model = new();
+            Question question = _questionRepository.Get(Id);
+            if (question == null)
+                throw new Exception("Question not found");
+            else
+            {
+                model.Id = question.Id;
+                model.Question = question.Question1;
+                model.Answers = listAnswerModel;
+            }
+            return model;
+        }
+
+        public QuestionModel GetByIdForAdmin(int Id)
+        {
+            var listAnswer = _answerRepository.GetAll().Where(x => x.QuestionId == Id).ToList();
+            List<AnswerModel> listAnswerModel = new();
+            if (listAnswer.Count > 0)
+            {
+                listAnswerModel = listAnswer.Select(x => new AnswerModel
+                {
+                    Id = x.Id,
+                    Answer = x.Answer1,
+                    IsCorrect = (IsCorrect?)x.IsCorrect,
                     QuestionId = x.QuestionId
                 }).ToList();
             }

@@ -23,6 +23,7 @@ $(document).ready(function(){
             success: function(response) {
                 $("#surveyName").val(response.Name);
                 $("#des").text(response.Description);
+                console.log(response.StartDate);
                 var startTime = convertDatetime(response.StartDate);
                 var endTime = convertDatetime(response.EndDate);
                 $("#date").val(startTime+" - "+endTime);
@@ -65,7 +66,7 @@ $(document).ready(function(){
                         Authorization: "Bearer " + token,
                     },
                     contentType: "application/json; charset=utf-8",
-                    data : data,
+                    data : JSON.stringify(data),
                     async: true,
                     success: function(response) {
                         if(response == true){
@@ -125,13 +126,13 @@ function validateDate(){
 }
 
 function convertDatetime(string){
-    var date = string.split('T')[0];
-    var time = string.split('T')[1];
+    var date = string.split(' ')[0];
+    var time = string.split(' ')[1];
 
-    var dates = date.split('-');
-    var year = dates[0];
+    var dates = date.split('/');
+    var year = dates[2];
     var month = dates[1];
-    var day = dates[2];
+    var day = dates[0];
 
     var times = time.split(':');
     var hour = times[0];
@@ -161,8 +162,8 @@ function formatDatePicker(){
             format: 'M/DD hh:mm A'
         }
         }, function(start, end, label) {
-        $("#startTime").val(start.format('DD/MM/YYYY hh:mm:ss A'));
-        $("#endTime").val(end.format('DD/MM/YYYY hh:mm:ss A'));
+        $("#startTime").val(start.format('MM/DD/YYYY HH:mm'));
+        $("#endTime").val(end.format('MM/DD/YYYY HH:mm'));
         });;
     });
 }

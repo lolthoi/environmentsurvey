@@ -50,7 +50,7 @@ function addRowData(Id, No, Survey, StartTime, EndTime, Des, Status){
         '<tr>'
             +'<td>'+No+'</td>'
             +'<td>'+Survey+'</td>'
-            +'<td>'+ StartTime +' / '+ EndTime +'</td>'
+            +'<td>'+ StartTime +' - '+ EndTime +'</td>'
             +'<td>'+Des+'</td>'
             +'<td>'+statusStr+'</td>'
             +'<td>'
@@ -72,7 +72,7 @@ function showListPending(list){
 }
 
 function convertDate(string){
-    var indexOfTime = string.indexOf("T");
+    var indexOfTime = string.indexOf(" ");
     var converted = string.substring(0, indexOfTime);
     return converted;
 }

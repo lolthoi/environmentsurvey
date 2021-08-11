@@ -53,6 +53,7 @@ $(document).ready(function(){
             }
             loadAllQuestion(listForSelect);
             loadSelectedQuestion(selectedList);
+            console.log(selectedList);
         },
     });
 
@@ -66,22 +67,23 @@ $(document).ready(function(){
 
     $("#submitButton").click(function(){
         var data = convertData();
+        console.log(data);
 
-        $.ajax({
-            type: "POST",
-            url: domen+"/api/SurveyQuestion",
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(data),
-            async: true,
-            success: function(response) {
-                if(response == true){
-                    window.location.href = "list-survey.html?seminarId="+seminarId;
-                }
-            },
-        });
+        // $.ajax({
+        //     type: "POST",
+        //     url: domen+"/api/SurveyQuestion",
+        //     headers: {
+        //         Authorization: "Bearer " + token,
+        //     },
+        //     contentType: "application/json; charset=utf-8",
+        //     data: JSON.stringify(data),
+        //     async: true,
+        //     success: function(response) {
+        //         if(response == true){
+        //             window.location.href = "list-survey.html?seminarId="+seminarId;
+        //         }
+        //     },
+        // });
     });
 
     $("#serachBox1").keyup(function(){

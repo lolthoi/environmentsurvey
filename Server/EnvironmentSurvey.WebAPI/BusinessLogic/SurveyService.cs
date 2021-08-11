@@ -33,8 +33,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             var survey = new Survey
             {
                 Name = model.Name,
-                StartDate = model.StartDate,
-                EndTime = model.EndDate,
+                StartDate = Convert.ToDateTime(model.StartDate),
+                EndTime = Convert.ToDateTime(model.EndDate),
                 Status = (int)model.Status,
                 SerminarId = model.SeminarId,
                 Description = model.Description,
@@ -52,8 +52,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             else
             {
                 survey.Name = model.Name;
-                survey.StartDate = model.StartDate;
-                survey.EndTime = model.EndDate;
+                survey.StartDate = Convert.ToDateTime(model.StartDate);
+                survey.EndTime = Convert.ToDateTime(model.EndDate);
                 survey.Status = (int)model.Status;
                 survey.SerminarId = model.SeminarId;
                 survey.Description = model.Description;
@@ -85,8 +85,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 surveyModel.Id = survey.Id;
                 surveyModel.Name = survey.Name;
-                surveyModel.StartDate = survey.StartDate;
-                surveyModel.EndDate = survey.EndTime;
+                surveyModel.StartDate = survey.StartDate.ToString();
+                surveyModel.EndDate = survey.EndTime.ToString();
                 surveyModel.Status = (SurveyStatus)survey.Status;
                 surveyModel.SeminarId = survey.SerminarId;
                 surveyModel.Description = survey.Description;
@@ -132,8 +132,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    StartDate = x.StartDate,
-                    EndDate = x.EndTime,
+                    StartDate = x.StartDate.ToString(),
+                    EndDate = x.EndTime.ToString(),
                     Status = (SurveyStatus)x.Status,
                     SeminarId = x.SerminarId,
                     Description = x.Description,

@@ -12,7 +12,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: "GET",
-            url: domen+"/api/Question/"+questionId,
+            url: domen+"/api/Question/Admin/"+questionId,
             headers: {
                 Authorization: "Bearer " + token,
             },
