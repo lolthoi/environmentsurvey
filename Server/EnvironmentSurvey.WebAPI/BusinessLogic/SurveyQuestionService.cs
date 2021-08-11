@@ -119,7 +119,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             }
             List<SurveyQuestion> listSurveyQuestionDomains = _surveyQuestionRepository.GetAll().Where(x => x.SurveyId == surveyId).ToList();
             if (listSurveyQuestionDomains.Count == 0)
-                throw new Exception("SurveyQuestion not found");
+                throw new Exception("There are no question for this survey");
             else
             {
                 var newQuestion = model.Where(t => !listSurveyQuestionDomains.Any(x => x.QuestionId == t.QuestionId)).ToList();
