@@ -194,12 +194,14 @@ let count = 0;
 function countQuestion(){
   count++;
 }
+
+let userChosseAns = null;
 //what happen when 'Continue' Button Will Click
 continueBtn.addEventListener("click", () => {
   
     quiz.style.display = "block";
     guide.style.display = "none";
-
+    
     interval = setInterval(countDown, 1000);
     loadData();
     total_correct.innerHTML = count+ ` Of ${questionData.length} Questions`;
@@ -214,30 +216,20 @@ continueBtn.addEventListener("click", () => {
 });
 
 option1.addEventListener("click", () => {
-  UserAns.push({
-    "SurveyQuestionId": document.getElementById("questionText").value,
-    "AnswerId": document.getElementById("option1").value,
-    "UserId": localStorage.getItem("userId")
-})});
+  userChosseAns =  document.getElementById("option1").value  
+});
 
 option2.addEventListener("click", () => {
-  UserAns.push({
-    "SurveyQuestionId": document.getElementById("questionText").value,
-    "AnswerId": document.getElementById("option2").value,
-    "UserId": localStorage.getItem("userId")
-  })});
+  userChosseAns =  document.getElementById("option2").value  
+});
+
 option3.addEventListener("click", () => {
-  UserAns.push({
-    "SurveyQuestionId": document.getElementById("questionText").value,
-    "AnswerId": document.getElementById("option3").value,
-    "UserId": localStorage.getItem("userId")
-  })});
+  userChosseAns =  document.getElementById("option3").value  
+});
+
 option4.addEventListener("click", () => {
-  UserAns.push({
-    "SurveyQuestionId": document.getElementById("questionText").value,
-    "AnswerId": document.getElementById("option4").value,
-    "UserId": localStorage.getItem("userId")
-  })});
+  userChosseAns =  document.getElementById("option4").value  
+});
 
 choice_que.forEach((choices, choiceNo) => {
     choices.addEventListener("click", () => {
@@ -260,6 +252,12 @@ next_question.addEventListener("click", () => {
             removeActive.classList.remove("active");
         })
         total_correct.innerHTML = count+ ` Of ${questionData.length} Questions`;
+      UserAns.push({
+        "SurveyQuestionId": document.getElementById("questionText").value,
+        "AnswerId": userChosseAns ? userChosseAns : null,
+        "UserId": localStorage.getItem("userId")
+      })
+      userChosseAns = null;
         //question
         loadData();
         //result
@@ -267,6 +265,12 @@ next_question.addEventListener("click", () => {
         clearInterval(interval);
         interval = setInterval(countDown, 1000);
     } else {
+      UserAns.push({
+        "SurveyQuestionId": document.getElementById("questionText").value,
+        "AnswerId": userChosseAns ? userChosseAns : null,
+        "UserId": localStorage.getItem("userId")
+      })
+      userChosseAns = null;
         index = 0;
         //when Quiz Question Complete Display Result Section
         $.ajax({
