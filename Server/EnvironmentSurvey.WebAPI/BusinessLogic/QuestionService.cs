@@ -45,9 +45,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 {
                     Question1 = model.Question,
                 };
-                model.Id = question.Id;
                 _questionRepository.Insert(question);
-
+                model.Id = question.Id;
                 foreach (var item in model.Answers)
                 {
                     Answer answer = new()

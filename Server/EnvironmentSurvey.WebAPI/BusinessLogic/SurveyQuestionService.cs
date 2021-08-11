@@ -10,10 +10,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
     public interface ISurveyQuestionService
     {
-        List<SurveyQuestionModel> Create(List<SurveyQuestionModel> model);
+        bool Create(List<SurveyQuestionModel> model);
         List<SurveyQuestionModel> GetAll();
         SurveyQuestionModel GetById(int Id);
-        SurveyQuestionModel Update(SurveyQuestionModel model);
+        bool Update(List<SurveyQuestionModel> model);
         bool Delete(int Id);
     }
     public class SurveyQuestionService : ISurveyQuestionService
@@ -27,7 +27,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             _surveyQuestionRepository = surveyQuestionRepository;
             _userAnswerRepository = userAnswerRepository;
         }
-        public List<SurveyQuestionModel> Create(List<SurveyQuestionModel> model)
+        public bool Create(List<SurveyQuestionModel> model)
         {
             foreach (var item in model)
             {
@@ -39,7 +39,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 _surveyQuestionRepository.Insert(surveyQuestion);
                 item.Id = surveyQuestion.Id;
             }
-            return model;
+            return true;
         }
 
         public bool Delete(int Id)
@@ -110,17 +110,38 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             return model;
         }
 
-        public SurveyQuestionModel Update(SurveyQuestionModel model)
+        public bool Update(List<SurveyQuestionModel> model)
         {
-            SurveyQuestion surveyQuestion = _surveyQuestionRepository.Get(model.Id);
-            if (surveyQuestion == null)
+            int surveyId = 0;
+            if (model.GroupBy(x => x.SurveyId).Select(t => t.Key).ToList().Count == 1)
+            {
+                surveyId = model.GroupBy(x => x.SurveyId).Select(t => t.Key).FirstOrDefault();
+            }
+            List<SurveyQuestion> listSurveyQuestionDomains = _surveyQuestionRepository.GetAll().Where(x => x.SurveyId == surveyId).ToList();
+            if (listSurveyQuestionDomains.Count == 0)
                 throw new Exception("SurveyQuestion not found");
             else
             {
-                surveyQuestion.SurveyId = model.SurveyId;
-                surveyQuestion.QuestionId = model.QuestionId;
+                var newQuestion = model.Where(t => !listSurveyQuestionDomains.Any(x => x.QuestionId == t.QuestionId)).ToList();
+                if (newQuestion.Count > 0)
+                {
+                    foreach (var item in newQuestion)
+                    {
+                        var surveyQuestion = new SurveyQuestion
+                        {
+                            SurveyId = item.SurveyId,
+                            QuestionId = item.QuestionId
+                        };
+                        _surveyQuestionRepository.Insert(surveyQuestion);
+                    }
+                }
+                var removedQuestion = listSurveyQuestionDomains.Where(t => !model.Any(x => x.QuestionId == t.QuestionId)).ToList();
+                if (removedQuestion.Count > 0)
+                {
+                    _surveyQuestionRepository.DeleteRange(removedQuestion);
+                }
             }
-            return model;
+            return true;
         }
     }
 }
