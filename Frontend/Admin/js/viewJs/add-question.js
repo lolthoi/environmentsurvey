@@ -43,22 +43,22 @@ $(document).ready(function(){
         }
         console.log(data);
         
-        // $.ajax({
-        //     type: "POST",
-        //     url: domen+"/api/Question",
-        //     headers: {
-        //         Authorization: "Bearer " + token,
-        //     },
-        //     contentType: "application/json; charset=utf-8",
-        //     data : JSON.stringify(data),
-        //     datatype:"json",
-        //     async: true,
-        //     success: function(response) {
-        //         if(response == true){
-        //             window.location.href = "/Admin/list-survey.html?seminarId="+seminarId;
-        //         }
-        //     },
-        // });
+        $.ajax({
+            type: "POST",
+            url: domen+"/api/Question",
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(data),
+            datatype:"json",
+            async: true,
+            success: function(response) {
+                if(response == true){
+                    window.location.href = "/Admin/list-survey.html?seminarId="+seminarId;
+                }
+            },
+        });
     })
 
 })
