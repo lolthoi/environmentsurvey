@@ -1,4 +1,4 @@
-let listSeminarOfUser = []
+
 $(document).ready(function(){
     $(this).scrollTop(0);
 	$.ajax({
@@ -12,36 +12,10 @@ $(document).ready(function(){
 			async:false,
 			success : function(response){
 				showSurvey(response);
-        console.log(response)
 			},       
 		});
   });
 
-  if(username != null && role!= null && token != null){
-    var dataLst = {
-        Username : username,		
-    }
-    $.ajax({
-        type : "POST",
-        url: domen+"/api/UserSeminar/getUserSeminarByUser",
-        headers: {
-            Authorization: 'Bearer '+token
-        },
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(dataLst),
-        datatype:"json",
-        async:false,
-        success : function(response){
-            response.forEach(element => {
-                var obj = {
-                    "seminarID": element.SeminarId,
-                    "status": element.Status
-                };
-                listSeminarOfUser.push(obj)
-            });
-        },       
-    });
-}
   function showSurvey(res){
     res.forEach(showEachSurvey);
   }
@@ -59,15 +33,7 @@ $(document).ready(function(){
     var monthEnd = ("0" + (dateEnd.getMonth() + 1)).slice(-2);
     var dayEnd = ("0" + dateEnd.getDate()).slice(-2);
     let nowTs = Date.now();
-    //  || listSeminarOfUser.includes(id) 
-    console.log(listSeminarOfUser)
-    let check = false ;
-    listSeminarOfUser.forEach(element => {
-        if(element.seminarID == id && element.status == 1)
-        check = true ;
-    });
-    console.log(role)
-    if((nowTs >= Date.parse(eachSurvey.StartDate) && nowTs <= Date.parse(eachSurvey.EndDate) && check) || role == "ADMIN"){
+    if((nowTs >= Date.parse(eachSurvey.StartDate) && nowTs <= Date.parse(eachSurvey.EndDate) && status == 1) || role == "ADMIN"){
       $('#listSurveyData').append(
       '<div class="col-lg-3 col-sm-6 mb-5">'
         +'<div class="card p-0 border-primary rounded-0 hover-shadow">'
