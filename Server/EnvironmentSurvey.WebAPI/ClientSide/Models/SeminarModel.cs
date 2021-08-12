@@ -14,10 +14,13 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public string Image { get; set; }
         public string Location { get; set; }
         public string Author { get; set; }
-        public string Subject { get; set; }
+        public int SubjectId { get; set; }
         public int forUser { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public IFormFile File { get; set; }
+        public SubjectModel Subject { get; set; }
+
+
     }
 }

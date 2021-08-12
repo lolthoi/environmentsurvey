@@ -68,7 +68,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
                 File = data.Files.First(),
                 Location = data["Location"],
                 Author = data["Author"],
-                Subject = data["Subject"],
+                SubjectId = int.Parse( data["SubjectId"]),
                 StartDate = data["StartTime"],
                 EndDate = data["EndTime"],
                 forUser = int.Parse(data["forUser"])
@@ -91,7 +91,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
                 Description = data["Description"],
                 Location = data["Location"],
                 Author = data["Author"],
-                Subject = data["Subject"],
+                SubjectId = int.Parse(data["SubjectId"]),
                 StartDate = data["StartTime"],
                 EndDate = data["EndTime"],
                 forUser = int.Parse(data["forUser"])

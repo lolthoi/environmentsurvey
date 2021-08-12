@@ -31,12 +31,14 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         private readonly ESContext _context;
         private IConfiguration _configuration;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ISubjectService _subjectService;
 
-        public SeminarService(ESContext context, IConfiguration configuration, IHostingEnvironment hostingEnvironment)
+        public SeminarService(ESContext context, IConfiguration configuration, IHostingEnvironment hostingEnvironment, ISubjectService subjectService)
         {
             _context = context;
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
+            _subjectService = subjectService;
         }
 
         public async Task<bool> Create(SeminarModel model)
@@ -65,7 +67,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Image = model.Image,
                 Location = model.Location,
                 Author = model.Author,
-                Subject = model.Subject,
+                Subject = await _context.Subjects.FindAsync(model.SubjectId),
+                SubjectId = model.SubjectId,
                 forUser = model.forUser,
                 StartDate = Convert.ToDateTime(model.StartDate),
                 EndTime = Convert.ToDateTime(model.EndDate),
@@ -93,7 +96,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             if(model.Search_key != "")
             {
                 
-                query = (IOrderedQueryable<Seminar>)query.Where(u => u.Name.Contains(key) || u.Author.Contains(key) || u.Location.Contains(key) || u.Subject.Contains(key));
+                query = (IOrderedQueryable<Seminar>)query.Where(u => u.Name.Contains(key) || u.Author.Contains(key) || u.Location.Contains(key));
             }
             if(model.FromDate != "")
             {
@@ -140,7 +143,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Image = x.Image,
                 Location = x.Location,
                 Author = x.Author,
-                Subject = x.Subject,
+                Subject = _subjectService.GetById(x.SubjectId),
                 forUser = x.forUser,
                 StartDate = x.StartDate.ToString("yyyy-MM-dd"),
                 EndDate = x.EndTime.ToString("yyyy-MM-dd")
@@ -179,7 +182,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                         Image = seminar.Image,
                         Location = seminar.Location,
                         Author = seminar.Author,
-                        Subject = seminar.Subject,
+                        Subject = _subjectService.GetById(seminar.SubjectId),
                         forUser = seminar.forUser,
                         StartDate = startDate,
                         EndDate = endDate
@@ -200,7 +203,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Image = x.Image,
                 Location = x.Location,
                 Author = x.Author,
-                Subject = x.Subject,
+                Subject = _subjectService.GetById(x.SubjectId),
                 forUser = x.forUser,
                 StartDate = x.StartDate.ToString("yyyy-MM-dd"),
                 EndDate = x.EndTime.ToString("yyyy-MM-dd")
@@ -238,7 +241,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 seminar.Description = model.Description;
                 seminar.Location = model.Location;
                 seminar.Author = model.Author;
-                seminar.Subject = model.Subject;
+                seminar.SubjectId = model.SubjectId;
+                seminar.Subject = await _context.Subjects.FindAsync(model.SubjectId);
                 seminar.forUser = model.forUser;
                 seminar.StartDate = Convert.ToDateTime(model.StartDate);
                 seminar.EndTime = Convert.ToDateTime(model.EndDate);
@@ -291,7 +295,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                         Image = seminar.Image,
                         Location = seminar.Location,
                         Author = seminar.Author,
-                        Subject = seminar.Subject,
+                        Subject = _subjectService.GetById(seminar.SubjectId),
+                        SubjectId = seminar.SubjectId,
                         forUser = seminar.forUser,
                         StartDate = seminar.StartDate.ToString("yyyy-MM-dd HH:mm:ss"),
                         EndDate = seminar.EndTime.ToString("yyyy-MM-dd HH:mm:ss")
