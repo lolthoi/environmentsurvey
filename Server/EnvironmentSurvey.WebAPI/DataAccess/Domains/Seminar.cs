@@ -13,11 +13,12 @@ namespace EnvironmentSurvey.WebAPI.DataAccess.Domains
         public string Image { get; set; }
         public string Location { get; set; }
         public string Author { get; set; }
-        public string Subject { get; set; }
+        public int SubjectId { get; set; }
         public int forUser { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndTime { get; set; }
 
+        public virtual Subject Subject { get; set; }
         public virtual ICollection<Survey> Surveys { get; set; }
         public virtual ICollection<UserSeminar> UserSeminars { get; set; }
     }

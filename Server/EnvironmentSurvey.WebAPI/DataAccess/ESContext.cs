@@ -29,6 +29,7 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
         public virtual DbSet<UserAnswer> UserAnswers { get; set; }
         public virtual DbSet<UserSeminar> UserSeminars { get; set; }
         public virtual DbSet<SupportInformation> SupportInformations { get; set; }
+        public virtual DbSet<Subject> Subjects { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -94,6 +95,19 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
                 entity.Property(e => e.Question1)
                     .HasColumnType("text")
                     .HasColumnName("Question");
+
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.Questions)
+                    .HasForeignKey(d => d.SubjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Questions__Subject__36B17696");
+            });
+
+            modelBuilder.Entity<Subject>(entity =>
+            {
+                entity.Property(e => e.Subject1)
+                    .HasColumnType("text")
+                    .HasColumnName("Subject");
             });
 
             modelBuilder.Entity<Result>(entity =>
@@ -150,7 +164,12 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Subject).HasMaxLength(255);
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.Seminars)
+                    .HasForeignKey(d => d.SubjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Seminars__Subject__36B57510");
+
             });
 
             modelBuilder.Entity<Survey>(entity =>
