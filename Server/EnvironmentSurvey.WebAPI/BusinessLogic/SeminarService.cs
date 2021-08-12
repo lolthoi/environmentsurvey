@@ -86,7 +86,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             List<Seminar> listSeminar = new List<Seminar>();
 
             var query = _context.Seminars.Where(s => !s.DeletedDate.HasValue).OrderByDescending(s => s.CreatedDate);
-            if(model.FromDate == "" && model.ToDate == "" && model.Search_key == "" && role =="" || model.FromDate == "" && model.ToDate == "" && model.Search_key == "" && role == "ADMIN")
+            if(model.FromDate == "" && model.ToDate == "" && model.Search_key == "" && role =="" && model.Status == 0 || model.FromDate == "" && model.ToDate == "" && model.Search_key == "" && role == "ADMIN" && model.Status == 0)
             {
                
             }
@@ -113,7 +113,18 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 query = (IOrderedQueryable<Seminar>)query.Where(s => s.forUser == 1);//.Where(s => s.StartDate > dateTime);
             }
-
+            if(model.Status == 1)
+            {
+                query = (IOrderedQueryable<Seminar>)query.Where(s => s.EndTime < dateTime);
+            }
+            if (model.Status == 2)
+            {
+                query = (IOrderedQueryable<Seminar>)query.Where(s => s.StartDate < dateTime && dateTime < s.EndTime);
+            }
+            if (model.Status == 3)
+            {
+                query = (IOrderedQueryable<Seminar>)query.Where(s => s.StartDate > dateTime);
+            }
             listSeminar = await query.ToListAsync();
             int totalPage = (int)Math.Ceiling(listSeminar.Count() / (double)paginationClientModel.PageSize);
             var listSeminarClient = await query

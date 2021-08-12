@@ -13,5 +13,6 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public int point { get; set; }
         public DateTime SubmitTime { get; set; }
         public int UserId { get; set; }
+        public int Ranked { get; set; }
     }
 }

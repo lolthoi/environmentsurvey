@@ -232,7 +232,7 @@
             <div class="container" style="padding:0 25px; margin-top: 20px;">
                 <a href="create-seminar.html" class="btn btn-block btn-primary mb-3">Create Seminar</a>
                 <div class="row">  
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="Subject">Search key</label>
                             <input type="text" autocomplete="off" class="form-control" name="Search_key"
@@ -240,7 +240,7 @@
                             <small id="subject-valid" class="text-danger"></small>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="StartTime">Start Date</label>
                             <input type="date" autocomplete="off" class="form-control" name="StartTime"
@@ -248,7 +248,7 @@
                             <small id="st-valid" class="text-danger"></small>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="EndTime">End Date</label>
                             <input type="date" autocomplete="off" class="form-control" name="EndTime"
@@ -256,6 +256,17 @@
                             <small id="et-valid" class="text-danger"></small>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control mb-3" id="status">
+                                <option value="0">All</option>
+                                <option value="1">Closed</option>
+                                <option value="2">Happening</option>
+                                <option value="3">Planed</option>
+                            </select>
+                        </div>
+                    </div> 
                     <div class="col-md-1">
                         <div style="margin-top:28px">
                             <button type="button" id="submit" class="btn btn-primary">Submit</button>

@@ -38,12 +38,22 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         {
             var account = _context.Users.SingleOrDefault(u => u.Username.Equals(userName));
             var result = await _context.Results.Where(r => r.SurveyId == surveyId && r.UserId == account.Id).FirstOrDefaultAsync();
+            var listResult = await _context.Results.Where(r => r.SurveyId == surveyId).OrderByDescending(r => r.Point).OrderByDescending(r=> r.SubmitTime).ToListAsync();
+
             if (result == null)
             {
                 throw new Exception("There is no result");
             }
-
             ResultModel model = new ResultModel();
+            for (int i=0; i< listResult.Count(); i++)
+            {
+                if(listResult[i].UserId == result.UserId)
+                {
+                    model.Ranked = i + 1;
+                }
+                break;
+            }
+
             model.surveyId = result.SurveyId;
             model.surveyName = result.Survey.Name;
             model.point = result.Point;
