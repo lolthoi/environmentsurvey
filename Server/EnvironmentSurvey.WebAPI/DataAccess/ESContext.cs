@@ -105,6 +105,8 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
 
             modelBuilder.Entity<Subject>(entity =>
             {
+                entity.ToTable("Subjects");
+
                 entity.Property(e => e.Subject1)
                     .HasColumnType("text")
                     .HasColumnName("Subject");
