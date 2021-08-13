@@ -69,7 +69,7 @@ $(document).ready(function(){
         var data = convertData();
 
         $.ajax({
-            type: "POST",
+            type: "PUT",
             url: domen+"/api/SurveyQuestion",
             headers: {
                 Authorization: "Bearer " + token,

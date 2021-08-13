@@ -7,12 +7,13 @@ var questionId = url.searchParams.get("questionId");
 var flag = 0;
 
 $(document).ready(function(){
+
     if(questionId != null){
         $("#page-title").text("Edit Question")
 
         $.ajax({
             type: "GET",
-            url: domen+"/api/Question/Admin/"+questionId,
+            url: domen+"/api/Admin/Question/"+questionId,
             headers: {
                 Authorization: "Bearer " + token,
             },
@@ -21,10 +22,14 @@ $(document).ready(function(){
             async: true,
             success: function(response) {
                 loadDataQuestionModel(response);
+                loadAllSubject(response.SubjectId);
             },
         });
         $("#saveQuestion").removeAttr("disabled");
-    };
+    } else {
+        loadAllSubject(null);
+    }
+
 
     $("#question").focusout(function(){
         validateQuestion();
@@ -149,5 +154,33 @@ function loadDataQuestionModel(model){
             $("#ansId"+j).val(listAns[i].Id);
         }
     }
+}
+
+function loadAllSubject(subjectId){
+    $.ajax({
+        type: "GET",
+        url: domen+"/api/Subject/",
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+        contentType: "application/json; charset=utf-8",
+        datatype:"json",
+        async: true,
+        success: function(response) {
+            response.forEach(e => {
+                if(e.id == subjectId){
+                    $("#subject").append(
+                        '<option selected value="'+e.Id+'">'+e.Subject+'</option>'
+                    );
+                } else {
+                    $("#subject").append(
+                        '<option value="'+e.Id+'">'+e.Subject+'</option>'
+                    );
+                };
+            });
+        },
+    });
+
+    
 }
 

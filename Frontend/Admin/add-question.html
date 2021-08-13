@@ -161,6 +161,13 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-subject.html"
+                                aria-expanded="false">
+                                <i class="fas fa-calendar-check" aria-hidden="true"></i>
+                                <span class="hide-menu">Subject</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="list-faqs.html"
                                 aria-expanded="false">
                                 <i class="far fa-question-circle" aria-hidden="true"></i>
@@ -231,6 +238,10 @@
                         <div class="card">
                             <div class="card-body">
                                 <form action="#" id="createForm">
+                                    <div class="form-group">
+                                        <label for="subject" class="form-label">Subject</label>
+                                        <select class="form-control" id="subject"></select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="question" class="form-label">Question</label>
                                         <input type="text" class="form-control" id="question" placeholder="Insert Question">

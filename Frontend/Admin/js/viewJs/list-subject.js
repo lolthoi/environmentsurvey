@@ -1,11 +1,43 @@
 var domain = "https://localhost:44304";
 var token = localStorage.getItem("token");
-
 var tempList = null;
 
 $(document).ready(function(){
     getList();
 })
+
+function getList(){
+    $.ajax({
+        type: "GET",
+        url: domen+"/api/Subject/",
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+        contentType: "application/json; charset=utf-8",
+        datatype:"json",
+        async: true,
+        success: function(response) {
+            tempList = response;
+            showList(tempList);
+        },
+    });
+}
+
+function showList(list){
+    $("#listSubjectTbody").html("");
+    for(var i=0; i<list.length; i++){
+        $("#listSubjectTbody").append(
+            '<tr>'
+                +'<td>'+i+1+'</td>'
+                +'<td>'+list[i].Subject+'</td>'
+                +'<td>'
+                    +'<a href="add-subject.html?subjectId='+list[i].Id+'" class="btn btn-block btn-warning"><i class=" ti-pencil"></i></a>  '
+                    +'<button type="button" class="btn btn-block btn-danger text-white" id="delete'+list[i].Id+'"><i class="fa fa-trash"></i></button>'
+                +'</td>'
+            +'</tr>'
+        )
+    }
+}
 
 $(document).on("click", 'button[id^="delete"]', function () {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -26,10 +58,9 @@ $(document).on("click", 'button[id^="delete"]', function () {
         if (result.isConfirmed) {
           swal.showLoading();
           Id = this.id.replace("delete", "");
-          console.log(Id);
           $.ajax({
             type: "DELETE",
-            url: domain + "/api/Question/" + Id,
+            url: domain + "/api/Subject/" + Id,
             headers: {
               Authorization: "Bearer " + token,
             },
@@ -44,9 +75,9 @@ $(document).on("click", 'button[id^="delete"]', function () {
                 buttonsStyling: false,
               });
               swalWithBootstrapButtons.fire("Delete Success", "", "success");
-              var questionId = Number.parseInt(Id);
+              var subjectId = Number.parseInt(Id);
               for(var i=0; i<tempList.length; i++){
-                if(tempList[i].Id === questionId){
+                if(tempList[i].Id === subjectId){
                     tempList.splice(i,1);
                 }
               }
@@ -71,37 +102,3 @@ $(document).on("click", 'button[id^="delete"]', function () {
         }
       });
   });
-
-function getList(){
-    $.ajax({
-        type: "GET",
-        url: domain+"/api/Question",
-        headers: {
-            Authorization: "Bearer " + token,
-        },
-        contentType: "application/json; charset=utf-8",
-        datatype:"json",
-        async: true,
-        success: function(response) {
-            tempList = response;
-            showList(tempList);
-        },
-    });
-}
-
-function showList(list){
-    $("#listQuestionTbody").html("");
-    for(var i=0; i<list.length; i++){
-      var No = i+1;
-        $("#listQuestionTbody").append(
-          '<tr>'
-              +'<td>'+No+'</td>'
-              +'<td>'+list[i].Question+'</td>'
-              +'<td>'
-                  +'<a href="add-question.html?questionId='+list[i].Id+'" class="btn btn-block btn-warning"><i class=" ti-pencil"></i></a>  '
-                  +'<button type="button" class="btn btn-block btn-danger text-white" id="delete'+list[i].Id+'"><i class="fa fa-trash"></i></button>'
-              +'</td>'
-          +'</tr>'
-      )
-    }
-}
