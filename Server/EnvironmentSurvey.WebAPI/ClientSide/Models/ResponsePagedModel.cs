@@ -12,5 +12,6 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public int TotalPage { get; set; }
         public List<UserModel> ListUser { get; set; }
         public List<ResUserSemiModel> ListUserSeminar { get; set; }
+        public List<ResultModel>  listResult { get; set; }
     }
 }

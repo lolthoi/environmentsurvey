@@ -22,10 +22,12 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     {
         private readonly IRepository<Survey> _surveyRespository;
         private readonly IRepository<Result> _resultRespository;
-        public SurveyService(IRepository<Survey> surveyRespository, IRepository<Result> resultRespository)
+        private readonly IRepository<Seminar> _seminartRespository;
+        public SurveyService(IRepository<Survey> surveyRespository, IRepository<Result> resultRespository, IRepository<Seminar> seminartRespository)
         {
             _surveyRespository = surveyRespository;
             _resultRespository = resultRespository;
+            _seminartRespository = seminartRespository;
         }
 
         public bool Create(SurveyModel model)
@@ -37,6 +39,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 EndTime = Convert.ToDateTime(model.EndDate),
                 Status = (int)model.Status,
                 SerminarId = model.SeminarId,
+                Serminar = _seminartRespository.Get(model.SeminarId),
                 Description = model.Description,
             };
             _surveyRespository.Insert(survey);

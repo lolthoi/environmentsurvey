@@ -11,6 +11,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     public interface ISubjectService
     {
         SubjectModel GetById(int id);
+        List<SubjectModel> getAll();
     }
     public class SubjectService : ISubjectService
     {
@@ -19,6 +20,23 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         {
             _subjectRepository = subjectRepository;
         }
+
+        public  List<SubjectModel> getAll()
+        {
+            var listSubject =  _subjectRepository.GetAll().ToList();
+            List<SubjectModel> listSubectModel = new List<SubjectModel>();
+            if(listSubject.Count > 0)
+            {
+                listSubectModel = listSubject.Select(s => new SubjectModel
+                {
+                    Id = s.Id,
+                    Subject = s.Subject1
+            }).ToList();
+            }
+            return listSubectModel;
+            
+        }
+
         public SubjectModel GetById(int id)
         {
             Subject subject = _subjectRepository.Get(id);

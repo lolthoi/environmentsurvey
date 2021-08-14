@@ -8,6 +8,7 @@ var loadFile = function (event) {
     image.src = URL.createObjectURL(event.target.files[0]);
 };
 $(document).ready(function () {
+    loadSubject();
     $.ajax({
         type : "GET",
         url: domain+"/api/Seminar/Manage/"+id,
@@ -27,6 +28,7 @@ $(document).ready(function () {
             $("#preview").attr("src",domain+'/Images/'+seminar.Image);
             $("#Description").val(seminar.Description);
             $("input[name=forUser][value="+seminar.forUser+"]").prop("checked",true);
+            $("#SubjectId option[value="+seminar.SubjectId+"]").prop("selected",true);
         },      
         error: function (response) {
           window.location.replace("list-seminar.html");
@@ -181,3 +183,22 @@ $(document).ready(function () {
         }
       });
 });
+
+function loadSubject(){
+  $.ajax({
+    type: "GET",
+    url: domain + "/api/Subject",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+    async: true,
+    success: function (response) {
+      console.log(response);
+      response.forEach(function(subject) {
+        $('#SubjectId').append(`<option value="${subject.Id}">
+                                       ${subject.Subject}
+                                  </option>`);
+      });
+    },
+  });
+}

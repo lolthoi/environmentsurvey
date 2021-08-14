@@ -13,8 +13,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
     public interface IResultService
     {
-        Task<ResultModel> showResult(int surveyId, string userName);
-        ResultModel SaveResult(List<UserAnswerModel> model);
+        Task<ResponsePagedModel> showResultUser(PaginationClientModel paginationClientModel, int userId);
+        ResultModel SaveResult(SaveUserAnswerModel model);
+        Task<ResponsePagedModel> showResultBySurveyId(PaginationClientModel paginationClientModel,int surveyId);
+        Task<List<InforTakeSurveyModel>> TakeInfor(int seminarId);
     }
     public class ResultService : IResultService
     {
@@ -23,52 +25,75 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         private readonly IRepository<Answer> _answerRespository;
         private readonly IRepository<SurveyQuestion> _surveyQuestionRepository;
         private readonly IRepository<Result> _resultRepository;
+        private readonly IRepository<User> _userRespository;
+        private readonly IRepository<Survey> _surveyRespository;
         public ResultService(ESContext context,
             IRepository<Answer> answerRespository,
             IRepository<SurveyQuestion> surveyQuestionRepository,
-            IRepository<Result> resultRepository)
+            IRepository<Result> resultRepository,
+            IRepository<User> userRespository,
+            IRepository<Survey> surveyRespository)
         {
             _context = context;
             _answerRespository = answerRespository;
             _surveyQuestionRepository = surveyQuestionRepository;
             _resultRepository = resultRepository;
+            _userRespository = userRespository;
+            _surveyRespository = surveyRespository;
         }
 
-        public async Task<ResultModel> showResult(int surveyId, string userName)
+        public async Task<ResponsePagedModel> showResultUser(PaginationClientModel paginationClientModel, int userId)
         {
-            var account = _context.Users.SingleOrDefault(u => u.Username.Equals(userName));
-            var result = await _context.Results.Where(r => r.SurveyId == surveyId && r.UserId == account.Id).FirstOrDefaultAsync();
-            var listResult = await _context.Results.Where(r => r.SurveyId == surveyId).OrderByDescending(r => r.Point).OrderByDescending(r=> r.SubmitTime).ToListAsync();
-
-            if (result == null)
+            var lsUserResultTotal = await _context.Results.Where(r => r.UserId == userId).ToListAsync();
+            int totalPage = (int)Math.Ceiling(lsUserResultTotal.Count() / (double)paginationClientModel.PageSize);
+            var lsUserResult = await _context.Results.Where(r => r.UserId == userId)
+                                .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                                .Take(paginationClientModel.PageSize)
+                                .ToListAsync();
+            List<ResultModel> lsUserResultModel = new List<ResultModel>();
+            if(lsUserResult.Count() > 0)
             {
-                throw new Exception("There is no result");
-            }
-            ResultModel model = new ResultModel();
-            for (int i=0; i< listResult.Count(); i++)
-            {
-                if(listResult[i].UserId == result.UserId)
+                foreach (var userResult in lsUserResult)
                 {
-                    model.Ranked = i + 1;
+                    var listResult = await _context.Results.Where(r => r.SurveyId == userResult.SurveyId).OrderByDescending(r => r.Point).ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate).ToListAsync();
+                    for (int i = 0; i < listResult.Count; i++)
+                    {
+                        var r = listResult[i];
+                        if (userResult.UserId == r.UserId)
+                        {
+                            ResultModel result = new ResultModel
+                            {
+                                Id = r.Id,
+                                surveyName = _surveyRespository.Get(r.SurveyId).Name,
+                                point = r.Point,
+                                SubmitTime = r.SubmitTime,
+                                //FullName = _userRespository.Get(r.UserId).FirstName + " " + _userRespository.Get(r.UserId).LastName,
+                                Ranked = i + 1,
+                                //NameSeminar = _surveyRespository.Get(r.SurveyId).Serminar.Name
+                            };
+                            lsUserResultModel.Add(result);
+                        }
+
+                    }
                 }
-                break;
             }
-
-            model.surveyId = result.SurveyId;
-            model.surveyName = result.Survey.Name;
-            model.point = result.Point;
-
-            return model;
+            var responsePagedModel = new ResponsePagedModel
+            {
+                listResult = lsUserResultModel.ToList(),
+                PageNumber = paginationClientModel.PageNumber,
+                TotalPage = totalPage
+            };
+            return responsePagedModel;
         }
 
-        public ResultModel SaveResult(List<UserAnswerModel> model)
+        public ResultModel SaveResult(SaveUserAnswerModel model)
         {
-            if (model.Count == 0)
+            if (model.ListUserAnserModel.Count == 0)
                 throw new Exception("Invalid input list model");
             //get all user anwers
             var listAnswer = _answerRespository.GetAll().ToList();
             var listAnswerModel = new List<AnswerModel>();
-            foreach (var item in model)
+            foreach (var item in model.ListUserAnserModel)
             {
                 var AnswerDomain = listAnswer.Where(x => x.Id == item.AnswerId).FirstOrDefault();
                 if (AnswerDomain != null)
@@ -97,14 +122,14 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             }
             //Get userId
             int userId = 0;
-            var countUser = model.GroupBy(x => x.UserId).Select(t => t.Key).ToList();
+            var countUser = model.ListUserAnserModel.GroupBy(x => x.UserId).Select(t => t.Key).ToList();
             if (countUser.Count == 1)
             {
                 userId = countUser.FirstOrDefault();
             }
             //Get SurveyId
             int surveyId = 0;
-            var a = model.FirstOrDefault();
+            var a = model.ListUserAnserModel.FirstOrDefault();
             var surveyQuestionModel = _surveyQuestionRepository.Get(a.Id);
             if (surveyQuestionModel != null)
             {
@@ -114,9 +139,11 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             Result res = new()
             {
                 Point = point,
-                SubmitTime = DateTime.UtcNow,
+                SubmitTime = model.SubmitTime,
                 UserId = userId,
+                User = _userRespository.Get(userId),
                 SurveyId = surveyId,
+                Survey = _surveyRespository.Get(surveyId)
             };
             _resultRepository.Insert(res);
 
@@ -129,6 +156,70 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 surveyId = res.SurveyId,
             };
             return result;
+        }
+
+        public async Task<ResponsePagedModel> showResultBySurveyId(PaginationClientModel paginationClientModel, int surveyId)
+        {
+            var listResultTotal = await _context.Results.Where(r => r.SurveyId == surveyId).OrderByDescending(r => r.Point).ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate).ToListAsync();
+            int totalPage = (int)Math.Ceiling(listResultTotal.Count() / (double)paginationClientModel.PageSize);
+
+            var listResult = await _context.Results
+                        .Where(r => r.SurveyId == surveyId)
+                        .OrderByDescending(r => r.Point)
+                        .ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate)
+                        .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                        .Take(paginationClientModel.PageSize)
+                        .ToListAsync();
+            List<ResultModel> lsresultModel = new List<ResultModel>();
+
+            if (listResult.Count() > 0)
+            {
+                for (int i = 0; i < listResult.Count; i++)
+                {
+                    var r = listResult[i];
+                    ResultModel result = new ResultModel
+                    {
+                        Id = r.Id,
+                        surveyName = _surveyRespository.Get(r.SurveyId).Name,
+                        point = r.Point,
+                        SubmitTime = r.SubmitTime,
+                        FullName = _userRespository.Get(r.UserId).FirstName + " " + _userRespository.Get(r.UserId).LastName,
+                        Ranked = i + 1
+                    };
+                    lsresultModel.Add(result);
+                }
+            }
+            var responsePagedModel = new ResponsePagedModel
+            {
+                listResult = lsresultModel.ToList(),
+                PageNumber = paginationClientModel.PageNumber,
+                TotalPage = totalPage
+            };
+            return responsePagedModel;
+        }
+
+        public async Task<List<InforTakeSurveyModel>> TakeInfor(int seminarId)
+        {
+            var requestSeminars = await _context.UserSeminars.Where(s=> s.SeminarId == seminarId).Where(s=>s.Status ==(int)Status.ACCEPTED).ToListAsync();
+            var totalRquestSeminars = requestSeminars.Count();
+            var listSurvey = await _context.Surveys.Where(s => s.SerminarId == seminarId).ToListAsync();
+            List<InforTakeSurveyModel> listResult = new List<InforTakeSurveyModel>();
+            if(listSurvey.Count() > 0)
+            {
+                foreach(var survey in listSurvey)
+                {
+                    InforTakeSurveyModel model = new InforTakeSurveyModel
+                    {
+                        SurveyId = survey.Id,
+                        TotalRegister = totalRquestSeminars,
+                        SeminarName = _context.Seminars.Where(s=> s.Id == seminarId).FirstOrDefault().Name,
+                        SurveyName = survey.Name,
+                        TotalTakeSurvey = _resultRepository.GetAll().Where(r=> r.SurveyId == survey.Id).ToList().Count()
+                    };
+                    listResult.Add(model);
+                }
+            }
+            return listResult;
         }
     }
 }

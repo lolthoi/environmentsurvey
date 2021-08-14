@@ -8,6 +8,11 @@ var loadFile = function (event) {
   image.src = URL.createObjectURL(event.target.files[0]);
 };
 $(document).ready(function () {
+  if($("#SubjectId").val() == ""){
+    console.log("Rỗng");
+  }
+  
+  loadSubject();
   $("#StartTime").datetimepicker({
     format: "Y-m-d H:m:s",
     changeMonth: true,
@@ -34,7 +39,7 @@ $(document).ready(function () {
     } else {
       $("#author-valid").text("");
     }
-    if ($("#Subject").val().trim() == "") {
+    if ($("#SubjectId").val() == "") {
       flag = false;
       $("#subject-valid").text("Subject can not be empty");
     } else {
@@ -160,3 +165,22 @@ $(document).ready(function () {
     }
   });
 });
+
+function loadSubject(){
+  $.ajax({
+    type: "GET",
+    url: domain + "/api/Subject",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+    async: true,
+    success: function (response) {
+      console.log(response);
+      response.forEach(function(subject) {
+        $('#SubjectId').append(`<option value="${subject.Id}">
+                                       ${subject.Subject}
+                                  </option>`);
+      });
+    },
+  });
+}

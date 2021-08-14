@@ -147,39 +147,74 @@ $(document).on("click", 'button[id^="delete"]', function () {
 });
 //show seminar
 function showSeminar(seminar) {
-  $("#list-seminar tbody").append(
-    "<tr>" +
-      "<td>" +
-      seminar.Name +
-      "</td>" +
-      "<td>" +
-      seminar.Location +
-      "</td>" +
-      "<td>" +
-      seminar.Author +
-      "</td>" +
-      "<td>" +
-      seminar.Subject +
-      "</td>" +
-      "<td>" +
-      seminar.StartDate +
-      "</td>" +
-      "<td>" +
-      seminar.EndDate +
-      "</td>" +
-      '<td><a href="edit-seminar.html?id=' +
-      seminar.ID +
-      '" class="btn btn-block btn-warning" title="Edit Seminar"><i class=" ti-pencil"></i></a> ' +
-      '<button title="Delete Seminar" type="button" class="btn btn-block btn-danger text-white" id="delete' +
-      seminar.ID +
-      '"><i class="fa fa-trash"></i></button> ' +
-      '<a href="list-survey.html?seminarId='+seminar.ID +
-      '" class="btn btn-block btn-info text-white" title="List Surveys"><i class="fas fa-list"></i></a> ' +
-      '<a href="../Client/seminar-single.html?id=' +
-      seminar.ID +
-      '&status=" class="btn btn-block btn-info text-white" title="View detail" target="_blank"><i class=" ti-book"></i></a></td>' +
-      "</tr>"
-  );
+  var dtnow =  new Date();
+  var endDate =  new Date(seminar.EndDate);
+  if(dtnow >= endDate){
+    $("#list-seminar tbody").append(
+      "<tr>" +
+        "<td>" +
+        seminar.Name +
+        "</td>" +
+        "<td>" +
+        seminar.Location +
+        "</td>" +
+        "<td>" +
+        seminar.Author +
+        "</td>" +
+        "<td>" +
+        seminar.Subject.Subject+
+        "</td>" +
+        "<td>" +
+        seminar.StartDate +
+        "</td>" +
+        "<td>" +
+        seminar.EndDate +
+        "</td>" +
+        '<td>'+
+        '<button title="Delete Seminar" type="button" class="btn btn-block btn-danger text-white" id="delete' +
+        seminar.ID +
+        '"><i class="fa fa-trash"></i></button> ' +
+        '<a href="inforSeminar.html?id=' +
+        seminar.ID +
+        '" class="btn btn-block btn-info text-white" title="View detail"><i class=" ti-book"></i></a></td>' +
+        "</tr>"
+    );
+  }else{
+    
+    $("#list-seminar tbody").append(
+      "<tr>" +
+        "<td>" +
+        seminar.Name +
+        "</td>" +
+        "<td>" +
+        seminar.Location +
+        "</td>" +
+        "<td>" +
+        seminar.Author +
+        "</td>" +
+        "<td>" +
+        seminar.Subject.Subject+
+        "</td>" +
+        "<td>" +
+        seminar.StartDate +
+        "</td>" +
+        "<td>" +
+        seminar.EndDate +
+        "</td>" +
+        '<td><a href="edit-seminar.html?id=' +
+        seminar.ID +
+        '" class="btn btn-block btn-warning" title="Edit Seminar"><i class=" ti-pencil"></i></a> ' +
+        '<button title="Delete Seminar" type="button" class="btn btn-block btn-danger text-white" id="delete' +
+        seminar.ID +
+        '"><i class="fa fa-trash"></i></button> ' +
+        '<a href="list-survey.html?seminarId='+seminar.ID +
+        '" class="btn btn-block btn-info text-white" title="List Surveys"><i class="fas fa-list"></i></a> ' +
+        '<a href="inforSeminar.html?id=' +
+        seminar.ID +
+        '&status=" class="btn btn-block btn-info text-white" title="View detail" target="_blank"><i class=" ti-book"></i></a></td>' +
+        "</tr>"
+    );
+  }
 }
 
 function ClearData(){

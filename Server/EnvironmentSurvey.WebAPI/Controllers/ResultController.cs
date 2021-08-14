@@ -20,25 +20,22 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getResult")]
-        public async Task<IActionResult> getResult(int surveyId, string userName)
+        [Route("getUserResult")]
+        public async Task<ResponsePagedModel> getResult([FromQuery] PaginationClientModel paginationClientModel,int userId)
         {
-            var userNameInToken = User.Identity.Name;
-            if (userNameInToken.Equals(userName)){
-                try
-                {
-                    var result = await _resultService.showResult(surveyId, userName);
-                    return Ok(result);
-                }
-                catch
-                {
-                    return BadRequest("Result Not Found");
-                }
-            }
-            return BadRequest("User Not Authorize");
-            
-            
-            
+            return await _resultService.showResultUser(paginationClientModel , userId);
+        }
+
+        [HttpGet("getResultBySurveyId")]
+        public async Task<ResponsePagedModel> getResultBySurveyId([FromQuery] PaginationClientModel paginationClientModel, int surveyId)
+        {
+            return await _resultService.showResultBySurveyId(paginationClientModel, surveyId);
+        }
+
+        [HttpGet("getInfor")]
+        public async Task<List<InforTakeSurveyModel>> getInfor( int seminarId)
+        {
+            return await _resultService.TakeInfor(seminarId);
         }
     }
 }

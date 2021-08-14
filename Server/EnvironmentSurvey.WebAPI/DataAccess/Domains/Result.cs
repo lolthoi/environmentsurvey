@@ -8,7 +8,7 @@ namespace EnvironmentSurvey.WebAPI.DataAccess.Domains
     public partial class Result : BaseEntity
     {
         public int Point { get; set; }
-        public DateTime SubmitTime { get; set; }
+        public double SubmitTime { get; set; }
         public int UserId { get; set; }
         public int SurveyId { get; set; }
 
