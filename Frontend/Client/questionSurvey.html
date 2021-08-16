@@ -25,6 +25,8 @@
 
   <!-- Main Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
+  <link href="css/questionSurvey.css" rel="stylesheet">
+
 
   <!--Favicon-->
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
@@ -69,14 +71,14 @@
             <li class="nav-item @@contact">
               <a class="nav-link" href="contact.html">CONTACT</a>
             </li>
-            <li class="nav-item dropdown view profile">
+            <li class="nav-item dropdown view profile active">
               <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 
               </a>
               <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="changeProfile.html">Update Profile</a>
-                <a class="dropdown-item" href="#">Change Password</a>
+                <a class="dropdown-item" href="change-password.html">Change Password</a>
                 <a class="dropdown-item" href="my_seminar.html">My Seminars</a>
                 <a class="dropdown-item logout"href="#" >Logout</a>
               </div>
@@ -91,162 +93,38 @@
     </div>
   </div>
 </header>
-<!-- /header -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content rounded-0 border-0 p-4">
-          <div class="modal-header border-0">
-              <h3>Login</h3>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <form action="#" class="row">
-                  <span id="message" class="hiddenField" style="color: red;"></span>
-                  <div class="col-12">
-                      <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Username">
-                  </div>
-                  <div class="col-12">
-                      <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password">
-                  </div>
-                  <div class="col-12">
-                      <button type="button" id="loginButton" class="btn btn-primary">LOGIN</button>
-                  </div>
-              </form>
-              <p>Not have an Account? <a href="register.html">Click Here</a></p>
-              
-          </div>
-      </div>
-  </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="registerSeminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Notify</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <h6 id="message_register_seminar"></h6>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- modal loader -->
-<div class="modal " id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered text-center" role="document">
-    <div class="loader"></div>
-  </div>
-</div>
-<!-- page title -->
 <section class="page-title-section overlay" data-background="images/backgrounds/page-title.jpg">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8">
-        <ul class="list-inline custom-breadcrumb">
-          <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="courses.html">Our Seminars</a></li>
-          <li class="list-inline-item text-white h3 font-secondary nasted" id="seminar_detail_name"></li>
-        </ul>
-        <p class="text-lighten">Our seminars offer a good compromise between the continuous assessment favoured by some universities and the emphasis placed on final exams by others.</p>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /page title -->
-
-
-<!-- section -->
-<section class="section-sm">
-  <div class="container" id="seminar_detail">
-
-  </div>
-</section>
-<section class="section">
-  <div class="container">
-    <!-- course list -->
-    <div class="col-12 mb-12">
-      <div id="loadListSurvey"> </div>
-    </div>
-
-  </div>
-</section>
-<!-- /section -->
-
-<!-- related course -->
-<section class="section pt-0">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h2 class="section-title">Related Seminar</h2>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <!-- course item -->
-      <div class="col-lg-4 col-sm-6 mb-5">
-        <div class="card p-0 border-primary rounded-0 hover-shadow">
-          <img class="card-img-top rounded-0" src="images/courses/course-1.jpg" alt="course thumb">
-          <div class="card-body">
-            <ul class="list-inline mb-2">
-              <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>02-14-2018</li>
-              <li class="list-inline-item"><a class="text-color" href="#">Humanities</a></li>
+    <div class="container">
+        <div class="row">
+        <div class="col-md-8">
+            <ul class="list-inline custom-breadcrumb">
+            <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="courses.html">Your Example</a></li>
+            <li class="list-inline-item text-white h3 font-secondary "></li>
             </ul>
-            <a href="course-single.html">
-              <h4 class="card-title">Photography</h4>
-            </a>
-            <p class="card-text mb-4"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna.</p>
-            <a href="course-single.html" class="btn btn-primary btn-sm">Apply now</a>
-          </div>
+            <!-- <p class="text-lighten">Our seminars offer a good compromise between the continuous assessment favoured by some universities and the emphasis placed on final exams by others.</p> -->
         </div>
-      </div>
-      <!-- course item -->
-      <div class="col-lg-4 col-sm-6 mb-5">
-        <div class="card p-0 border-primary rounded-0 hover-shadow">
-          <img class="card-img-top rounded-0" src="images/courses/course-2.jpg" alt="course thumb">
-          <div class="card-body">
-            <ul class="list-inline mb-2">
-              <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>02-14-2018</li>
-              <li class="list-inline-item"><a class="text-color" href="#">Humanities</a></li>
-            </ul>
-            <a href="course-single.html">
-              <h4 class="card-title">Programming</h4>
-            </a>
-            <p class="card-text mb-4"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna.</p>
-            <a href="course-single.html" class="btn btn-primary btn-sm">Apply now</a>
-          </div>
         </div>
-      </div>
-      <!-- course item -->
-      <div class="col-lg-4 col-sm-6 mb-5">
-        <div class="card p-0 border-primary rounded-0 hover-shadow">
-          <img class="card-img-top rounded-0" src="images/courses/course-3.jpg" alt="course thumb">
-          <div class="card-body">
-            <ul class="list-inline mb-2">
-              <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>02-14-2018</li>
-              <li class="list-inline-item"><a class="text-color" href="#">Humanities</a></li>
-            </ul>
-            <a href="course-single.html">
-              <h4 class="card-title">Lifestyle Archives</h4>
-            </a>
-            <p class="card-text mb-4"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna.</p>
-            <a href="course-single.html" class="btn btn-primary btn-sm">Apply now</a>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
-<!-- /related course -->
+<!-- /header -->
+<!-- Modal -->
+<div class="col-12 mb-12">
+    <div id="containerTime" style="position: fixed;top: 45%;left: 80%;">
+      <div id=timess><span id="time">15:00</span></div>
+  </div>
+</div>
+<div class="col-12 mb-12">
+    <div id="listQuestion"> </div>
+</div>
+<div style="padding-left: 40%;">
+    <div id="quiz" style="padding-top: 20px;"></div>
+    <div id="previousPage"></div>
+    <div id="nextPage"></div>
+    <div id="submit"></div>
+</div>
 
+
+<!-- page title -->
 <!-- footer -->
 <footer>
   <!-- newsletter -->
@@ -347,7 +225,7 @@
   </div>
 </footer>
 <!-- /footer -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <!-- jQuery -->
 <script src="plugins/jQuery/jquery.min.js"></script>
 <!-- Bootstrap JS -->
@@ -360,14 +238,14 @@
 <script src="plugins/venobox/venobox.min.js"></script>
 <!-- filter -->
 <script src="plugins/filterizr/jquery.filterizr.min.js"></script>
-<!-- google map -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
-<script src="plugins/google-map/gmap.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Main Script -->
 <script src="js/script.js"></script>
 <script src="js/viewJs/authorize.js"></script>
-<script src="js/viewJs/seminar_signle.js"></script>
 <script src="js/viewJs/login.js"></script>
+    
+<script src="js/viewJs/questionSurvey.js"></script>
 </body>
 </html>
+
