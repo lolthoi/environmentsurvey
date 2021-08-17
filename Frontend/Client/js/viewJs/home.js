@@ -8,7 +8,7 @@ var token = localStorage.getItem("token")
 $(document).ready(function(){
 	var owl = $('.owl-carousel');
 	owl.owlCarousel({
-		items:3,
+		items:4,
 		loop: true,
 		margin:10,
 		autoplay:true,
@@ -74,36 +74,49 @@ $(document).ready(function(){
 			}	
         },       
     })
+
+
+	var dataTopStudent = {
+		TimeOrPoint : 0
+	}
+	$.ajax({
+		type : "POST",
+		url: domain+"/api/Result/top3Result?PageNumber=1&PageSize=6",
+		contentType: "application/json; charset=utf-8",
+		data: JSON.stringify(dataTopStudent),
+		datatype:"json",
+		async:true,
+		success : function(response){	
+			console.log(response)		
+			response.listResult.forEach(function(result){
+				showTop3StudentSurvey(result);
+			});
+		},       
+	})
+	
 });
 
 
-function showMessageOutput(count) {
-	  	    	
-    $('.owl-carousel').owlCarousel('add', '<div class="item item_'+count+'">'
-           +'<h4 class="station_name">'+messageOutput.station.name+'</h4>	'	
-           +'<div class="table-responsive">'
-               
-           +'</div>'
-       +'</div>'
-       );
-//     var index = 0;
-//     Object.keys(messageOutput.detail).map(key=> {   		 
-       
-//         if(messageOutput.detail[key] == 1){
-// // 	    		console.log('#detail_'+count);
-//     		$('#detail_'+count).append('<tr id="' +count +'_'+index +'">'
-//                     +'<td >' + key + '</td>'
-//                     +'<td class="icon-checkmark-circle2 text-center " ></td>'
-//                     +'</tr>');
-//     	}else{
-// // 	    		console.log('#detail_'+count);
-//     		$('#detail_'+count).append(`<tr id="` +count +`_`+index +`">`
-//                     +'<td >' + key + '</td>'
-//                     +'<td class="icon-cancel-circle2 text-center"   ></td>'
-//                     +'</tr>');	    		
-//     	}
-//         index++;
-//    })
+
+
+
+
+function showTop3StudentSurvey(result) {	    	
+    $('.owl-carousel').owlCarousel('add', 
+		'<div class=" item">'+
+			'<div class="card border-0 rounded-0 hover-shadow">'+
+				'<img class="card-img-top rounded-0" src="https://localhost:44304/Images/'+result.Image+'" alt="teacher">'+
+				'<div class="card-body">'+
+					'<h4 class="card-title">'+result.FullName+'</h4>'+
+					'<ul class="list-inline seminar_item">'+
+						'<li class="list-inline-item"><b>Submit Time : </b>'+result.SubmitTime+' (s)</li>'+
+						'<li class="list-inline-item"><b>Point : </b>'+result.point+'</li>'+						
+					'</ul>'+
+				'</div>'+
+			'</div>'+
+		'</div>'
+    );
+
    $('.owl-carousel').owlCarousel('refresh');
      
 }

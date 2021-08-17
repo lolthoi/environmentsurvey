@@ -131,17 +131,55 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             List<SurveyModel> result = new List<SurveyModel>();
             if (listSurvey.Count > 0) 
             {
-                result = listSurvey.Select(x => new SurveyModel
+                foreach(var x in listSurvey)
                 {
-                    Id = x.Id,
-                    Name = x.Name,
-                    StartDate = x.StartDate.ToString(),
-                    EndDate = x.EndTime.ToString(),
-                    Status = (SurveyStatus)x.Status,
-                    SeminarId = x.SerminarId,
-                    Description = x.Description,
-                    Results = listResultModel.Count > 0 ? listResultModel.Where(y => y.surveyId == x.Id).ToList() : null,
-                }).ToList();
+                    DateTime dt = DateTime.UtcNow;
+                    if(dt > x.EndTime)
+                    {
+                        SurveyModel surveyModel = new SurveyModel
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                            StartDate = x.StartDate.ToString("yyyy-MM-dd HH:mm:ss tt"),
+                            EndDate = x.EndTime.ToString("yyyy-MM-dd HH:mm:ss tt"),
+                            Status = SurveyStatus.Closed,
+                            SeminarId = x.SerminarId,
+                            Description = x.Description,
+                            Results = listResultModel.Count > 0 ? listResultModel.Where(y => y.surveyId == x.Id).ToList() : null                   
+                        };
+                        result.Add(surveyModel);
+                    }else if (dt < x.StartDate)
+                    {
+                        SurveyModel surveyModel = new SurveyModel
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                            StartDate = x.StartDate.ToString("yyyy-MM-dd HH:mm:ss tt"),
+                            EndDate = x.EndTime.ToString("yyyy-MM-dd HH:mm:ss tt"),
+                            Status = SurveyStatus.Planned,
+                            SeminarId = x.SerminarId,
+                            Description = x.Description,
+                            Results = listResultModel.Count > 0 ? listResultModel.Where(y => y.surveyId == x.Id).ToList() : null
+                        };
+                        result.Add(surveyModel);
+                    }
+                    else
+                    {
+                        SurveyModel surveyModel = new SurveyModel
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                            StartDate = x.StartDate.ToString("yyyy-MM-dd HH:mm:ss tt"),
+                            EndDate = x.EndTime.ToString("yyyy-MM-dd HH:mm:ss tt"),
+                            Status = SurveyStatus.Happenning,
+                            SeminarId = x.SerminarId,
+                            Description = x.Description,
+                            Results = listResultModel.Count > 0 ? listResultModel.Where(y => y.surveyId == x.Id).ToList() : null
+                        };
+                        result.Add(surveyModel);
+                    }
+
+                }
             }
                 
             

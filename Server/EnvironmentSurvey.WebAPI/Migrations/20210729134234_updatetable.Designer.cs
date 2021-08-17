@@ -4,14 +4,16 @@ using EnvironmentSurvey.WebAPI.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EnvironmentSurvey.WebAPI.Migrations
 {
     [DbContext(typeof(ESContext))]
-    partial class ESContextModelSnapshot : ModelSnapshot
+    [Migration("20210729134234_updatetable")]
+    partial class updatetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                         .HasColumnType("text")
                         .HasColumnName("Answer");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -61,7 +63,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -90,7 +92,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -103,12 +105,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                         .HasColumnType("text")
                         .HasColumnName("Question");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
 
                     b.ToTable("Questions");
                 });
@@ -120,7 +117,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -132,8 +129,8 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                     b.Property<int>("Point")
                         .HasColumnType("int");
 
-                    b.Property<double>("SubmitTime")
-                        .HasColumnType("float");
+                    b.Property<DateTime>("SubmitTime")
+                        .HasColumnType("datetime");
 
                     b.Property<int>("SurveyId")
                         .HasColumnType("int");
@@ -161,7 +158,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -192,80 +189,16 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<string>("Subject")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("forUser")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubjectId");
-
                     b.ToTable("Seminars");
-                });
-
-            modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.Subject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Subject1")
-                        .HasColumnType("text")
-                        .HasColumnName("Subject");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Subjects");
-                });
-
-            modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.SupportInformation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Company")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CompanyTel")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Supporter")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SupporterTel")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SupportInfo");
                 });
 
             modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.Survey", b =>
@@ -275,7 +208,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -318,7 +251,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -352,7 +285,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -435,7 +368,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                     b.Property<int?>("AnswerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -468,7 +401,7 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -508,17 +441,6 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.Question", b =>
-                {
-                    b.HasOne("EnvironmentSurvey.WebAPI.DataAccess.Domains.Subject", "Subject")
-                        .WithMany("Questions")
-                        .HasForeignKey("SubjectId")
-                        .HasConstraintName("FK__Questions__Subject__36B17696")
-                        .IsRequired();
-
-                    b.Navigation("Subject");
-                });
-
             modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.Result", b =>
                 {
                     b.HasOne("EnvironmentSurvey.WebAPI.DataAccess.Domains.Survey", "Survey")
@@ -536,17 +458,6 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                     b.Navigation("Survey");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.Seminar", b =>
-                {
-                    b.HasOne("EnvironmentSurvey.WebAPI.DataAccess.Domains.Subject", "Subject")
-                        .WithMany("Seminars")
-                        .HasForeignKey("SubjectId")
-                        .HasConstraintName("FK__Seminars__Subject__36B57510")
-                        .IsRequired();
-
-                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.Survey", b =>
@@ -641,13 +552,6 @@ namespace EnvironmentSurvey.WebAPI.Migrations
                     b.Navigation("Surveys");
 
                     b.Navigation("UserSeminars");
-                });
-
-            modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.Subject", b =>
-                {
-                    b.Navigation("Questions");
-
-                    b.Navigation("Seminars");
                 });
 
             modelBuilder.Entity("EnvironmentSurvey.WebAPI.DataAccess.Domains.Survey", b =>

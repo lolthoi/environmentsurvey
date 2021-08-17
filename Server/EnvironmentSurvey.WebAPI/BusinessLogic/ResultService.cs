@@ -14,9 +14,12 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     public interface IResultService
     {
         Task<ResponsePagedModel> showResultUser(PaginationClientModel paginationClientModel, int userId);
-        ResultModel SaveResult(SaveUserAnswerModel model);
-        Task<ResponsePagedModel> showResultBySurveyId(PaginationClientModel paginationClientModel,int surveyId);
+        ResultModel UpdateResult(SaveUserAnswerModel model);
+        Task<string> SaveResult(SaveResultModel model);
+        Task<bool> checkResultExists(SaveResultModel model);
+        Task<ResponsePagedModel> showResultBySurveyId(PaginationClientModel paginationClientModel,int surveyId, SearchModel model);
         Task<List<InforTakeSurveyModel>> TakeInfor(int seminarId);
+        Task<ResponsePagedModel> Top3Result(PaginationClientModel paginationClientModel, SearchModel model);
     }
     public class ResultService : IResultService
     {
@@ -55,8 +58,11 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 foreach (var userResult in lsUserResult)
                 {
-                    var listResult = await _context.Results.Where(r => r.SurveyId == userResult.SurveyId).OrderByDescending(r => r.Point).ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate).ToListAsync();
-                    for (int i = 0; i < listResult.Count; i++)
+                    var listResult = await _context.Results.Where(r => r.SurveyId == userResult.SurveyId)
+                                    .OrderByDescending(r => r.Point).ThenBy(r => r.SubmitTime)
+                                    .ThenBy(r => r.CreatedDate)
+                                    .ToListAsync();
+                    for (int i = 0; i < listResult.Count(); i++)
                     {
                         var r = listResult[i];
                         if (userResult.UserId == r.UserId)
@@ -67,11 +73,11 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                                 surveyName = _surveyRespository.Get(r.SurveyId).Name,
                                 point = r.Point,
                                 SubmitTime = r.SubmitTime,
-                                //FullName = _userRespository.Get(r.UserId).FirstName + " " + _userRespository.Get(r.UserId).LastName,
                                 Ranked = i + 1,
-                                //NameSeminar = _surveyRespository.Get(r.SurveyId).Serminar.Name
+                                
                             };
                             lsUserResultModel.Add(result);
+                            break;
                         }
 
                     }
@@ -86,7 +92,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             return responsePagedModel;
         }
 
-        public ResultModel SaveResult(SaveUserAnswerModel model)
+        public ResultModel UpdateResult(SaveUserAnswerModel model)
         {
             if (model.ListUserAnserModel.Count == 0)
                 throw new Exception("Invalid input list model");
@@ -130,46 +136,73 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             //Get SurveyId
             int surveyId = 0;
             var a = model.ListUserAnserModel.FirstOrDefault();
-            var surveyQuestionModel = _surveyQuestionRepository.Get(a.Id);
+            var surveyQuestionModel = _surveyQuestionRepository.Get(a.SurveyQuestionId);
             if (surveyQuestionModel != null)
             {
                 surveyId = surveyQuestionModel.SurveyId;
             }
-            //Save result
-            Result res = new()
-            {
-                Point = point,
-                SubmitTime = model.SubmitTime,
-                UserId = userId,
-                User = _userRespository.Get(userId),
-                SurveyId = surveyId,
-                Survey = _surveyRespository.Get(surveyId)
-            };
-            _resultRepository.Insert(res);
+            //update result
+            var resultEntity = _context.Results.Where(r => r.SurveyId == surveyId && r.UserId == userId).FirstOrDefault();
 
-            var result = new ResultModel()
+            var result = new ResultModel();
+            if (resultEntity != null)
             {
-                Id = res.Id,
-                point = res.Point,
-                SubmitTime = res.SubmitTime,
-                UserId = res.UserId,
-                surveyId = res.SurveyId,
-            };
-            return result;
+                resultEntity.Point = point;
+                resultEntity.SubmitTime = model.SubmitTime;
+                resultEntity.User = _userRespository.Get(userId);
+                resultEntity.Survey = _surveyRespository.Get(surveyId);
+                try
+                {
+                    _context.SaveChangesAsync();
+                    result = new ResultModel()
+                    {
+                        Id = resultEntity.Id,
+                        point = resultEntity.Point,
+                        SubmitTime = resultEntity.SubmitTime,
+                        UserId = resultEntity.UserId,
+                        surveyId = resultEntity.SurveyId,
+                    };
+                    return result;
+                }
+                catch(Exception e)
+                {
+                    return result;
+                }
+            }
+            else
+            {
+                return result;
+            }
+
+
         }
 
-        public async Task<ResponsePagedModel> showResultBySurveyId(PaginationClientModel paginationClientModel, int surveyId)
+        public async Task<ResponsePagedModel> showResultBySurveyId(PaginationClientModel paginationClientModel, int surveyId, SearchModel model)
         {
             var listResultTotal = await _context.Results.Where(r => r.SurveyId == surveyId).OrderByDescending(r => r.Point).ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate).ToListAsync();
             int totalPage = (int)Math.Ceiling(listResultTotal.Count() / (double)paginationClientModel.PageSize);
-
-            var listResult = await _context.Results
+            List<Result> listResult = new List<Result>();
+            if(model.TimeOrPoint == 0)
+            {
+                listResult = await _context.Results
                         .Where(r => r.SurveyId == surveyId)
                         .OrderByDescending(r => r.Point)
                         .ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate)
                         .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
                         .Take(paginationClientModel.PageSize)
                         .ToListAsync();
+            }
+            else
+            {
+                listResult = await _context.Results
+                        .Where(r => r.SurveyId == surveyId)
+                        .Where(r => r.Point == model.TimeOrPoint || r.SubmitTime == model.TimeOrPoint)
+                        .OrderByDescending(r => r.Point)
+                        .ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate)
+                        .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                        .Take(paginationClientModel.PageSize)
+                        .ToListAsync();
+            }
             List<ResultModel> lsresultModel = new List<ResultModel>();
 
             if (listResult.Count() > 0)
@@ -200,6 +233,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public async Task<List<InforTakeSurveyModel>> TakeInfor(int seminarId)
         {
+            
             var requestSeminars = await _context.UserSeminars.Where(s=> s.SeminarId == seminarId).Where(s=>s.Status ==(int)Status.ACCEPTED).ToListAsync();
             var totalRquestSeminars = requestSeminars.Count();
             var listSurvey = await _context.Surveys.Where(s => s.SerminarId == seminarId).ToListAsync();
@@ -220,6 +254,109 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 }
             }
             return listResult;
+        }
+
+        public async Task< ResponsePagedModel> Top3Result(PaginationClientModel paginationClientModel , SearchModel model)
+        {
+            var listSurveyId = await _context.Results.GroupBy(r => r.SurveyId).Select(r => r.Key).ToListAsync();
+            
+            List<Result> listTotalResultTop3 = new List<Result>();
+            foreach (var surveyId in listSurveyId)
+            {
+                var list = await _context.Results
+                        .Where(r => r.SurveyId == (surveyId))
+                        .OrderByDescending(r => r.Point)
+                        .ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate)
+                        .Take(3)
+                        .ToListAsync();
+                list.ForEach(item => listTotalResultTop3.Add(item));
+            }
+            int totalPage = (int)Math.Ceiling(listTotalResultTop3.Count() / (double)paginationClientModel.PageSize);
+
+            List<Result> listResult = new List<Result>();
+            if (model.TimeOrPoint==0)
+            {
+                listResult = listTotalResultTop3
+                            .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                            .Take(paginationClientModel.PageSize)
+                            .ToList();
+            }
+            
+            if( model.TimeOrPoint != 0)
+            {
+                 listResult = listTotalResultTop3
+                            .Where(r => r.Point == model.TimeOrPoint || r.SubmitTime == model.TimeOrPoint)
+                            .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                            .Take(paginationClientModel.PageSize)
+                            .ToList();
+            }
+            
+            List<ResultModel> lsresultModel = new List<ResultModel>();
+
+            if (listResult.Count() > 0)
+            {
+                lsresultModel = listResult.Select(r => new ResultModel
+                {
+                    surveyName = _surveyRespository.Get(r.SurveyId).Name,
+                    point = r.Point,
+                    SubmitTime = r.SubmitTime,
+                    FullName = _userRespository.Get(r.UserId).FirstName + " " + _userRespository.Get(r.UserId).LastName,
+                    Image = _userRespository.Get(r.UserId).Image,
+
+                }).ToList();
+            }
+            var responsePagedModel = new ResponsePagedModel
+            {
+                listResult = lsresultModel.ToList(),
+                PageNumber = paginationClientModel.PageNumber,
+                TotalPage = totalPage
+            };
+            return responsePagedModel;
+        }
+
+        public async  Task<string> SaveResult(SaveResultModel model)
+        {
+            if(model != null)
+            {
+                Result res = new()
+                {
+                    Point = 0,
+                    SubmitTime = 0,
+                    UserId = model.UserId,
+                    SurveyId = model.SurveyId,
+                    CreatedDate = DateTime.UtcNow
+                };
+                try
+                {
+                    _context.Results.Add(res);
+                    await _context.SaveChangesAsync();
+                    return "success";
+                }catch(Exception e)
+                {
+                    return "save error";
+                }
+            }
+            return "data client null";
+        }
+
+        public async Task<bool> checkResultExists(SaveResultModel model)
+        {
+            if(model == null)
+            {
+                return false;
+            }
+            else
+            {
+                var result = await _context.Results.Where(r => r.SurveyId == model.SurveyId && r.UserId == model.UserId).FirstOrDefaultAsync();
+                if(result != null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
         }
     }
 }

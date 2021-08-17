@@ -60,16 +60,16 @@ function getList(pageNumber) {
 function showHistory(result) {
   $("#list-seminar tbody").append(
     "<tr>" +
-      "<td>" +
+      '<td class="text-center">' +
       result.surveyName +
       "</td>" +
-      "<td>" +
+      '<td class="text-center">' +
       result.SubmitTime +
       "</td>" +
-      "<td>" +
+      '<td class="text-center">' +
       result.point+
       "</td>" +
-      "<td>" +
+      '<td class="text-center">' +
       result.Ranked +
       "</td>" +
       "</tr>"

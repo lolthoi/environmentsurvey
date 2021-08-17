@@ -21,7 +21,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "ADMIN")]
+        //[Authorize(Roles = "ADMIN")]
         public ActionResult<List<SubjectModel>> GetListSeminar()
         {
             var listSubject =  _subjectService.getAll();

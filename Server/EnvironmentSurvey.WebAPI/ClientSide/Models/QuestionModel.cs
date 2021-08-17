@@ -9,5 +9,7 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public List<AnswerModel> Answers { get; set; }
         public List<SurveyQuestionModel> SurveyQuestions { get; set; }
         public int? SurveyQuestionId { get; set; }
+        public string NameSurvey { get; set; }
+
     }
 }

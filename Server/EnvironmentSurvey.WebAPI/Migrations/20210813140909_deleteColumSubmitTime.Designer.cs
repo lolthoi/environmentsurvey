@@ -4,14 +4,16 @@ using EnvironmentSurvey.WebAPI.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EnvironmentSurvey.WebAPI.Migrations
 {
     [DbContext(typeof(ESContext))]
-    partial class ESContextModelSnapshot : ModelSnapshot
+    [Migration("20210813140909_deleteColumSubmitTime")]
+    partial class deleteColumSubmitTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,9 +133,6 @@ namespace EnvironmentSurvey.WebAPI.Migrations
 
                     b.Property<int>("Point")
                         .HasColumnType("int");
-
-                    b.Property<double>("SubmitTime")
-                        .HasColumnType("float");
 
                     b.Property<int>("SurveyId")
                         .HasColumnType("int");

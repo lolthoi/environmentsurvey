@@ -1190,3 +1190,93 @@ link:focus,
   padding-right: 6px;
   color: #fff;
 }
+
+
+/* style take survey */
+.optionA::before {
+  content: "A";
+}
+.optionB::before {
+  content: "B";
+}
+.optionC::before {
+  content: "C";
+}
+.optionD::before {
+  content: "D";
+}
+
+.option-label-radio::before {
+  position: absolute;
+  top: 8px;
+  left: -0.5rem;
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  pointer-events: none;
+  background-color: #fff;
+  border: #808487 solid 1px;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 50%;
+}
+
+input[type=checkbox], input[type=radio] {
+  box-sizing: border-box !important;
+  padding: 0 !important;
+}
+
+button, input, optgroup, select, textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.selected-option::before {
+  color: #fff!important;
+  background-color: #4d799d!important;
+  border-color: #43627c!important;
+}
+
+button, input {
+  overflow: visible;
+}
+
+.selected-option {
+  background-color: #7ab3e2;
+  border-color: #7ab3e2;
+  color: #fff!important;
+}
+
+.option-label-checkbox, .option-label-radio {
+  border: 0;
+  color: #000;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.form-control {
+  font-size: 1rem;
+}
+
+.card{
+  margin-bottom: 30px;
+}
+
+.Closed {
+  pointer-events: none !important;
+  cursor: default !important;
+  background-color:rgba(100, 100, 100, 0.5);
+}
+.Planned{
+  pointer-events: none !important;
+  cursor: default !important;
+  background-color: orange;
+}
+.Start-text{
+  color: green;
+}
+.Start{
+  background-color: green;
+}

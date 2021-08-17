@@ -23,14 +23,17 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         private readonly IRepository<Question> _questionRepository;
         private readonly IRepository<Answer> _answerRepository;
         private readonly IRepository<SurveyQuestion> _surveyQuestionRepository;
+        private readonly IRepository<Survey> _surveyRepository;
         public QuestionService(
             IRepository<Question> questionRepository,
             IRepository<Answer> answerRepository,
-            IRepository<SurveyQuestion> surveyQuestionRepository)
+            IRepository<SurveyQuestion> surveyQuestionRepository,
+            IRepository<Survey> surveyRepository)
         {
             _questionRepository = questionRepository;
             _answerRepository = answerRepository;
             _surveyQuestionRepository = surveyQuestionRepository;
+            _surveyRepository = surveyRepository;
         }
 
         public bool Create(QuestionModel model)
@@ -116,9 +119,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             return result;
         }
 
-        public List<QuestionModel> GetAllQuestionBySurveyId(int Id)
+        public  List<QuestionModel> GetAllQuestionBySurveyId(int Id)
         {
-            var listAnswer = _answerRepository.GetAll().ToList();
+            var survey = _surveyRepository.Get(Id);
+            var listAnswer =  _answerRepository.GetAll().ToList();
             List<AnswerModel> listAnswerModel = new();
             if (listAnswer.Count > 0)
             {
@@ -144,6 +148,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 {
                     Id = x.Id,
                     Question = x.Question1,
+                    NameSurvey = survey.Name,
                     Answers = listAnswerModel.Count > 0 ? listAnswerModel.Where(y => y.QuestionId == x.Id).ToList() : null,
                     SurveyQuestionId = x.SurveyQuestions.GroupBy(x => x.Id).Select(t => t.Key).ToList().Count == 1
                         ? x.SurveyQuestions.GroupBy(x => x.Id).Select(t => t.Key).ToList().FirstOrDefault() : null,

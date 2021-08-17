@@ -2,6 +2,8 @@ var domain = "https://localhost:44304";
 var token = localStorage.getItem('token');
 var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
+var userId = localStorage.getItem("userId");
+
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -9,25 +11,135 @@ const id = urlParams.get('id');
 const status = urlParams.get('status');
 
 
+var listSurvey = '';
+
 $(document).ready(function(){
-	$('#loadListSurvey').load("listSurvey.html");
-	$.ajax({
+	//$('#loadListSurvey').load("listSurvey.html");
+    $.ajax({
         type : "GET",
-        url: domain+"/api/Seminar/"+id,
+        url: domain+"/api/Seminar/"+id+"/Survey",
+        headers: {
+          Authorization: 'Bearer '+token
+        },
         contentType: "application/json; charset=utf-8",
-        async:true,
-        success : function(seminar){
-            $('#seminar_detail_name').html(seminar.Name);	
-            if(status == ""){
-              showSeminarDetail(seminar);
-            }else if(status == 1){
-              showSeminarDetailRegistered(seminar);
-            }else{
-              showSeminarDetailRegisteringOrDecline(seminar);
-            }
+        async:false,
+        success : function(response){
+            console.log(response)
+            getListSurvey(response)
         },       
     })
+    showSeminar_survey(listSurvey);
+    
 })
+
+function getListSurvey(response){
+  listSurvey = response;
+}
+
+function showSeminar_survey(listSurvey){
+  $.ajax({
+    type : "GET",
+    url: domain+"/api/Seminar/"+id,
+    headers: {
+      Authorization: 'Bearer '+token
+    },
+    contentType: "application/json; charset=utf-8",
+    async:true,
+    success : function(seminar){
+        $('#seminar_detail_name').html(seminar.Name);	
+        if(status == "" ){
+          showSeminarDetail(seminar);
+          listSurvey.forEach(function(survey) {
+            showListSurveyPendingDecline(survey)
+					});
+        }else if(status == 1 ){
+          showSeminarDetailRegistered(seminar);
+          listSurvey.forEach(function(survey) {
+            showListSurveyRegisted(survey);
+					});
+        }else{
+          showSeminarDetailRegisteringOrDecline(seminar);
+          listSurvey.forEach(function(survey) {
+            showListSurveyPendingDecline(survey)
+					});
+          
+        }
+    },       
+  })
+}
+
+
+
+
+
+function showListSurveyRegisted(survey){
+  var arrayStartTime = survey.StartDate.split(' ');
+  var arrayEndTime = survey.StartDate.split(' ');
+  var text = "";
+  if(survey.Status == 3){
+    text = "Closed";
+  }
+  if(survey.Status == 1){
+    text = "Start";
+  }
+  if(survey.Status == 3){
+    text = "Planned";
+  }
+   $('#listSurvey').append(
+    '<div class="col-4 mb-4 ">'+
+    '<div class="card p-0 border-primary rounded-0 hover-shadow">'+
+      '<div class="card-body ">'+
+        '<ul class="list-inline mb-2 seminar_item ">'+
+        '<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>Start Date</li>'+
+        '<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>End Date</li>'+
+        '</ul>'+
+        '<ul class="list-inline mb-2 seminar_item ">'+
+          '<li class="list-inline-item">'+arrayStartTime[0]+'</li>'+
+          '<li class="list-inline-item">'+arrayEndTime[0]+'</li>'+
+        '</ul>'+
+        '<ul class="list-inline mb-2 seminar_item ">'+
+          '<li class="list-inline-item">'+arrayStartTime[1]+' '+arrayStartTime[2]+'</li>'+
+          '<li class="list-inline-item">'+arrayEndTime[1]+' '+arrayEndTime[2]+'</li>'+
+        '</ul>'+
+        '<h4 class="card-title '+text+'-text" style="height:50px">'+survey.Name+'</h4>'+
+        // '<p class="card-text mb-4 seminar_desc">'+survey.Description+'</p>'+
+        '<a href="survey_detail.html?id='+survey.Id+'" style="margin-left: 30%;" class="btn btn-primary btn-sm '+text+' " id="startSurvey'+survey.Id+'">'+text+'</a>'+
+      '</div>'+
+    '</div>'+
+  '</div>'
+   );
+}
+
+
+function showListSurveyPendingDecline(survey){
+  var arrayStartTime = survey.StartDate.split(' ');
+  var arrayEndTime = survey.StartDate.split(' ');
+   $('#listSurvey').append(
+    '<div class="col-4 mb-4 ">'+
+    '<div class="card p-0 border-primary rounded-0 hover-shadow">'+
+      '<div class="card-body ">'+
+        '<ul class="list-inline mb-2 seminar_item ">'+
+        '<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>Start Date</li>'+
+        '<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>End Date</li>'+
+        '</ul>'+
+        '<ul class="list-inline mb-2 seminar_item ">'+
+          '<li class="list-inline-item">'+arrayStartTime[0]+'</li>'+
+          '<li class="list-inline-item">'+arrayEndTime[0]+'</li>'+
+        '</ul>'+
+        '<ul class="list-inline mb-2 seminar_item ">'+
+          '<li class="list-inline-item">'+arrayStartTime[1]+' '+arrayStartTime[2]+'</li>'+
+          '<li class="list-inline-item">'+arrayEndTime[1]+' '+arrayEndTime[2]+'</li>'+
+        '</ul>'+
+        '<h4 class="card-title" style="height:50px">'+survey.Name+'</h4>'+
+        // '<p class="card-text mb-4 seminar_desc">'+survey.Description+'</p>'+
+      '</div>'+
+    '</div>'+
+  '</div>'
+   );
+}
+
+
+
 
 function showSeminarDetail(seminar){
 	$('#seminar_detail').append(
@@ -89,7 +201,10 @@ function showSeminarDetail(seminar){
      +'</div>'
      +'<div class="col-12 mb-4">'
        +'<h3 class="mb-3">Survey</h3>'
-       +'<div id="loadListSurvey"></div>'
+       +'<p><b>Description</b>: These are all surveys you can participate in this workshop. Each survey can only be taken once. After Click Submit, you can see the number of correct answers and the time it took to complete the survey. You can <a href="http://127.0.0.1:5500/Client/myHistory.html">Click Here</a> to see your current ranking.</p>'
+       +'<div class="row" id="listSurvey">'
+       
+       +'</div>'
      +'</div>'
      +'<div class="col-12 mb-4">'
       +'<button type="button" class="btn btn-primary btn-sm button_register" data-name="'+seminar.Name+'" ">Register Now</button>'
@@ -159,7 +274,10 @@ function showSeminarDetailRegisteringOrDecline(seminar){
      +'</div>'
      +'<div class="col-12 mb-4">'
        +'<h3 class="mb-3">Survey</h3>'
-       +'<ul class="list-styled">'
+       +'<p><b>Description</b>: These are all surveys you can participate in this workshop. Each survey can only be taken once. After Click Submit, you can see the number of correct answers and the time it took to complete the survey. You can <a href="http://127.0.0.1:5500/Client/myHistory.html">Click Here</a> to see your current ranking.</p>'
+       +'<div class="row" id="listSurvey">'
+       
+       +'</div>'
      +'</div>'      
      +'</div>'
    +'</div>'
@@ -225,6 +343,10 @@ function showSeminarDetailRegistered(seminar){
      +'</div>'
      +'<div class="col-12 mb-4">'
        +'<h3 class="mb-3">Survey</h3>'
+       +'<p><b>Description</b>: These are all surveys you can participate in this workshop. Each survey can only be taken once. After Click Submit, you can see the number of correct answers and the time it took to complete the survey. You can <a href="http://127.0.0.1:5500/Client/myHistory.html">Click Here</a> to see your current ranking.</p>'
+       +'<div class="row" id="listSurvey">'
+       
+       +'</div>'
      +'</div>'
      +'</div>'
    +'</div>'

@@ -114,7 +114,9 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
 
             modelBuilder.Entity<Result>(entity =>
             {
-                entity.Property(e => e.SubmitTime).HasColumnType("datetime");
+                /*entity.Property(e => e.SubmitTime)
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("('1')");*/
 
                 entity.HasOne(d => d.Survey)
                     .WithMany(p => p.Results)

@@ -16,6 +16,7 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public int Ranked { get; set; }
         public string FullName { get; set; }
         public string NameSeminar { get; set; }
+        public string Image { get; set; }
 
     }
 }

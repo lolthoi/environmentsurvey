@@ -42,7 +42,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             try
             {
                 _userAnswerService.Create(model.ListUserAnserModel);
-                return _resultService.SaveResult(model);
+                return _resultService.UpdateResult(model);
             }
             catch (Exception e)
             {

@@ -13,5 +13,6 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public string Role { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
+        public double TimeOrPoint { get; set; }
     }
 }
