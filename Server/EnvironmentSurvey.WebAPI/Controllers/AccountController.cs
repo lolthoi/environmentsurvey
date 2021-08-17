@@ -100,8 +100,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             if (userName.Equals(model.Username))
             {
                 var check = await _accountService.changePassword(model);
-                if (check.Equals("Success"))
-                    return Ok("Password Change Successful");
+                return Ok(check);
             }
             return BadRequest("Change Password Fail");
         }

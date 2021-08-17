@@ -63,3 +63,6 @@ svg {
     overflow: hidden;
     vertical-align: middle;
 }
+.p-pad{
+    padding: 6px 12px 6px 25px;
+  }

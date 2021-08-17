@@ -108,7 +108,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     CreatedDate = DateTime.UtcNow,
                 };
                 _context.Users.Add(user);
-                var result = await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return "Success";
             }
             catch(Exception ex)

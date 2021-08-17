@@ -191,7 +191,7 @@ $(document).ready(function () {
     else {
       if ($("#ConfirmPassword").val().trim() !== $("#Password").val().trim())
         $("#invalid-confirm-password").text(
-          "The password confirmation does not match."
+          "The password confirmation does not match"
         );
       else $("#invalid-confirm-password").text("");
     }

@@ -3,6 +3,7 @@ using EnvironmentSurvey.WebAPI.ClientSide.Common;
 using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -66,30 +67,48 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         [HttpPut]
         [Route("changeProfile")]
         [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
-        public async Task<IActionResult> update()
+        public async Task<IActionResult> update(UserModel model)
         {
-            var formCollection = await Request.ReadFormAsync();
-            int count = formCollection.Count();
-            var dict = formCollection.ToDictionary(x => x.Key, x => x.Value.ToString());
-            string imgPath = null;
-            if (count == 7)
-            {
-                var file = formCollection.Files.First();
-                if (file != null)
-                {
-                    FileInfo fi = new FileInfo(file.FileName);
-                    var newfilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + fi.Extension;
-                    var path = Path.Combine("", hostingEnvironment.WebRootPath + "\\Images\\" + newfilename);
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                        imgPath = newfilename;
-                    }
+            var response = await _userService.Update(model);
+            return Ok(response);
+            //var formCollection = await Request.ReadFormAsync();
+            //int count = formCollection.Count();
+            //var dict = formCollection.ToDictionary(x => x.Key, x => x.Value.ToString());
+            //string imgPath = null;
+            //if (count == 7)
+            //{
+            //    var file = formCollection.Files.First();
+            //    if (file != null)
+            //    {
+            //        FileInfo fi = new FileInfo(file.FileName);
+            //        var newfilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + fi.Extension;
+            //        var path = Path.Combine("", hostingEnvironment.WebRootPath + "\\Images\\" + newfilename);
+            //        using (var stream = new FileStream(path, FileMode.Create))
+            //        {
+            //            file.CopyTo(stream);
+            //            imgPath = newfilename;
+            //        }
                    
-                }
-            }
+            //    }
+            //}
             
-            var response = await _userService.Update(dict, imgPath);
+            //var response = await _userService.Update(dict, imgPath);
+            //return Ok(response);
+        }
+        [HttpPut]
+        [Route("changeAvatar")]
+        [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
+        public async Task<IActionResult> changeAvatar(IFormCollection data)
+        {
+            var model = new ChangeAvatarModel
+            {
+                ID = int.Parse(data["ID"])
+            };
+            if (data.Files.Count() != 0)
+            {
+                model.File = data.Files.First();
+            }
+            var response = await _userService.changeAvatar(model);
             return Ok(response);
         }
 

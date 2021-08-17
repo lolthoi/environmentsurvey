@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,5 +22,10 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public int? Status { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
+    }
+    public class ChangeAvatarModel
+    {
+        public int ID { get; set; }
+        public IFormFile File { get; set; }
     }
 }
