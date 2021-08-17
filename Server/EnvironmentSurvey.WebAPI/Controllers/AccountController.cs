@@ -18,12 +18,10 @@ namespace EnvironmentSurvey.WebAPI.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly ISendMailService _sendMailService;
-        private readonly IHostingEnvironment hostingEnvironment;
 
-        public AccountController(IAccountService accountService, IHostingEnvironment hostingEnv, ISendMailService sendMailService)
+        public AccountController(IAccountService accountService, ISendMailService sendMailService)
         {
             _accountService = accountService;
-            hostingEnvironment = hostingEnv;
             _sendMailService = sendMailService;
         }
 

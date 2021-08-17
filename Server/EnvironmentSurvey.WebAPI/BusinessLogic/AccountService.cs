@@ -13,6 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BC = BCrypt.Net.BCrypt;
 
@@ -30,12 +31,13 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     {
         private readonly ESContext _context;
         private IConfiguration _configuration;
+        private readonly Regex regexPassword = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
 
         public AccountService(IConfiguration config, ESContext context)
         {
             _configuration = config;
             _context = context;
-           
+
         }
 
         private async Task<User> GetUser(string UserName, string Password)
@@ -86,9 +88,9 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public async Task<string> Register(RegisterModel model)
         {
-            if (!model.Role.Equals("STUDENT") && !model.Role.Equals("EMPLOYEE"))
+            if ((!model.Role.Equals("STUDENT") && !model.Role.Equals("EMPLOYEE")) || !regexPassword.IsMatch(model.Password))
             {
-                return "Error";
+                return "Failed";
             }
             try
             {
@@ -111,7 +113,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 await _context.SaveChangesAsync();
                 return "Success";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex.Message;
             }
@@ -161,8 +163,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public async Task<string> changePassword(ChangePasswordModel model)
         {
+            if (!regexPassword.IsMatch(model.NewPassword))
+                return "Failed";
             User user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(model.Username));
-            if(user != null)
+            if (user != null)
             {
                 string userPass = user.Password;
                 if (BC.Verify(model.OldPassword, userPass))
@@ -175,10 +179,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 }
             }
             else
-            {
                 return "User not found";
-            }
-            
             return "Failed";
         }
     }

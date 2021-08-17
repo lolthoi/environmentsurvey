@@ -5,6 +5,7 @@ var allowed = [".jpg", ".png", ".gif", ".jpeg", ".jfif"];
 var regexImage = new RegExp(
   "([a-zA-Z0-9s_\\.-:()])+(" + allowed.join("|") + ")$"
 );
+const passRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 //Get Profile
 $(document).ready(function () {
   var data = {
@@ -87,6 +88,7 @@ function validatePasswordForm() {
   if (
     $("#OldPassword").val().trim() != "" &&
     $("#NewPassword").val().trim() != "" &&
+    passRegex.test($("#NewPassword").val().trim()) &&
     $("#ConfirmPassword").val().trim() != "" &&
     $("#ConfirmPassword").val().trim() == $("#NewPassword").val().trim()
   )
@@ -175,14 +177,22 @@ $(document).ready(function () {
     if ($("#NewPassword").val().trim() == "")
       $("#invalid-new-password").text("Please input new password");
     else {
-      $("#invalid-new-password").text("");
+      if(!passRegex.test($("#NewPassword").val().trim())){
+        $("#invalid-new-password").text("Minimum eight characters, at least one letter and one number");
+      }else{
+        $("#invalid-new-password").text("");
+      }
     }
   });
   $("#NewPassword").keydown(function () {
     if ($("#NewPassword").val().trim() == "")
       $("#invalid-new-password").text("Please input new password");
     else {
-      $("#invalid-new-password").text("");
+      if(!passRegex.test($("#NewPassword").val().trim())){
+        $("#invalid-new-password").text("Minimum eight characters, at least one letter and one number");
+      }else{
+        $("#invalid-new-password").text("");
+      }
     }
   });
   $("#ConfirmPassword").keyup(function () {

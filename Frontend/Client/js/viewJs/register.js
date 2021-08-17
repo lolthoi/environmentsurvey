@@ -2,6 +2,7 @@ var domain = "https://localhost:44304";
 const emailRegex =
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const telRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+const passRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 //Prevent Submit Function
 function validateForm() {
   if (
@@ -164,14 +165,22 @@ $(document).ready(function () {
     if ($("#Password").val().trim() == "")
       $("#invalid-password").text("Please enter your password");
     else {
-      $("#invalid-password").text("");
+      if(!passRegex.test($("#Password").val().trim())){
+        $("#invalid-password").text("Minimum eight characters, at least one letter and one number");
+      }else{
+        $("#invalid-password").text("");
+      }
     }
   });
   $("#Password").keydown(function () {
     if ($("#Password").val().trim() == "")
       $("#invalid-password").text("Please enter password");
     else {
-      $("#invalid-password").text("");
+      if(!passRegex.test($("#Password").val().trim())){
+        $("#invalid-password").text("Minimum eight characters, at least one letter and one number");
+      }else{
+        $("#invalid-password").text("");
+      }
     }
   });
   $("#ConfirmPassword").keyup(function () {
