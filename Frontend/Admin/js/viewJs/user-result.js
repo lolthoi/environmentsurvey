@@ -1,4 +1,4 @@
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 
 var token = localStorage.getItem("token");
 var url_string = window.location + "";
@@ -8,7 +8,7 @@ var userId = url.searchParams.get("userId");
 $(document).ready(function(){
     $.ajax({
         type: "GET",
-        url: domen+"/api/"+userId+"/Result/",
+        url: domain+"/api/"+userId+"/Result/",
         headers: {
             Authorization: "Bearer " + token,
         },

@@ -16,7 +16,7 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public string Email { get; set; }
         public string Tel { get; set; }
         public string Address { get; set; }
-        public string Image { get; set; }
+        //public string Image { get; set; }
         public int Gender { get; set; }
     }
 }

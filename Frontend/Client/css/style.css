@@ -159,7 +159,7 @@ h6, .h6 {
   font-family: "Poppins", sans-serif;
   text-transform: capitalize;
   padding: 15px 40px;
-  border-radius: 0;
+  /* border-radius: 0; */
   font-weight: 500;
   border: 0;
   position: relative;
@@ -520,6 +520,9 @@ a h4:hover {
 /* page title */
 .page-title-section {
   padding: 200px 0 80px;
+}
+.page-register-section {
+  padding: 97px 0 0 0;
 }
 
 .custom-breadcrumb li.nasted {
@@ -1016,9 +1019,9 @@ link:focus,
 }
 
 .form-control {
-  height: 60px;
+  height: 40px;
   background: #fff;
-  border-radius: 0;
+  /* border-radius: 0; */
   padding-left: 25px;
 }
 
@@ -1064,7 +1067,7 @@ link:focus,
 
 /*Custom css*/
 
-.header__navbar-use-menu::before{
+/* .header__navbar-use-menu::before{
   content: "";
   display: block;
   position: absolute;
@@ -1075,7 +1078,7 @@ link:focus,
   right: 165px;
  
 }
-
+ */
 
 .loader {
   position: relative;

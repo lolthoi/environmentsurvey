@@ -3,7 +3,7 @@ $(document).ready(function(){
     $(this).scrollTop(0);
 	$.ajax({
 			type : "GET",
-			url: domen+"/api/Seminar/"+id+"/Survey",
+			url: domain+"/api/Seminar/"+id+"/Survey",
 			headers: {
 				Authorization: 'Bearer '+token
 			},

@@ -41,9 +41,6 @@
 
   <!-- header -->
   <header class="fixed-top header">
-    <!-- top header -->
-
-    <!-- navbar -->
     <div class="navigation w-100">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark p-0">
@@ -52,42 +49,40 @@
             aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-
+  
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav ml-auto text-center">
-              <li class="nav-item ">
+              <li class="nav-item">
                 <a class="nav-link" href="index.html">HOME</a>
               </li>
-              <li class="nav-item @@seminar">
-                <a class="nav-link" href="seminars.html">SEMINAR</a>
+              <li class="nav-item">
+                <a class="nav-link" href="seminars.html">SEMINARS</a>
               </li>
-              <li class="nav-item @@courses">
-                <a class="nav-link" href="courses.html">SUPPORT</a>
+              <li class="nav-item">
+                <a class="nav-link" href="support-information.html">SUPPORT</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="fags.html">FAGS</a>
-              </li>
-              <li class="nav-item @@contact">
-                <a class="nav-link" href="contact.html">CONTACT</a>
+                <a class="nav-link" href="fags.html">FAQS</a>
               </li>
               <li class="nav-item dropdown view profile">
                 <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
-
                 </a>
                 <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="changeProfile.html">Update Profile</a>
-                  <a class="dropdown-item" href="#">Change Password</a>
+                  <a class="dropdown-item" href="../Admin/dashboard.html" id="admin-dashboard">Admin Dashboard</a>
+                  <a class="dropdown-item" href="profile.html">Change Profile</a>
                   <a class="dropdown-item" href="my_seminar.html">My Seminars</a>
-                  <a class="dropdown-item logout" href="#">Logout</a>
+                  <a class="dropdown-item" href="myHistory.html">My History</a>
+                  <a class="dropdown-item logout"href="javascript:void(0)" >Logout</a>
                 </div>
               </li>
-
-              <li class="nav-item @@login login">
-                <a class="nav-link" data-toggle="modal" data-target="#loginModal">LOGIN</a>
-              </li>
+              
+              <li class="nav-item login">
+                <a href="login.html" class="nav-link">LOGIN</a>
+              </li>           
             </ul>
           </div>
+  
         </nav>
       </div>
     </div>

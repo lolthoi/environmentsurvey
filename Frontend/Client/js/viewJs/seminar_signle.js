@@ -1,4 +1,4 @@
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 var token = localStorage.getItem('token');
 var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
@@ -13,7 +13,7 @@ $(document).ready(function(){
 	$('#loadListSurvey').load("listSurvey.html");
 	$.ajax({
         type : "GET",
-        url: domen+"/api/Seminar/"+id,
+        url: domain+"/api/Seminar/"+id,
         contentType: "application/json; charset=utf-8",
         async:true,
         success : function(seminar){
@@ -33,7 +33,7 @@ function showSeminarDetail(seminar){
 	$('#seminar_detail').append(
 		'<div class="row">'
             +'<div class="col-12 mb-4">'
-            +'<img src="'+domen+'/Images/'+seminar.Image+'" class="img-fluid w-100">'
+            +'<img src="'+domain+'/Images/'+seminar.Image+'" class="img-fluid w-100">'
             +'</div>'
         +'</div>'
     +'<div class="row align-items-center mb-5 seminar_item">'
@@ -103,7 +103,7 @@ function showSeminarDetailRegisteringOrDecline(seminar){
 	$('#seminar_detail').append(
 		'<div class="row">'
             +'<div class="col-12 mb-4">'
-            +'<img src="'+domen+'/Images/'+seminar.Image+'" class="img-fluid w-100">'
+            +'<img src="'+domain+'/Images/'+seminar.Image+'" class="img-fluid w-100">'
             +'</div>'
         +'</div>'
     +'<div class="row align-items-center mb-5 seminar_item">'
@@ -169,7 +169,7 @@ function showSeminarDetailRegistered(seminar){
 	$('#seminar_detail').append(
 		'<div class="row">'
             +'<div class="col-12 mb-4">'
-            +'<img src="'+domen+'/Images/'+seminar.Image+'" class="img-fluid w-100">'
+            +'<img src="'+domain+'/Images/'+seminar.Image+'" class="img-fluid w-100">'
             +'</div>'
         +'</div>'
     +'<div class="row align-items-center mb-5 seminar_item">'
@@ -249,7 +249,7 @@ $(document).ready(function() {
 			$.ajax({
 				
 				type : "POST",
-				url: domen+"/api/UserSeminar/SeminarRegistration",
+				url: domain+"/api/UserSeminar/SeminarRegistration",
 				headers: {
 					Authorization: 'Bearer '+token
 				},

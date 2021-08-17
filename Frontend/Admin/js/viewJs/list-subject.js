@@ -9,7 +9,7 @@ $(document).ready(function(){
 function getList(){
     $.ajax({
         type: "GET",
-        url: domen+"/api/Subject/",
+        url: domain+"/api/Subject/",
         headers: {
             Authorization: "Bearer " + token,
         },

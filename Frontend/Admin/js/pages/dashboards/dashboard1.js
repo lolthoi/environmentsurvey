@@ -101,7 +101,7 @@ $(function () {
     sparklineLogin();
 });
 
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 var token = localStorage.getItem('token');
 var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
@@ -113,7 +113,7 @@ $(document).ready(function(){
             headers: {
                 Authorization: 'Bearer '+token
             },
-            url: domen+"/api/Report/getDataReport",
+            url: domain+"/api/Report/getDataReport",
             contentType: "application/json; charset=utf-8",
             async:true,
             success : function(response){

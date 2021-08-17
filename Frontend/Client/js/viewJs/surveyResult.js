@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var domen = "https://localhost:44304";
+    var domain = "https://localhost:44304";
     var url_string = window.location + "";
     var url = new URL(url_string);
     var surveyId = url.searchParams.get("surveyId");
@@ -13,7 +13,7 @@ $(document).ready(function(){
 
     $.ajax({
         type: "POST",
-        url: domen+"/api/Result/getResult",
+        url: domain+"/api/Result/getResult",
         contentType: "application/json; charset=utf-8",
         headers: {Authorization: 'Bearer '+ token},
         data: JSON.stringify(data),

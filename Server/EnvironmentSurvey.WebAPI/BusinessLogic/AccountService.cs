@@ -20,7 +20,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 {
     public interface IAccountService
     {
-        Task<string> Register(Dictionary<string, string> dict, string imagePath);
+        //Task<string> Register(Dictionary<string, string> dict, string imagePath);
+        Task<string> Register(RegisterModel model);
         Task<AuthendModel> Login(LoginModel model);
         //Task<Object> GetUserProfile();
         Task<string> changePassword(ChangePasswordModel model);
@@ -46,41 +47,74 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 return await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(UserName));
         }
 
-        public async Task<string> Register(Dictionary<string,string> dict, string imagePath)
+        //public async Task<string> Register(Dictionary<string,string> dict, string imagePath)
+        //{
+        //    User user = new User();
+        //    foreach (string key in dict.Keys)
+        //    {
+        //        if (key.Equals("username")) { user.Username = dict[key]; continue; }
+        //        if (key.Equals("userPass")) { user.Password = BC.HashPassword(dict[key]); continue; }
+        //        if (key.Equals("idNumber")) { user.NumberId = dict[key]; continue; }
+        //        if (key.Equals("userRole")) { user.Role = dict[key]; continue; }
+        //        if (key.Equals("userLastname")) { user.LastName = dict[key]; continue; }
+        //        if (key.Equals("userFirstname")) { user.FirstName = dict[key]; continue; }
+        //        if (key.Equals("userEmail")) { user.Email = dict[key]; continue; }
+        //        if (key.Equals("userTel")) { user.Tel = dict[key]; continue; }
+        //        if (key.Equals("userAddress")) { user.Address = dict[key]; continue; }
+        //        if (key.Equals("userGender")) { user.Gender = Int32.Parse(dict[key]); continue; }
+        //    }
+        //    user.Image = imagePath;
+        //    user.Status = (int)Status.PENDING;
+        //    user.CreatedDate = DateTime.UtcNow;
+
+        //    /*var duplicate = _context.Users.FirstOrDefault(u => u.Username.Equals(user.Username));
+        //    if (duplicate != null)
+        //        return "Duplicate";*/
+
+        //    try
+        //    {
+        //        _context.Users.Add(user);
+        //        var result = await _context.SaveChangesAsync();
+        //        //await _sendMailService.SendWelcomeEmailAsync(user.Email, "Verify Account", user.Username);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ex.Message;
+        //    }
+        //    return "Success";
+        //}
+
+        public async Task<string> Register(RegisterModel model)
         {
-            User user = new User();
-            foreach (string key in dict.Keys)
+            if (!model.Role.Equals("STUDENT") && !model.Role.Equals("EMPLOYEE"))
             {
-                if (key.Equals("username")) { user.Username = dict[key]; continue; }
-                if (key.Equals("userPass")) { user.Password = BC.HashPassword(dict[key]); continue; }
-                if (key.Equals("idNumber")) { user.NumberId = dict[key]; continue; }
-                if (key.Equals("userRole")) { user.Role = dict[key]; continue; }
-                if (key.Equals("userLastname")) { user.LastName = dict[key]; continue; }
-                if (key.Equals("userFirstname")) { user.FirstName = dict[key]; continue; }
-                if (key.Equals("userEmail")) { user.Email = dict[key]; continue; }
-                if (key.Equals("userTel")) { user.Tel = dict[key]; continue; }
-                if (key.Equals("userAddress")) { user.Address = dict[key]; continue; }
-                if (key.Equals("userGender")) { user.Gender = Int32.Parse(dict[key]); continue; }
+                return "Error";
             }
-            user.Image = imagePath;
-            user.Status = (int)Status.PENDING;
-            user.CreatedDate = DateTime.UtcNow;
-
-            /*var duplicate = _context.Users.FirstOrDefault(u => u.Username.Equals(user.Username));
-            if (duplicate != null)
-                return "Duplicate";*/
-
             try
             {
+                User user = new User
+                {
+                    Username = model.Username,
+                    Password = BC.HashPassword(model.Password),
+                    NumberId = model.NumberId,
+                    Role = model.Role,
+                    LastName = model.LastName,
+                    FirstName = model.FirstName,
+                    Email = model.Email,
+                    Tel = model.Tel,
+                    Gender = model.Gender,
+                    Image = "default-avatar.jpg",
+                    Status = (int)Status.PENDING,
+                    CreatedDate = DateTime.UtcNow,
+                };
                 _context.Users.Add(user);
                 var result = await _context.SaveChangesAsync();
-                //await _sendMailService.SendWelcomeEmailAsync(user.Email, "Verify Account", user.Username);
+                return "Success";
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 return ex.Message;
             }
-            return "Success";
         }
 
         public async Task<AuthendModel> Login(LoginModel model)

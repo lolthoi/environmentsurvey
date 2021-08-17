@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Educenter</title>
+  <title>Environmental Survey</title>
 
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,34 +72,30 @@
             <li class="nav-item active">
               <a class="nav-link" href="index.html">HOME</a>
             </li>
-            <li class="nav-item @@seminar">
-              <a class="nav-link" href="seminars.html">SEMINAR</a>
+            <li class="nav-item">
+              <a class="nav-link" href="seminars.html">SEMINARS</a>
             </li>
-            <li class="nav-item @@courses">
-              <a class="nav-link" href="courses.html">SUPPORT</a>
+            <li class="nav-item">
+              <a class="nav-link" href="support-information.html">SUPPORT</a>
             </li>
-            <li class="nav-item @@events">
-              <a class="nav-link" href="fags.html">FAGS</a>
-            </li>
-            <li class="nav-item @@contact">
-              <a class="nav-link" href="contact.html">CONTACT</a>
+            <li class="nav-item">
+              <a class="nav-link" href="fags.html">FAQS</a>
             </li>
             <li class="nav-item dropdown view profile">
               <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                
               </a>
               <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="changeProfile.html">Update Profile</a>
-                <a class="dropdown-item" href="change-password.html">Change Password</a>
+                <a class="dropdown-item" href="../Admin/dashboard.html" id="admin-dashboard">Admin Dashboard</a>
+                <a class="dropdown-item" href="profile.html">Change Profile</a>
                 <a class="dropdown-item" href="my_seminar.html">My Seminars</a>
                 <a class="dropdown-item" href="myHistory.html">My History</a>
-                <a class="dropdown-item logout"href="#" >Logout</a>
+                <a class="dropdown-item logout"href="javascript:void(0)" >Logout</a>
               </div>
             </li>
             
-            <li class="nav-item @@login login">
-              <a class="nav-link"  data-toggle="modal" data-target="#loginModal">LOGIN</a>
+            <li class="nav-item login">
+              <a href="login.html" class="nav-link">LOGIN</a>
             </li>           
           </ul>
         </div>
@@ -109,37 +105,6 @@
   </div>
 </header>
 <!-- /header -->
-<!-- Modal login-->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content rounded-0 border-0 p-4">
-            <div class="modal-header border-0">
-                <h3>Login</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="#" class="row">
-                    <span id="message" class="hiddenField" style="color: red;"></span>
-                    <div class="col-12">
-                        <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Username">
-                    </div>
-                    <div class="col-12">
-                        <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password">
-                    </div>
-                    <div class="col-12">
-                        <button type="button" id="loginButton" class="btn btn-primary">LOGIN</button>
-                    </div>
-                </form>
-                <p>Not have an Account? <a href="register.html">Click Here</a></p>
-                
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal register seminar -->
-
 <!-- hero slider -->
 <section class="hero-section overlay bg-cover" data-background="images/banner/banner-1.jpg">
   <div class="container">
@@ -609,21 +574,21 @@
 <!-- footer -->
 <footer>
   <!-- newsletter -->
-  <div class="newsletter">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-9 ml-auto bg-primary py-5 newsletter-block">
-          <h3 class="text-white">Subscribe Now</h3>
-          <form action="#">
-            <div class="input-wrapper">
-              <input type="email" class="form-control border-0" id="newsletter" name="newsletter" placeholder="Enter Your Email...">
-              <button type="submit" value="send" class="btn btn-primary">Join</button>
-            </div>
-          </form>
-        </div>
+<div class="newsletter">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 ml-auto bg-primary py-5 newsletter-block">
+        <h3 class="text-white">Subscribe Now</h3>
+        <form action="#">
+          <div class="input-wrapper">
+            <input type="email" class="form-control border-0" id="newsletter" name="newsletter" placeholder="Enter Your Email...">
+            <button type="submit" value="send" class="btn btn-primary">Join</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
   <!-- footer content -->
   <div class="footer bg-footer section border-bottom">
     <div class="container">
@@ -632,10 +597,9 @@
           <!-- logo -->
           <a class="logo-footer" href="index.html"><img class="img-fluid mb-4" src="images/logo.png" alt="logo"></a>
           <ul class="list-unstyled">
-            <li class="mb-2">23621 15 Mile Rd #C104, Clinton MI, 48035, New York, USA</li>
-            <li class="mb-2">+1 (2) 345 6789</li>
-            <li class="mb-2">+1 (2) 345 6789</li>
-            <li class="mb-2">contact@yourdomain.com</li>
+            <li class="mb-2">Số 8A Tôn Thất Thuyết, Mỹ Đình, Cầu Giấy, Hà Nội</li>
+            <li class="mb-2">024 7300 8855</li>
+            <li class="mb-2">aptech.fpt@fe.edu.vn</li>
           </ul>
         </div>
         <!-- company -->
@@ -654,7 +618,7 @@
           <ul class="list-unstyled">
             <li class="mb-3"><a class="text-color" href="courses.html">Courses</a></li>
             <li class="mb-3"><a class="text-color" href="event.html">Events</a></li>
-            <li class="mb-3"><a class="text-color" href="gallary.html">Gallary</a></li>
+            <li class="mb-3"><a class="text-color" href="gallary.html">Gallery</a></li>
             <li class="mb-3"><a class="text-color" href="faqs.html">FAQs</a></li>
           </ul>
         </div>
@@ -690,8 +654,9 @@
             <script>
               var CurrentYear = new Date().getFullYear()
               document.write(CurrentYear)
-            </script> 
-            © themefisher</p>
+            </script>
+            © themefisher
+          </p>
         </div>
         <div class="col-sm-5 text-sm-right text-center">
           <ul class="list-inline">

@@ -1,4 +1,4 @@
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 var selectedList = [];
 var listForSelect = [];
 
@@ -12,7 +12,7 @@ var token = localStorage.getItem("token");
 $(document).ready(function(){
     $.ajax({
         type: "GET",
-        url: domen+"/api/Survey/"+surveyId,
+        url: domain+"/api/Survey/"+surveyId,
         headers: {
             Authorization: "Bearer " + token,
         },
@@ -26,7 +26,7 @@ $(document).ready(function(){
 
     $.ajax({
         type: "GET",
-        url: domen+"/api/Question",
+        url: domain+"/api/Question",
         headers: {
             Authorization: "Bearer " + token,
         },
@@ -70,7 +70,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: "PUT",
-            url: domen+"/api/SurveyQuestion",
+            url: domain+"/api/SurveyQuestion",
             headers: {
                 Authorization: "Bearer " + token,
             },

@@ -1,4 +1,4 @@
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 var token = localStorage.getItem("token");
 
 var url_string = window.location + "";
@@ -13,7 +13,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: "GET",
-            url: domen+"/api/Survey/"+surveyId,
+            url: domain+"/api/Survey/"+surveyId,
             headers: {
                 Authorization: "Bearer " + token,
             },
@@ -37,7 +37,7 @@ $(document).ready(function(){
 
     $.ajax({
         type: "GET",
-        url: domen+"/api/Seminar/"+seminarId,
+        url: domain+"/api/Seminar/"+seminarId,
         headers: {
             Authorization: "Bearer " + token,
         },
@@ -61,7 +61,7 @@ $(document).ready(function(){
                 }
                 $.ajax({
                     type: "POST",
-                    url: domen+"/api/Survey",
+                    url: domain+"/api/Survey",
                     headers: {
                         Authorization: "Bearer " + token,
                     },
@@ -85,7 +85,7 @@ $(document).ready(function(){
                 }
                 $.ajax({
                     type: "PUT",
-                    url: domen+"/api/Survey",
+                    url: domain+"/api/Survey",
                     headers: {
                         Authorization: "Bearer " + token,
                     },

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Educenter</title>
+  <title>List Notices</title>
 
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,8 +41,6 @@
 
 <!-- header -->
 <header class="fixed-top header">
-  <!-- top header -->
-  <!-- navbar -->
   <div class="navigation w-100">
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-dark p-0">
@@ -54,111 +52,50 @@
 
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="navbar-nav ml-auto text-center">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="index.html">HOME</a>
             </li>
-            <li class="nav-item @@about">
-              <a class="nav-link" href="about.html">SEMINAR</a>
+            <li class="nav-item">
+              <a class="nav-link" href="seminars.html">SEMINARS</a>
             </li>
-            <li class="nav-item @@courses">
-              <a class="nav-link" href="courses.html">SUPPORT</a>
+            <li class="nav-item">
+              <a class="nav-link" href="support-information.html">SUPPORT</a>
             </li>
-            <li class="nav-item @@events">
-              <a class="nav-link" href="events.html">FAGS</a>
-            </li>
-            <li class="nav-item @@contact">
-              <a class="nav-link" href="contact.html">CONTACT</a>
+            <li class="nav-item">
+              <a class="nav-link" href="fags.html">FAQS</a>
             </li>
             <li class="nav-item dropdown view profile">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                
               </a>
               <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Update Profile</a>
-                <a class="dropdown-item" href="#">Change Password</a>
-                <a class="dropdown-item" href="#">History</a>
-                <a class="dropdown-item logout" href="#">Logout</a>
+                <a class="dropdown-item" href="../Admin/dashboard.html" id="admin-dashboard">Admin Dashboard</a>
+                <a class="dropdown-item" href="profile.html">Change Profile</a>
+                <a class="dropdown-item" href="my_seminar.html">My Seminars</a>
+                <a class="dropdown-item" href="myHistory.html">My History</a>
+                <a class="dropdown-item logout"href="javascript:void(0)" >Logout</a>
               </div>
             </li>
             
-            <li class="nav-item @@login login">
-              <a class="nav-link"  data-toggle="modal" data-target="#loginModal">LOGIN</a>
+            <li class="nav-item login">
+              <a href="login.html" class="nav-link">LOGIN</a>
             </li>           
           </ul>
         </div>
+
       </nav>
     </div>
   </div>
 </header>
 <!-- /header -->
-<!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content rounded-0 border-0 p-4">
-          <div class="modal-header border-0">
-              <h3>Login</h3>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <form action="#" class="row">
-                  <span id="message" class="hiddenField" style="color: red;"></span>
-                  <div class="col-12">
-                      <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Username">
-                  </div>
-                  <div class="col-12">
-                      <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password">
-                  </div>
-                  <div class="col-12">
-                      <button type="button" id="loginButton" class="btn btn-primary">LOGIN</button>
-                  </div>
-              </form>
-              <p>Not have an Account? <a href="register.html">Click Here</a></p>
-              
-          </div>
-      </div>
-  </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content rounded-0 border-0 p-4">
-            <div class="modal-header border-0">
-                <h3>Login</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="#" class="row">
-                    <div class="col-12">
-                        <input type="text" class="form-control mb-3" id="loginPhone" name="loginPhone" placeholder="Phone">
-                    </div>
-                    <div class="col-12">
-                        <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Name">
-                    </div>
-                    <div class="col-12">
-                        <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password">
-                    </div>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary">LOGIN</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- page title -->
 <section class="page-title-section overlay" data-background="images/backgrounds/page-title.jpg">
   <div class="container">
     <div class="row">
       <div class="col-md-8">
         <ul class="list-inline custom-breadcrumb">
-          <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Notice</a></li>
-          <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
+          <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="index.html">Home</a></li>
+          <li class="list-inline-item text-white h3 font-secondary nasted">Notice</li>
         </ul>
         <p class="text-lighten">Our courses offer a good compromise between the continuous assessment favoured by some universities and the emphasis placed on final exams by others.</p>
       </div>
@@ -217,8 +154,8 @@
 <!-- /notice -->
 
 <!-- footer -->
-<footer>
-  <!-- newsletter -->
+ <footer>
+    <!-- newsletter -->
   <div class="newsletter">
     <div class="container">
       <div class="row">
@@ -234,87 +171,87 @@
       </div>
     </div>
   </div>
-  <!-- footer content -->
-  <div class="footer bg-footer section border-bottom">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-sm-8 mb-5 mb-lg-0">
-          <!-- logo -->
-          <a class="logo-footer" href="index.html"><img class="img-fluid mb-4" src="images/logo.png" alt="logo"></a>
-          <ul class="list-unstyled">
-            <li class="mb-2">23621 15 Mile Rd #C104, Clinton MI, 48035, New York, USA</li>
-            <li class="mb-2">+1 (2) 345 6789</li>
-            <li class="mb-2">+1 (2) 345 6789</li>
-            <li class="mb-2">contact@yourdomain.com</li>
-          </ul>
-        </div>
-        <!-- company -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">COMPANY</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="about.html">About Us</a></li>
-            <li class="mb-3"><a class="text-color" href="teacher.html">Our Teacher</a></li>
-            <li class="mb-3"><a class="text-color" href="contact.html">Contact</a></li>
-            <li class="mb-3"><a class="text-color" href="blog.html">Blog</a></li>
-          </ul>
-        </div>
-        <!-- links -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">LINKS</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="courses.html">Courses</a></li>
-            <li class="mb-3"><a class="text-color" href="event.html">Events</a></li>
-            <li class="mb-3"><a class="text-color" href="gallary.html">Gallary</a></li>
-            <li class="mb-3"><a class="text-color" href="faqs.html">FAQs</a></li>
-          </ul>
-        </div>
-        <!-- support -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">SUPPORT</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="#">Forums</a></li>
-            <li class="mb-3"><a class="text-color" href="#">Documentation</a></li>
-            <li class="mb-3"><a class="text-color" href="#">Language</a></li>
-            <li class="mb-3"><a class="text-color" href="#">Release Status</a></li>
-          </ul>
-        </div>
-        <!-- support -->
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
-          <h4 class="text-white mb-5">RECOMMEND</h4>
-          <ul class="list-unstyled">
-            <li class="mb-3"><a class="text-color" href="#">WordPress</a></li>
-            <li class="mb-3"><a class="text-color" href="#">LearnPress</a></li>
-            <li class="mb-3"><a class="text-color" href="#">WooCommerce</a></li>
-            <li class="mb-3"><a class="text-color" href="#">bbPress</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- copyright -->
-  <div class="copyright py-4 bg-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-7 text-sm-left text-center">
-          <p class="mb-0">Copyright
-            <script>
-              var CurrentYear = new Date().getFullYear()
-              document.write(CurrentYear)
-            </script> 
-            © themefisher</p>
-        </div>
-        <div class="col-sm-5 text-sm-right text-center">
-          <ul class="list-inline">
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-facebook text-primary"></i></a></li>
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-twitter-alt text-primary"></i></a></li>
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-linkedin text-primary"></i></a></li>
-            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-instagram text-primary"></i></a></li>
-          </ul>
+    <!-- footer content -->
+    <div class="footer bg-footer section border-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-sm-8 mb-5 mb-lg-0">
+            <!-- logo -->
+            <a class="logo-footer" href="index.html"><img class="img-fluid mb-4" src="images/logo.png" alt="logo"></a>
+            <ul class="list-unstyled">
+              <li class="mb-2">Số 8A Tôn Thất Thuyết, Mỹ Đình, Cầu Giấy, Hà Nội</li>
+              <li class="mb-2">024 7300 8855</li>
+              <li class="mb-2">aptech.fpt@fe.edu.vn</li>
+            </ul>
+          </div>
+          <!-- company -->
+          <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+            <h4 class="text-white mb-5">COMPANY</h4>
+            <ul class="list-unstyled">
+              <li class="mb-3"><a class="text-color" href="about.html">About Us</a></li>
+              <li class="mb-3"><a class="text-color" href="teacher.html">Our Teacher</a></li>
+              <li class="mb-3"><a class="text-color" href="contact.html">Contact</a></li>
+              <li class="mb-3"><a class="text-color" href="blog.html">Blog</a></li>
+            </ul>
+          </div>
+          <!-- links -->
+          <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+            <h4 class="text-white mb-5">LINKS</h4>
+            <ul class="list-unstyled">
+              <li class="mb-3"><a class="text-color" href="courses.html">Courses</a></li>
+              <li class="mb-3"><a class="text-color" href="event.html">Events</a></li>
+              <li class="mb-3"><a class="text-color" href="gallary.html">Gallery</a></li>
+              <li class="mb-3"><a class="text-color" href="faqs.html">FAQs</a></li>
+            </ul>
+          </div>
+          <!-- support -->
+          <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+            <h4 class="text-white mb-5">SUPPORT</h4>
+            <ul class="list-unstyled">
+              <li class="mb-3"><a class="text-color" href="#">Forums</a></li>
+              <li class="mb-3"><a class="text-color" href="#">Documentation</a></li>
+              <li class="mb-3"><a class="text-color" href="#">Language</a></li>
+              <li class="mb-3"><a class="text-color" href="#">Release Status</a></li>
+            </ul>
+          </div>
+          <!-- support -->
+          <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+            <h4 class="text-white mb-5">RECOMMEND</h4>
+            <ul class="list-unstyled">
+              <li class="mb-3"><a class="text-color" href="#">WordPress</a></li>
+              <li class="mb-3"><a class="text-color" href="#">LearnPress</a></li>
+              <li class="mb-3"><a class="text-color" href="#">WooCommerce</a></li>
+              <li class="mb-3"><a class="text-color" href="#">bbPress</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+    <!-- copyright -->
+    <div class="copyright py-4 bg-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-7 text-sm-left text-center">
+            <p class="mb-0">Copyright
+              <script>
+                var CurrentYear = new Date().getFullYear()
+                document.write(CurrentYear)
+              </script>
+              © themefisher
+            </p>
+          </div>
+          <div class="col-sm-5 text-sm-right text-center">
+            <ul class="list-inline">
+              <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-facebook text-primary"></i></a></li>
+              <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-twitter-alt text-primary"></i></a></li>
+              <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-linkedin text-primary"></i></a></li>
+              <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="ti-instagram text-primary"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 <!-- /footer -->
 
 <!-- jQuery -->

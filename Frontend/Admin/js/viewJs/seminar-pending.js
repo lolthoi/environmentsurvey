@@ -1,10 +1,10 @@
-// var domen = "https://localhost:44304";
+// var domain = "https://localhost:44304";
 // var tempList = null;
 
 // $(document).ready(function(){
 //     $.ajax({
 //         type: "GET",
-//         url: domen+"/api/UserSeminar/getAllSeminarPending",
+//         url: domain+"/api/UserSeminar/getAllSeminarPending",
 //         contentType: "application/json; charset=utf-8",
 //         datatype:"json",
 //         async: true,
@@ -69,7 +69,7 @@
 
 //     $.ajax({
 //         type: "POST",
-//         url: domen+"/api/UserSeminar/changeUserSeminarStatus",
+//         url: domain+"/api/UserSeminar/changeUserSeminarStatus",
 //         contentType: "application/json; charset=utf-8",
 //         data: JSON.stringify(data),
 //         async: true,

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Educenter</title>
+  <title>Login</title>
 
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 
   <!-- Main Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
+  <link href="css/authen.css" rel="stylesheet">
 
   <!--Favicon-->
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
@@ -54,40 +55,34 @@
 
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav ml-auto text-center">
-              <li class="nav-item @@home">
-                <a class="nav-link" href="index.html">Home</a>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">HOME</a>
               </li>
-              <li class="nav-item @@about">
-                <a class="nav-link" href="about.html">About</a>
+              <li class="nav-item">
+                <a class="nav-link" href="seminars.html">SEMINARS</a>
               </li>
-              <li class="nav-item @@courses">
-                <a class="nav-link" href="courses.html">COURSES</a>
+              <li class="nav-item">
+                <a class="nav-link" href="courses.html">SUPPORT</a>
               </li>
-              <li class="nav-item @@events">
-                <a class="nav-link" href="events.html">EVENTS</a>
+              <li class="nav-item">
+                <a class="nav-link" href="events.html">FAQS</a>
               </li>
-              <li class="nav-item @@blog">
-                <a class="nav-link" href="blog.html">BLOG</a>
-              </li>
-              <li class="nav-item dropdown view">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Pages
+              <li class="nav-item dropdown view profile">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="teacher.html">Teacher</a>
-                  <a class="dropdown-item" href="teacher-single.html">Teacher Single</a>
-                  <a class="dropdown-item" href="notice.html">Notice</a>
-                  <a class="dropdown-item" href="notice-single.html">Notice Details</a>
-                  <a class="dropdown-item" href="research.html">Research</a>
-                  <a class="dropdown-item" href="scholarship.html">Scholarship</a>
-                  <a class="dropdown-item" href="course-single.html">Course Details</a>
-                  <a class="dropdown-item" href="event-single.html">Event Details</a>
-                  <a class="dropdown-item" href="blog-single.html">Blog Details</a>
+                <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="../Admin/dashboard.html" id="admin-dashboard">Admin Dashboard</a>
+                  <a class="dropdown-item" href="profile.html">Change Profile</a>
+                  <a class="dropdown-item" href="my_seminar.html">My Seminars</a>
+                  <a class="dropdown-item" href="myHistory.html">My History</a>
+                  <a class="dropdown-item logout"href="javascript:void(0)" >Logout</a>
                 </div>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="contact.html">CONTACT</a>
-              </li>
+              
+              <li class="nav-item login active">
+                <a href="login.html" class="nav-link">LOGIN</a>
+              </li>           
             </ul>
           </div>
         </nav>
@@ -95,27 +90,35 @@
     </div>
   </header>
   <!-- /header -->
-
   <!-- page title -->
-  <section class="page-title-section overlay" data-background="images/backgrounds/page-title.jpg">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8">
-          <ul class="list-inline custom-breadcrumb">
-            <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Register New Account</a></li>
-            <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
-          </ul>
-
-        </div>
-      </div>
-    </div>
+  <section class="page-register-section overlay">
   </section>
   <!-- /page title -->
 
-  <!-- register -->
-  <section class="section bg-gray">
-    <div class="container">
-      Wait...
+  <!-- login -->
+  <section>
+    <div class="login-container">
+      <div class="title">Login</div>
+      <div class="content">
+        <form action="#" id="loginForm" autocomplete="off">
+            <div class="user-details">
+              <span id="error-message" class="" style="color: red;"></span>
+                <div class="input-box input-box-login">
+                    <span class="details">Username</span>
+                    <input type="text" id="Username" name="Username" placeholder="Enter your username" required>
+                    <small id="invalid-username" class="text-danger"></small>
+                  </div>
+                  <div class="input-box input-box-login">
+                    <span class="details">Password</span>
+                    <input type="password" id="Password" name="Password" placeholder="Enter your password" required>
+                    <small id="invalid-password" class="text-danger"></small>
+                  </div>
+            </div>
+          <div class="button">
+            <input type="button" value="Login" id="loginButton">
+          </div>
+        </form>
+        <p>Don't have an account yet? <a href="register.html">Register Now</a></p>
       </div>
     </div>
   </section>
@@ -123,6 +126,22 @@
 
   <!-- footer -->
   <footer>
+    <!-- newsletter -->
+  <div class="newsletter">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 ml-auto bg-primary py-5 newsletter-block">
+          <h3 class="text-white">Subscribe Now</h3>
+          <form action="#">
+            <div class="input-wrapper">
+              <input type="email" class="form-control border-0" id="newsletter" name="newsletter" placeholder="Enter Your Email...">
+              <button type="submit" value="send" class="btn btn-primary">Join</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
     <!-- footer content -->
     <div class="footer bg-footer section border-bottom">
       <div class="container">
@@ -131,10 +150,9 @@
             <!-- logo -->
             <a class="logo-footer" href="index.html"><img class="img-fluid mb-4" src="images/logo.png" alt="logo"></a>
             <ul class="list-unstyled">
-              <li class="mb-2">23621 15 Mile Rd #C104, Clinton MI, 48035, New York, USA</li>
-              <li class="mb-2">+1 (2) 345 6789</li>
-              <li class="mb-2">+1 (2) 345 6789</li>
-              <li class="mb-2">contact@yourdomain.com</li>
+              <li class="mb-2">Số 8A Tôn Thất Thuyết, Mỹ Đình, Cầu Giấy, Hà Nội</li>
+              <li class="mb-2">024 7300 8855</li>
+              <li class="mb-2">aptech.fpt@fe.edu.vn</li>
             </ul>
           </div>
           <!-- company -->
@@ -153,7 +171,7 @@
             <ul class="list-unstyled">
               <li class="mb-3"><a class="text-color" href="courses.html">Courses</a></li>
               <li class="mb-3"><a class="text-color" href="event.html">Events</a></li>
-              <li class="mb-3"><a class="text-color" href="gallary.html">Gallary</a></li>
+              <li class="mb-3"><a class="text-color" href="gallary.html">Gallery</a></li>
               <li class="mb-3"><a class="text-color" href="faqs.html">FAQs</a></li>
             </ul>
           </div>
@@ -225,7 +243,8 @@
 
   <!-- Main Script -->
   <script src="js/script.js"></script>
-
+  <script src="js/viewJs/authorize.js"></script>
+  <script src="js/viewJs/login.js"></script>
 </body>
 
 </html>

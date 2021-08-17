@@ -1,4 +1,4 @@
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 var token = localStorage.getItem("token");
 
 var url_string = window.location + "";
@@ -21,7 +21,7 @@ $(document).ready(function(){
             
             $.ajax({
                 type: "POST",
-                url: domen+"/api/Subject",
+                url: domain+"/api/Subject",
                 headers: {
                     Authorization: "Bearer " + token,
                 },
@@ -59,7 +59,7 @@ function validateSubject(name){
     }
     $.ajax({
         type: "POST",
-        url: domen+"/api/Subject/Search",
+        url: domain+"/api/Subject/Search",
         headers: {
             Authorization: "Bearer " + token,
         },
@@ -82,7 +82,7 @@ function validateSubject(name){
 function getSubject(id){
     $.ajax({
         type: "GET",
-        url: domen+"/api/Subject/"+id,
+        url: domain+"/api/Subject/"+id,
         headers: {
             Authorization: "Bearer " + token,
         },

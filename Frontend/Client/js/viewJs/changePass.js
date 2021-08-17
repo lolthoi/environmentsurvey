@@ -1,5 +1,5 @@
 
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 var token_string = localStorage.getItem("token");
 
 
@@ -23,7 +23,7 @@ $(document).ready(function(){
 
         $.ajax({
             type : "POST",
-            url: domen+"/api/Account/ChangePassword",
+            url: domain+"/api/Account/ChangePassword",
             headers: {Authorization: 'Bearer '+ token_string},
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),

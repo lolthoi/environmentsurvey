@@ -1,5 +1,5 @@
 
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 
 var token = localStorage.getItem('token');
 var username = localStorage.getItem('username');
@@ -11,7 +11,7 @@ $(document).ready(function() {
     }
     $.ajax({
         type : "POST",
-        url: domen+"/api/User/searchByUsername",
+        url: domain+"/api/User/searchByUsername",
         headers: {
             Authorization: 'Bearer '+token
         },
@@ -33,7 +33,7 @@ $(document).ready(function() {
             }else if(gender == 1){              
                 $("#userGender").val(gender).find("option[value=" + gender +"]").attr('selected', true);
             }
-            $('#output').attr("src", domen+'/Images/'+response.Image);
+            $('#output').attr("src", domain+'/Images/'+response.Image);
         },       
     })
 
@@ -54,7 +54,7 @@ function checkEmailExists() {
   var email = $("#userEmail").val();
   $.ajax({
     type: "POST",
-    url: domen+"/api/User/checkEmailExists?email=" + email,
+    url: domain+"/api/User/checkEmailExists?email=" + email,
     contentType: "application/json; charset=utf-8",
     async: true,
     success: function(response) {
@@ -67,7 +67,7 @@ function checkTelExists() {
   var tel = $("#userTel").val();
   $.ajax({
     type: "POST",
-    url: domen+"/api/User/checkTelExists?tel=" + tel,
+    url: domain+"/api/User/checkTelExists?tel=" + tel,
     contentType: "application/json; charset=utf-8",
     async: true,
     success: function(response) {
@@ -161,7 +161,7 @@ $(document).ready(function() {
       var form = new FormData($("#updateProfileForm")[0]);
       $.ajax({
         type: "PUT",
-        url: domen+"/api/User/changeProfile",
+        url: domain+"/api/User/changeProfile",
         headers: {
             Authorization: 'Bearer '+token
         },

@@ -1,268 +1,318 @@
-
-var domen = "https://localhost:44304";
-
-var loadFile = function (event) {
-		var image = document.getElementById('output');
-		image.src = URL.createObjectURL(event.target.files[0]);
-	};
-//Check username exists
-function checkUserExists() {
-  var username = $("#username").val();
-  $.ajax({
-    type: "POST",
-    url: domen+"/api/User/checkUserExists?username=" + username,
-    contentType: "application/json; charset=utf-8",
-    async: true,
-    success: function(response) {
-      $("#message_user").html(response);
-    },
-  });
-}
-//Check email exists
-function checkEmailExists() {
-  var email = $("#userEmail").val();
-  $.ajax({
-    type: "POST",
-    url: domen+"/api/User/checkEmailExists?email=" + email,
-    contentType: "application/json; charset=utf-8",
-    async: true,
-    success: function(response) {
-      $("#message_email").html(response);
-    },
-  });
-}
-//Check tel exists
-function checkTelExists() {
-  var tel = $("#userTel").val();
-  $.ajax({
-    type: "POST",
-    url: domen+"/api/User/checkTelExists?tel=" + tel,
-    contentType: "application/json; charset=utf-8",
-    async: true,
-    success: function(response) {
-      $("#message_tel").html(response);
-    },
-  });
-}
-
-//Check IDnumber exists
-function checkIdNumberExists() {
-  var idNum = $("#idNumber").val();
-  $.ajax({
-    type: "POST",
-    url: domen+"/api/User/checkIdNumberExists?idnum=" + idNum,
-    contentType: "application/json; charset=utf-8",
-    async: true,
-    success: function(response) {
-      $("#message_number").html(response);
-    },
-  });
-}
-//validate email;
-function validateEmail(email) {
-  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(email);
-}
-function checkEmailValid(){
-  var userEmail = $("#userEmail").val();
-  if(!validateEmail(userEmail)){
-    $("#message_email").html("Email not valid");
-  }
-}
-//validate tel
-function validateTel(tel) {
-  const re = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
-  return re.test(tel);
-}
-function checkTelValid(){
-  var userTel = $("#userTel").val();
-  if(!validateTel(userTel)){
-    $("#message_tel").html("Tel not valid");
-    flag = false;
-  }
-}
-
-
-$(document).ready(function() {
-  $("#username").keyup(function() {
-    checkUserExists();
-  });
-  $("#userEmail").keyup(function() {
-    checkEmailExists();
-  });
-  $("#idNumber").keyup(function() {
-    checkIdNumberExists()
-  });
-  $("#userTel").keyup(function() {
-    checkTelExists()
-  });
-});
-
-//validation
+var domain = "https://localhost:44304";
+const emailRegex =
+  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const telRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+//Prevent Submit Function
 function validateForm() {
-  var username = $("#username").val();
-  var userrepass = $("#retypePass").val();
-  var userpass = $("#userPass").val();
-  var userEmail = $("#userEmail").val();
-  var userFirstname = $("#userFirstname").val();
-  var userLastname = $("#userLastname").val();
-  var userTel = $("#userTel").val();
-  var message_number = $("#idNumber").val();
-  var avata = $("#userAvatar").val();
-  var response = $("#message_user").text();
-  var responseEmail = $('#message_email').text();
-  var responseTel = $('#message_tel').text();
-  var responseIdnumber = $('#message_number').text();
-  var flag = true;
-  if (username == "") {
-    $("#message_user").html("User name can not be empty");
-    flag = false;
-  }else{
-    flag = true;
+  if (
+    $("#FirstName").val().trim() != "" &&
+    $("#LastName").val().trim() != "" &&
+    $("#Username").val().trim() != "" &&
+    $("#Email").val().trim() != "" &&
+    $("#Password").val().trim() != "" &&
+    $("#ConfirmPassword").val().trim() != "" &&
+    $("#Tel").val().trim() != "" &&
+    $("#NumberId").val().trim() != "" &&
+    $("#Role").val() != "" &&
+    $("#Gender").val() != "" &&
+    $("#invalid-first-name").text() == "" &&
+    $("#invalid-last-name").text() == "" &&
+    $("#invalid-username").text() == "" &&
+    $("#invalid-email").text() == "" &&
+    $("#invalid-password").text() == "" &&
+    $("#invalid-confirm-password").text() == "" &&
+    $("#invalid-tel").text() == "" &&
+    $("#invalid-id").text() == "" &&
+    $("#invalid-gender").text() == "" &&
+    $("#invalid-role").text() == ""
+  ) {
+    return true;
   }
-  if (userpass == "") {
-    $("#message_pass").html("Password can not be empty");
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if (userrepass == "") {
-    $("#message_repass").html("Confirm Password can not be empty");
-    flag = false;
-  }else{flag = true;return true;
-  }
-  if (userrepass != userpass) {
-    $("#message_repass").html("Confirm Password not correct");
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if (userEmail == "") {
-    $("#message_email").html("Email can not be empty");
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if (userFirstname == "") {
-    $("#message_fname").html("First name can not be empty");
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if (userLastname == "") {
-    $("#message_lname").html("Last name can not be empty");
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if (userTel == "") {
-    $("#message_tel").html("Tel can not be empty");
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if (message_number == "") {
-    $("#message_number").html("IDStudent can not be empty");
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if (avata == "") {
-    $("#message_avata").html("Please choose the avata");
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if (response != "") {
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if(responseEmail != ""){
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if(responseTel != ""){
-    flag = false;
-  }else{
-    flag = true;
-  }
-  if(responseIdnumber != ""){
-    flag = false;
-  }else{
-    flag = true;
-  }
-  
-  return flag;
+  return false;
 }
-
-var name1 = document.querySelector("#username");
-var pass = document.querySelector("#userPass");
-var repass = document.querySelector("#retypePass");
-var fname = document.querySelector("#userFirstname");
-var lname = document.querySelector("#userLastname");
-var tel = document.querySelector("#userTel");
-var number = document.querySelector("#idNumber");
-var email = document.querySelector("#userEmail");
-
-name1.oninput = function() {
-  $("#message_user").html("");
-};
-pass.oninput = function() {
-  $("#message_pass").html("");
-};
-repass.oninput = function() {
-  $("#message_repass").html("");
-};
-email.oninput = function() {
-  $("#message_email").html("");
-};
-fname.oninput = function() {
-  $("#message_fname").html("");
-};
-lname.oninput = function() {
-  $("#message_lname").html("");
-};
-tel.oninput = function() {
-  $("#message_tel").html("");
-};
-number.oninput = function() {
-  $("#message_number").html("");
-};
-
-//Create new account
-$(document).ready(function() {
-  $("#register").click(function() {
-    var username = $("#username").val();
-    var check = validateForm();
-    if (check){
-      $('#registerModal').modal('show');
-      var form = new FormData($("#registerForm")[0]);
-      $.ajax({
-        type: "POST",
-        url: domen+"/api/Account/Register",
-        dataType: 'text',
-        data: form,
-        processData: false,
-        contentType: false,
-        async: true,
-        success: function(response) {
-          if (response == "Success") {
-            localStorage.setItem('registerUser', username);
-            $('#registerModal').modal('hide');            
-            $('#sucessModal').modal('show');
-            setInterval(function(){ 
-              if ( $('#sucessModal').attr('aria-hidden')){
-                   window.location.href = "index.html";
-                 }
-            }, 500);
-          }
-         
-        },
+//Validate Function
+function checkUserExists() {
+  return $.ajax({
+    type: "POST",
+    url:
+      domain +
+      "/api/User/checkUserExists?username=" +
+      $("#Username").val().trim(),
+    contentType: "application/json; charset=utf-8",
+    success: function (response) {},
+  });
+}
+function checkEmailExists() {
+  return $.ajax({
+    type: "POST",
+    url:
+      domain + "/api/User/checkEmailExists?email=" + $("#Email").val().trim(),
+    contentType: "application/json; charset=utf-8",
+    success: function (response) {},
+  });
+}
+function checkTelExists() {
+  return $.ajax({
+    type: "POST",
+    url: domain + "/api/User/checkTelExists?tel=" + $("#Tel").val().trim(),
+    contentType: "application/json; charset=utf-8",
+    success: function (response) {},
+  });
+}
+function checkIdNumberExists() {
+  return $.ajax({
+    type: "POST",
+    url:
+      domain +
+      "/api/User/checkIdNumberExists?idnum=" +
+      $("#NumberId").val().trim(),
+    contentType: "application/json; charset=utf-8",
+    success: function (response) {},
+  });
+}
+//Validate Message
+$(document).ready(function () {
+  $("#FirstName").keyup(function () {
+    if ($("#FirstName").val().trim() == "")
+      $("#invalid-first-name").text("Please enter your first name");
+    else {
+      $("#invalid-first-name").text("");
+    }
+  });
+  $("#FirstName").keydown(function () {
+    if ($("#FirstName").val().trim() == "")
+      $("#invalid-first-name").text("Please enter your first name");
+    else {
+      $("#invalid-first-name").text("");
+    }
+  });
+  $("#LastName").keyup(function () {
+    if ($("#LastName").val().trim() == "")
+      $("#invalid-last-name").text("Please enter your last name");
+    else {
+      $("#invalid-last-name").text("");
+    }
+  });
+  $("#LastName").keydown(function () {
+    if ($("#LastName").val().trim() == "")
+      $("#invalid-last-name").text("Please enter your last name");
+    else {
+      $("#invalid-last-name").text("");
+    }
+  });
+  $("#Username").keyup(function () {
+    if ($("#Username").val().trim() == "")
+      $("#invalid-username").text("Please enter your username");
+    else {
+      checkUserExists().done(function (data) {
+        if (data == "") {
+          $("#invalid-username").text("");
+        } else {
+          $("#invalid-username").text("Username is available");
+        }
       });
     }
-    
   });
-  
+  $("#Username").keydown(function () {
+    if ($("#Username").val().trim() == "")
+      $("#invalid-username").text("Please enter your username");
+    else {
+      checkUserExists().done(function (data) {
+        if (data == "") {
+          $("#invalid-username").text("");
+        } else {
+          $("#invalid-username").text("Username is available");
+        }
+      });
+    }
+  });
+  $("#Email").keyup(function () {
+    if ($("#Email").val().trim() == "")
+      $("#invalid-email").text("Please enter your email");
+    else {
+      if (!emailRegex.test($("#Email").val().trim()))
+        $("#invalid-email").text("Email not valid");
+      else {
+        checkEmailExists().done(function (data) {
+          if (data == "") {
+            $("#invalid-email").text("");
+          } else {
+            $("#invalid-email").text("Email is already in use");
+          }
+        });
+      }
+    }
+  });
+  $("#Email").keydown(function () {
+    if ($("#Email").val().trim() == "")
+      $("#invalid-email").text("Please enter your email");
+    else {
+      if (!emailRegex.test($("#Email").val().trim()))
+        $("#invalid-email").text("Email not valid");
+      else {
+        checkEmailExists().done(function (data) {
+          if (data == "") {
+            $("#invalid-email").text("");
+          } else {
+            $("#invalid-email").text("Email is already in use");
+          }
+        });
+      }
+    }
+  });
+  $("#Password").keyup(function () {
+    if ($("#Password").val().trim() == "")
+      $("#invalid-password").text("Please enter your password");
+    else {
+      $("#invalid-password").text("");
+    }
+  });
+  $("#Password").keydown(function () {
+    if ($("#Password").val().trim() == "")
+      $("#invalid-password").text("Please enter password");
+    else {
+      $("#invalid-password").text("");
+    }
+  });
+  $("#ConfirmPassword").keyup(function () {
+    if ($("#ConfirmPassword").val().trim() == "")
+      $("#invalid-confirm-password").text("Please enter confirm password");
+    else {
+      if ($("#ConfirmPassword").val().trim() !== $("#Password").val().trim())
+        $("#invalid-confirm-password").text(
+          "The password confirmation does not match."
+        );
+      else $("#invalid-confirm-password").text("");
+    }
+  });
+  $("#ConfirmPassword").keydown(function () {
+    if ($("#ConfirmPassword").val().trim() == "")
+      $("#invalid-confirm-password").text("Please enter confirm password");
+    else {
+      if ($("#ConfirmPassword").val().trim() !== $("#Password").val().trim())
+        $("#invalid-confirm-password").text(
+          "The password confirmation does not match."
+        );
+      else $("#invalid-confirm-password").text("");
+    }
+  });
+  $("#Tel").keyup(function () {
+    if ($("#Tel").val().trim() == "")
+      $("#invalid-tel").text("Please enter your phone number");
+    else {
+      if (!telRegex.test($("#Tel").val().trim()))
+        $("#invalid-tel").text("Phone number not valid");
+      else {
+        checkTelExists().done(function (data) {
+          if (data == "") {
+            $("#invalid-tel").text("");
+          } else {
+            $("#invalid-tel").text("Phone number is already in use");
+          }
+        });
+      }
+    }
+  });
+  $("#Tel").keydown(function () {
+    if ($("#Tel").val().trim() == "")
+      $("#invalid-tel").text("Please enter your phone number");
+    else {
+      if (!telRegex.test($("#Tel").val().trim()))
+        $("#invalid-tel").text("Phone number not valid");
+      else {
+        checkTelExists().done(function (data) {
+          if (data == "") {
+            $("#invalid-tel").text("");
+          } else {
+            $("#invalid-tel").text("Phone number is already in use");
+          }
+        });
+      }
+    }
+  });
+  $("#NumberId").keyup(function () {
+    if ($("#NumberId").val().trim() == "")
+      $("#invalid-id").text("Please enter your ID");
+    else {
+      checkIdNumberExists().done(function (data) {
+        if (data == "") {
+          $("#invalid-id").text("");
+        } else {
+          $("#invalid-id").text("This ID is already in use");
+        }
+      });
+    }
+  });
+  $("#NumberId").keydown(function () {
+    if ($("#NumberId").val().trim() == "")
+      $("#invalid-id").text("Please enter your ID");
+    else {
+      checkIdNumberExists().done(function (data) {
+        if (data == "") {
+          $("#invalid-id").text("");
+        } else {
+          $("#invalid-id").text("This ID is already in use");
+        }
+      });
+    }
+  });
+  $("#Gender").keydown(function () {
+    if ($("#Gender").val() == "")
+      $("#invalid-gender").text("Please choose your gender");
+    else $("#invalid-gender").text("");
+  });
+  $("#Gender").change(function () {
+    if ($("#Gender").val() == "")
+      $("#invalid-gender").text("Please choose your gender");
+    else $("#invalid-gender").text("");
+  });
+  $("#Role").keydown(function () {
+    if ($("#Role").val() == "")
+      $("#invalid-role").text("Please choose your role");
+    else $("#invalid-role").text("");
+  });
+  $("#Role").change(function () {
+    if ($("#Role").val() == "")
+      $("#invalid-role").text("Please choose your role");
+    else $("#invalid-role").text("");
+  });
+});
+//Submit Register
+$(document).ready(function () {
+  $("#registerButton").click(function () {
+    if (validateForm()) {
+      $("#registerModal").modal("show");
+      var data = {
+        FirstName: $("#FirstName").val().trim(),
+        LastName: $("#LastName").val().trim(),
+        Username: $("#Username").val().trim(),
+        Email: $("#Email").val().trim(),
+        Password: $("#Password").val().trim(),
+        Tel: $("#Tel").val().trim(),
+        NumberId: $("#NumberId").val().trim(),
+        Gender: $("#Gender").val(),
+        Role: $("#Role").val(),
+      };
+    }
+    $.ajax({
+      type: "POST",
+      url: domain + "/api/Account/Register",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(data),
+      datatype: "json",
+      async: true,
+      success: function (response) {
+        if (response == "Success") {
+          localStorage.setItem("registerUser", $("#Username").val().trim());
+          $("#registerModal").modal("hide");
+          $("#successModal").modal("show");
+          setInterval(function () {
+            if ($("#successModal").attr("aria-hidden")) {
+              window.location.href = "index.html";
+            }
+          }, 500);
+        }
+      },
+    });
+  });
 });

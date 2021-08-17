@@ -7,7 +7,7 @@ let dataQuestion = {};
 let totalPage = 0;
 let currentPage = 0 ;
 let dataQuestionEachPage= [];
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
 var token = localStorage.getItem("token")
@@ -15,7 +15,7 @@ var token = localStorage.getItem("token")
 $(document).ready(function(){
   $.ajax({
 			type : "GET",
-			url: domen+"/api/Survey/"+surveyId+"/Question",
+			url: domain+"/api/Survey/"+surveyId+"/Question",
 			headers: {
 				Authorization: 'Bearer '+token
 			},
@@ -211,7 +211,7 @@ function submit(){
     totalDataUserAnswer.push(timeSubmit);
     // $.ajax({
     //     type : "POST",
-    //     url: domen+"/api/UserAnswer",
+    //     url: domain+"/api/UserAnswer",
     //     contentType: "application/json; charset=utf-8",
     //     data: JSON.stringify(totalDataUserAnswer),
     //     success : function(response){

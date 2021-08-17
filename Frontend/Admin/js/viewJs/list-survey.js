@@ -1,4 +1,4 @@
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 var tempList = null;
 
 var token = localStorage.getItem("token");
@@ -11,7 +11,7 @@ $(document).ready(function(){
     
     $.ajax({
         type: "GET",
-        url: domen+"/api/Seminar/"+seminarId,
+        url: domain+"/api/Seminar/"+seminarId,
         headers: {
             Authorization: "Bearer " + token,
         },
@@ -25,7 +25,7 @@ $(document).ready(function(){
 
     $.ajax({
         type: "GET",
-        url: domen+"/api/Seminar/"+seminarId+"/Survey",
+        url: domain+"/api/Seminar/"+seminarId+"/Survey",
         headers: {
             Authorization: "Bearer " + token,
         },
@@ -98,7 +98,7 @@ $(document).on("click", 'button[id^="delete"]', function () {
           surveyId = this.id.replace("delete", "");
           $.ajax({
             type: "DELETE",
-            url: domen+"/api/Survey/"+surveyId,
+            url: domain+"/api/Survey/"+surveyId,
             headers: {
               Authorization: "Bearer " + token,
             },

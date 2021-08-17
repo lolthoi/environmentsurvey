@@ -1,4 +1,4 @@
-var domen = "https://localhost:44304";
+var domain = "https://localhost:44304";
 var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
 var token = localStorage.getItem("token");
@@ -34,7 +34,7 @@ function getTotalPage(response){
 function getList(pageNumber) {
   $.ajax({
     type: "GET",
-    url: domen + "/api/Result/getUserResult?PageNumber="+pageNumber+"&PageSize=6&userId="+userId,
+    url: domain + "/api/Result/getUserResult?PageNumber="+pageNumber+"&PageSize=6&userId="+userId,
     headers: {
       Authorization: "Bearer " + token,
     },

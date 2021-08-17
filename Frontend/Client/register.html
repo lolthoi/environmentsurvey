@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Educenter</title>
+  <title>Register Account</title>
 
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 
   <!-- Main Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
+  <link href="css/authen.css" rel="stylesheet">
 
   <!--Favicon-->
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
@@ -41,85 +42,53 @@
 
   <!-- header -->
   <header class="fixed-top header">
-    <!-- top header -->
-
-    <!-- navbar -->
     <div class="navigation w-100">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark p-0">
           <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
-          <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation"
+            aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-
+  
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav ml-auto text-center">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link" href="index.html">HOME</a>
               </li>
-              <li class="nav-item @@seminar">
-                <a class="nav-link" href="about.html">SEMINAR</a>
+              <li class="nav-item">
+                <a class="nav-link" href="seminars.html">SEMINARS</a>
               </li>
-              <li class="nav-item @@courses">
-                <a class="nav-link" href="courses.html">SUPPORT</a>
+              <li class="nav-item">
+                <a class="nav-link" href="support-information.html">SUPPORT</a>
               </li>
-              <li class="nav-item @@events">
-                <a class="nav-link" href="events.html">FAGS</a>
-              </li>
-              <li class="nav-item @@contact">
-                <a class="nav-link" href="contact.html">CONTACT</a>
+              <li class="nav-item">
+                <a class="nav-link" href="fags.html">FAQS</a>
               </li>
               <li class="nav-item dropdown view profile">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
-                  
                 </a>
                 <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Update Profile</a>
-                  <a class="dropdown-item" href="change-password.html">Change Password</a>
-                  <a class="dropdown-item" href="#">History</a>
-                  <a class="dropdown-item logout" href="#">Logout</a>
+                  <a class="dropdown-item" href="../Admin/dashboard.html" id="admin-dashboard">Admin Dashboard</a>
+                  <a class="dropdown-item" href="profile.html">Change Profile</a>
+                  <a class="dropdown-item" href="my_seminar.html">My Seminars</a>
+                  <a class="dropdown-item" href="myHistory.html">My History</a>
+                  <a class="dropdown-item logout"href="javascript:void(0)" >Logout</a>
                 </div>
               </li>
               
-              <li class="nav-item @@login login">
-                <a class="nav-link"  data-toggle="modal" data-target="#loginModal">LOGIN</a>
+              <li class="nav-item login">
+                <a href="login.html" class="nav-link">LOGIN</a>
               </li>           
             </ul>
           </div>
+  
         </nav>
       </div>
     </div>
   </header>
   <!-- /header -->
-  <!-- model login -->
-  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-       <div class="modal-content rounded-0 border-0 p-4">
-            <div class="modal-header border-0">
-                <h3>Login</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="#" class="row">
-                    <span id="message" class="hiddenField" style="color: red;"></span>
-                    <div class="col-12">
-                        <input type="text" class="form-control mb-3" id="loginName" name="loginName" placeholder="Username">
-                    </div>
-                    <div class="col-12">
-                        <input type="password" class="form-control mb-3" id="loginPassword" name="loginPassword" placeholder="Password">
-                    </div>
-                    <div class="col-12">
-                        <button type="button" id="loginButton" class="btn btn-primary">LOGIN</button>
-                    </div>
-                </form>
-                <p>Not have an Account? <a href="register.html">Click Here</a></p>                
-            </div>           
-        </div>       
-    </div>
-  </div>
   <!-- modal register -->
   <div class="modal " id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered text-center" role="document">
@@ -128,7 +97,7 @@
   </div>
 
   <!-- Register success -->
-  <div class="modal fade" id="sucessModal" tabindex="-1" role="" aria-hidden="true">
+  <div class="modal fade" id="successModal" tabindex="-1" role="" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
        <div class="modal-content rounded-0 border-0 p-4">
             <div class="modal-header border-0">
@@ -147,122 +116,79 @@
     </div>
   </div>
   <!-- page title -->
-  <section class="page-title-section overlay" data-background="images/backgrounds/page-title.jpg">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8">
-          <ul class="list-inline custom-breadcrumb">
-            <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">Register New Account</a></li>
-            <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
-          </ul>
-
-        </div>
-      </div>
-    </div>
+  <section class="page-register-section overlay">
   </section>
   <!-- /page title -->
 
   <!-- register -->
-  <section class="section bg-gray">
-    <div class="container">
-      <div class="row">
-        <form action="#" id="registerForm" enctype="multipart/form-data">
-        <div class="col-lg-12 mb-4 mb-lg-0">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control mb-3" id="username" name="username" placeholder="Username">
-                <span id="message_user" style="color: red;"></span>
-              </div>
+  <section>
+    <div class="register-container">
+      <div class="title">Registration</div>
+      <div class="content">
+        <form action="#" id="registerForm" autocomplete="off">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">First Name</span>
+              <input type="text" placeholder="Enter your first name" id="FirstName" name="FirstName" required>
+              <small id="invalid-first-name" class="text-danger"></small>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="userEmail">Email</label>
-                <input type="email" class="form-control mb-3" id="userEmail" name="userEmail" placeholder="Email" onfocusout="checkEmailValid()">
-                <span id="message_email" style="color: red;"></span>
-              </div>
+            <div class="input-box">
+              <span class="details">Last Name</span>
+              <input type="text" placeholder="Enter your last name" id="LastName" name="LastName" required>
+              <small id="invalid-last-name" class="text-danger"></small>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="userPass">Password</label>
-                <input type="password" class="form-control mb-3" id="userPass" name="userPass" placeholder="Password">
-                <span id="message_pass" style="color: red;"></span>
-              </div>
+            <div class="input-box">
+              <span class="details">Username</span>
+              <input type="text" placeholder="Enter your username" id="Username" name="Username" required>
+              <small id="invalid-username" class="text-danger"></small>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="userTel">Tel</label>
-                <input type="" class="form-control mb-3" id="userTel" name="userTel" placeholder="Tel" onfocusout="checkTelValid()">
-                <span id="message_tel" style="color: red;"></span>
-              </div>
+            <div class="input-box">
+              <span class="details">Email</span>
+              <input type="text" placeholder="Enter your email" id="Email" name="Email" required>
+              <small id="invalid-email" class="text-danger"></small>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="retypePass">Confirm Password</label>
-                <input type="password" class="form-control mb-3" id="retypePass" name="retypePass" placeholder="Confirm Password">
-                <span id="message_repass" style="color: red;"></span>
-              </div>
+            <div class="input-box">
+              <span class="details">Password</span>
+              <input type="password" placeholder="Enter your password" id="Password" name="Password" required>
+              <small id="invalid-password" class="text-danger"></small>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="userFirstname">First Name</label>
-                <input type="text" class="form-control mb-3" id="userFirstname" name="userFirstname" placeholder="First Name">
-                <span id="message_fname" style="color: red;"></span>
-              </div>
+            <div class="input-box">
+              <span class="details">Confirm Password</span>
+              <input type="password" placeholder="Confirm your password" id="ConfirmPassword" name="ConfirmPassword" required>
+              <small id="invalid-confirm-password" class="text-danger"></small>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="idNumber">Number ID</label>
-                <input type="text" class="form-control mb-3" id="idNumber" name="idNumber" placeholder="Number ID">
-                <span id="message_number" style="color: red;"></span>
-              </div>
+            <div class="input-box">
+              <span class="details">Phone Number</span>
+              <input type="text" placeholder="Enter your phone number" id="Tel" name="Tel" required>
+              <small id="invalid-tel" class="text-danger"></small>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="userLastname">Last Name</label>
-                <input type="text" class="form-control mb-3" id="userLastname" name="userLastname" placeholder="Last Name">
-                <span id="message_lname" style="color: red;"></span>
-              </div>
+            <div class="input-box">
+              <span class="details">Number ID</span>
+              <input type="text" placeholder="Enter your ID" id="NumberId" name="NumberId" required>
+              <small id="invalid-id" class="text-danger"></small>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="userAvatar">Avatar</label><br>
-                <img src="images/no-image.jpg" id="output" class="img-rounded" alt="Image" width="200" height="200" />               
-                <label for="userAvatar" style="cursor:pointer;"> Choose file</label>
-                <input type="file" name="userAvatar" id="userAvatar" class="d-none" onchange="loadFile(event)" />
-                <p id="message_avata" style="color: red;"></p>
-              </div>
+            <div class="input-box">
+              <span class="details">Gender</span>
+              <select class="" id="Gender" name="Gender" required>
+                <option value="">Select your gender</option>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+              </select>
+              <small id="invalid-gender" class="text-danger"></small>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="userRole">Role</label>
-                <select class="form-control mb-3" id="userRole" name="userRole">
-                  <option value="STUDENT">Student</option>
-                  <option value="EMPLOYEE">Teacher</option>
-                </select>
-              </div>            
-                <div class="form-group">
-                  <label for="userGender">Gender</label>
-                  <select class="form-control" id="userGender" name="userGender">
-                    <option value="0">Male</option>
-                    <option value="1">Female</option>
-                  </select>
-                </div>
-              <div class="form-group">
-                <label for="userAddress">Address</label>
-                <input name="userAddress" id="userAddress" class="form-control mb-3" placeholder="Address">
-              </div>
+            <div class="input-box">
+              <span class="details">Role</span>
+              <select class="" id="Role" name="Role" required>
+                <option value="">Select your role</option>
+                <option value="STUDENT">Student</option>
+                <option value="EMPLOYEE">Teacher</option>
+              </select>
+              <small id="invalid-role" class="text-danger"></small>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <button type="button" id="register" onclick="return validateForm()" class="btn btn-primary">Register</button>
-              </div>
-            </div>
+          <div class="button">
+            <input type="button" value="Register" id="registerButton">
           </div>
-        </div>
         </form>
       </div>
     </div>
@@ -271,6 +197,22 @@
 
   <!-- footer -->
   <footer>
+    <!-- newsletter -->
+  <div class="newsletter">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 ml-auto bg-primary py-5 newsletter-block">
+          <h3 class="text-white">Subscribe Now</h3>
+          <form action="#">
+            <div class="input-wrapper">
+              <input type="email" class="form-control border-0" id="newsletter" name="newsletter" placeholder="Enter Your Email...">
+              <button type="submit" value="send" class="btn btn-primary">Join</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
     <!-- footer content -->
     <div class="footer bg-footer section border-bottom">
       <div class="container">
@@ -279,10 +221,9 @@
             <!-- logo -->
             <a class="logo-footer" href="index.html"><img class="img-fluid mb-4" src="images/logo.png" alt="logo"></a>
             <ul class="list-unstyled">
-              <li class="mb-2">23621 15 Mile Rd #C104, Clinton MI, 48035, New York, USA</li>
-              <li class="mb-2">+1 (2) 345 6789</li>
-              <li class="mb-2">+1 (2) 345 6789</li>
-              <li class="mb-2">contact@yourdomain.com</li>
+              <li class="mb-2">Số 8A Tôn Thất Thuyết, Mỹ Đình, Cầu Giấy, Hà Nội</li>
+              <li class="mb-2">024 7300 8855</li>
+              <li class="mb-2">aptech.fpt@fe.edu.vn</li>
             </ul>
           </div>
           <!-- company -->
@@ -301,7 +242,7 @@
             <ul class="list-unstyled">
               <li class="mb-3"><a class="text-color" href="courses.html">Courses</a></li>
               <li class="mb-3"><a class="text-color" href="event.html">Events</a></li>
-              <li class="mb-3"><a class="text-color" href="gallary.html">Gallary</a></li>
+              <li class="mb-3"><a class="text-color" href="gallary.html">Gallery</a></li>
               <li class="mb-3"><a class="text-color" href="faqs.html">FAQs</a></li>
             </ul>
           </div>
@@ -375,7 +316,6 @@
   <script src="js/script.js"></script>
   <script src="js/viewJs/register.js"></script>
   <script src="js/viewJs/authorize.js"></script>
-  <script src="js/viewJs/login.js"></script>
 </body>
 
 </html>

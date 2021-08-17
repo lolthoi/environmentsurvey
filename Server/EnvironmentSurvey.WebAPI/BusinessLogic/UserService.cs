@@ -83,7 +83,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(username));
             if (user != null)
             {
-                return "Username is unvalible";
+                return "Username is available";
             }
             else
             {
