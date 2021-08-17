@@ -42,24 +42,22 @@
 
   <!-- header -->
   <header class="fixed-top header">
-    <!-- top header -->
-
-    <!-- navbar -->
     <div class="navigation w-100">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark p-0">
           <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
-          <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation"
+            aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-
+  
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav ml-auto text-center">
               <li class="nav-item">
                 <a class="nav-link" href="index.html">HOME</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.html">SEMINARS</a>
+                <a class="nav-link" href="seminars.html">SEMINARS</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="support-information.html">SUPPORT</a>
@@ -68,22 +66,24 @@
                 <a class="nav-link" href="fags.html">FAQS</a>
               </li>
               <li class="nav-item dropdown view profile">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
                 </a>
                 <div class="dropdown-menu header__navbar-use-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Update Profile</a>
-                  <a class="dropdown-item" href="change-password.html">Change Password</a>
-                  <a class="dropdown-item" href="#">History</a>
-                  <a class="dropdown-item logout" href="#">Logout</a>
+                  <a class="dropdown-item" href="../Admin/dashboard.html" id="admin-dashboard">Admin Dashboard</a>
+                  <a class="dropdown-item" href="profile.html">Change Profile</a>
+                  <a class="dropdown-item" href="my_seminar.html">My Seminars</a>
+                  <a class="dropdown-item" href="myHistory.html">My History</a>
+                  <a class="dropdown-item logout"href="javascript:void(0)" >Logout</a>
                 </div>
               </li>
               
-              <li class="nav-item login active">
+              <li class="nav-item login">
                 <a href="login.html" class="nav-link">LOGIN</a>
               </li>           
             </ul>
           </div>
+  
         </nav>
       </div>
     </div>
@@ -144,7 +144,7 @@
                   <div class="tab-pane active" id="profile">
                     <h6>YOUR PROFILE INFORMATION</h6>
                     <hr>
-                    <form>
+                    <form action="#" id="profileForm" autocomplete="off">
                       <div class="form-group">
                         <label for="fullName">Full Name</label>
                         <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value="Kenneth Valdez">
@@ -301,9 +301,6 @@
 
   <!-- Main Script -->
   <script src="js/script.js"></script>
-  <script src="js/viewJs/register.js"></script>
   <script src="js/viewJs/authorize.js"></script>
-  <script src="js/viewJs/login.js"></script>
 </body>
-
 </html>
