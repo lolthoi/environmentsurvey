@@ -20,6 +20,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         Task<ResponsePagedModel> showResultBySurveyId(PaginationClientModel paginationClientModel,int surveyId, SearchModel model);
         Task<List<InforTakeSurveyModel>> TakeInfor(int seminarId);
         Task<ResponsePagedModel> Top3Result(PaginationClientModel paginationClientModel, SearchModel model);
+        Task<List<int>> listSurveyIdUser(int userId);
     }
     public class ResultService : IResultService
     {
@@ -357,6 +358,13 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     return true;
                 }
             }
+        }
+
+        public async Task<List<int>> listSurveyIdUser(int userId)
+        {
+            List<int> listSurveyId = new List<int>();
+            listSurveyId =  await _context.Results.Where(r => r.UserId == userId).Select(r => r.SurveyId).ToListAsync();
+            return listSurveyId;
         }
     }
 }

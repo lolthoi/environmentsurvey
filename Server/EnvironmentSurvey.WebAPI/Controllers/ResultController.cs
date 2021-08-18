@@ -60,5 +60,12 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         {
             return await _resultService.checkResultExists(model);
         }
+
+        [HttpGet("getAllUserResultJoined")]
+        //[Authorize(Roles = "ADMIN, STUDENT, EMPOYEE")]
+        public async Task<List<int>> getAllUserResultJoined(int userId)
+        {
+            return await _resultService.listSurveyIdUser(userId);
+        }
     }
 }

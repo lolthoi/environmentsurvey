@@ -21,14 +21,13 @@ $(document).ready(function(){
     SaveResult(id, UserId);
   }
   else{
-    window.location.href = "seminar-single.html?id=3&status=1";
+    window.location.href = "index.html";
   }
 
 });
 function doCheck(response){
   check = response;
 }
-
 
 function SaveResult(surveyId, UserId){
   var dataSave = {
@@ -264,7 +263,7 @@ function clockCountUp(listQuestion){
             $('#sucessModal').modal('show');
             setInterval(function(){ 
               if ( $('#sucessModal').attr('aria-hidden')){
-                   window.location.href = "index.html";
+                   window.location.href = "myHistory.html";
                  }
             }, 500);
           },       

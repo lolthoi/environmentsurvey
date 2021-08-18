@@ -12,9 +12,10 @@ const status = urlParams.get('status');
 
 
 var listSurvey = '';
-
+var listSurveyJoined = '';
 $(document).ready(function(){
 	//$('#loadListSurvey').load("listSurvey.html");
+    getListSurveyUserJoined();
     $.ajax({
         type : "GET",
         url: domain+"/api/Seminar/"+id+"/Survey",
@@ -24,11 +25,10 @@ $(document).ready(function(){
         contentType: "application/json; charset=utf-8",
         async:false,
         success : function(response){
-            console.log(response)
             getListSurvey(response)
         },       
     })
-    showSeminar_survey(listSurvey);
+    showSeminar_survey(listSurvey, listSurveyJoined);
     
 })
 
@@ -36,7 +36,7 @@ function getListSurvey(response){
   listSurvey = response;
 }
 
-function showSeminar_survey(listSurvey){
+function showSeminar_survey(listSurvey, listsurveyJoined){
   $.ajax({
     type : "GET",
     url: domain+"/api/Seminar/"+id,
@@ -54,9 +54,15 @@ function showSeminar_survey(listSurvey){
 					});
         }else if(status == 1 ){
           showSeminarDetailRegistered(seminar);
-          listSurvey.forEach(function(survey) {
-            showListSurveyRegisted(survey);
+          let listSurveyJoining  = listSurvey.filter(item=> !listsurveyJoined.includes(item.Id));
+          let listSurveyJoined  = listSurvey.filter(item=> listsurveyJoined.includes(item.Id));
+          listSurveyJoined.forEach(function(survey) {
+            showListSurveyRegisted(survey, false);
 					});
+          listSurveyJoining.forEach(function(survey) {
+            showListSurveyRegisted(survey, true);
+					});
+         
         }else{
           showSeminarDetailRegisteringOrDecline(seminar);
           listSurvey.forEach(function(survey) {
@@ -68,20 +74,42 @@ function showSeminar_survey(listSurvey){
   })
 }
 
+function getlistJoined(response){
+  listSurveyJoined = response;
+}
+
+function getListSurveyUserJoined(){
+  $.ajax({
+    type : "GET",
+    url: domain+"/api/Result/getAllUserResultJoined?userId="+userId,
+    headers: {
+      Authorization: 'Bearer '+token
+    },
+    contentType: "application/json; charset=utf-8",
+		datatype:"json",
+		async:false,
+    success : function(response){
+      getlistJoined(response)
+    },       
+  })
+}
 
 
 
-
-function showListSurveyRegisted(survey){
+function showListSurveyRegisted(survey, check){
   var arrayStartTime = survey.StartDate.split(' ');
   var arrayEndTime = survey.StartDate.split(' ');
   var text = "";
-  if(survey.Status == 3){
+  if(survey.Status == 1){
     text = "Closed";
   }
-  if(survey.Status == 1){
+  if(survey.Status == 2 && check == false){
+    text = "Closed";
+  }
+  if(survey.Status == 2 && check == true){
     text = "Start";
   }
+  
   if(survey.Status == 3){
     text = "Planned";
   }
