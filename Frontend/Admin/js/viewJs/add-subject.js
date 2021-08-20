@@ -7,34 +7,61 @@ var subjectId = url.searchParams.get("subjectId");
 
 $(document).ready(function(){
     if(subjectId != null){
+        $("#page-title").text("Edit Subject");
         getSubject(subjectId);
     }
 
-    $("#saveQuestion").click(function(){
+    $("#saveForm").click(function(){
         if($("#subject").val() == ""){
             $("#issue-subject").text("Please Insert Subject");
             $("#saveForm").attr("disabled", true);
         } else {
-            var data = {
-                Subject : $("#subject").val(),
+            if(subjectId == null){
+                var data = {
+                    Subject : $("#subject").val(),
+                }
+                
+                $.ajax({
+                    type: "POST",
+                    url: domain+"/api/Subject",
+                    headers: {
+                        Authorization: "Bearer " + token,
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data : JSON.stringify(data),
+                    datatype:"json",
+                    async: true,
+                    success: function(response) {
+                        if(response == true){
+                            sessionStorage.setItem('createResponse', "Success");
+                            window.location.replace("list-subject.html");
+                        }
+                    },
+                });
+            } else {
+                var data = {
+                    Id : Number.parseInt(subjectId),
+                    Subject : $("#subject").val(),
+                }
+                
+                $.ajax({
+                    type: "PUT",
+                    url: domain+"/api/Subject",
+                    headers: {
+                        Authorization: "Bearer " + token,
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data : JSON.stringify(data),
+                    datatype:"json",
+                    async: true,
+                    success: function(response) {
+                        if(response == true){
+                            sessionStorage.setItem('editResponse', "Success");
+                            window.location.replace("list-subject.html");
+                        }
+                    },
+                });
             }
-            
-            $.ajax({
-                type: "POST",
-                url: domain+"/api/Subject",
-                headers: {
-                    Authorization: "Bearer " + token,
-                },
-                contentType: "application/json; charset=utf-8",
-                data : JSON.stringify(data),
-                datatype:"json",
-                async: true,
-                success: function(response) {
-                    if(response == true){
-                        window.location.href = "/Admin/list-subject.html";
-                    }
-                },
-            });
         }
     });
 
@@ -48,12 +75,12 @@ function validateSubject(name){
     var data;
     if(subjectId != null){
         data = {
-            subjectId : subjectId,
+            Id : subjectId,
             Subject : name,
         };
     } else {
         data = {
-            subjectId : 0,
+            Id : 0,
             Subject : name,
         }
     }
@@ -68,7 +95,7 @@ function validateSubject(name){
         datatype:"json",
         async: true,
         success: function(response) {
-            if(response == true){
+            if(response == false){
                 $("#issue-subject").text("Subject Name Unavailable.");
                 $("#saveForm").attr("disabled", true);
             } else {

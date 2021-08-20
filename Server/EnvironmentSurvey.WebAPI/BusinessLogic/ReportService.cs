@@ -54,7 +54,21 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 seminarPerDay = await _context.Seminars.Where(s => s.Id.Equals(top1SenimarPerDay.SeminarId)).FirstAsync();
             }
-            
+
+            //Top 3 Student: Awards
+            var listSurveyId = await _context.Results.GroupBy(r => r.SurveyId).Select(r => r.Key).ToListAsync();
+            List<Result> listTotalResultTop3 = new List<Result>();
+            foreach (var surveyId in listSurveyId)
+            {
+                var list = await _context.Results
+                        .Where(r => r.SurveyId == (surveyId))
+                        .OrderByDescending(r => r.Point)
+                        .ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate)
+                        .Take(3)
+                        .ToListAsync();
+                list.ForEach(item => listTotalResultTop3.Add(item));
+            }
+
             var responseModel = new DashboardModel
             {
                 TotalSeminars = totalseminars,
@@ -64,9 +78,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 TotalRequestSeminars = totalRquestSeminars,
                 TotalNewRequestSeminars = totalNewRequestSemianr,
                 Top1Seminar = seminar.Name != null ? seminar.Name : "",
-                Top1SeminarCount = top1Senimar!= null ? top1Senimar.count : 0,
+                Top1SeminarCount = top1Senimar != null ? top1Senimar.count : 0,
                 Top1SeminarPerDay = seminarPerDay.Name != null ? seminarPerDay.Name : "",
-                Top1SeminarPerDayCount = top1SenimarPerDay != null ? top1SenimarPerDay.count : 0
+                Top1SeminarPerDayCount = top1SenimarPerDay != null ? top1SenimarPerDay.count : 0,
+                TotalAwards = listTotalResultTop3.Count()
             };
             return responseModel;
         }

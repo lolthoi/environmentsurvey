@@ -24,8 +24,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "ADMIN,STUDENT,EMPLOYEE")]
-        //[Authorize(Roles ="ADMIN")]
+        [Authorize(Roles = "ADMIN,STUDENT,EMPLOYEE")]
         public async Task<ResponsePagedModel> getAll(SearchModel model, [FromQuery] PaginationClientModel paginationClientModel)
         {
             var listUser = await _seminarSevice.GetAll(model, paginationClientModel);
@@ -33,7 +32,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
-        //[Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
+        [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
         public async Task<SeminarModel> getSeminarByID(int id)
         {
             var user = await _seminarSevice.GetByID(id);
@@ -41,10 +40,10 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "ADMIN")]
-        public async Task<List<SeminarModel>> GetListSeminar()
+        [Authorize(Roles = "ADMIN,EMPLOYEE,STUDENT")]
+        public async Task<List<SeminarModel>> GetListSeminar(string status)
         {
-            var listSeminar = await _seminarSevice.GetListSeminar();
+            var listSeminar = await _seminarSevice.GetListSeminar(status);
             return listSeminar;
         }
 
@@ -55,6 +54,21 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             var seminar = await _seminarSevice.GetByIDManage(id);
             return seminar;
         }
+
+        [HttpGet("getUpcomingSeminar")]
+        [Authorize(Roles = "ADMIN,STUDENT, EMPLOYEE")]
+        public async Task<List<SeminarModel>> getUpcomingSeminar()
+        {
+            return await _seminarSevice.UpComingSeminar();
+        }
+
+        [HttpGet("getSeminarRelated")]
+        [Authorize(Roles = "ADMIN,STUDENT, EMPLOYEE")]
+        public async Task<List<SeminarModel>> getSeminarRelated(string subject, int idSeminar)
+        {
+            return await _seminarSevice.RelatedSeminar(subject, idSeminar);
+        }
+
 
         [HttpPost]
         [Route("Create")]

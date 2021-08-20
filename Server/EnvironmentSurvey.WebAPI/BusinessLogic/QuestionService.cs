@@ -1,5 +1,6 @@
 ﻿using EnvironmentSurvey.WebAPI.ClientSide.Common;
 using EnvironmentSurvey.WebAPI.ClientSide.Models;
+using EnvironmentSurvey.WebAPI.DataAccess;
 using EnvironmentSurvey.WebAPI.DataAccess.Domains;
 using EnvironmentSurvey.WebAPI.DataAccess.Extensions;
 using System;
@@ -17,6 +18,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         QuestionModel GetByIdForAdmin(int Id);
         bool Update(QuestionModel model);
         bool Delete(int Id);
+        int GetNumsQuestionBySubject(int id);
+        List<int> getRandomQuestion(int num);
     }
     public class QuestionService : IQuestionService
     {
@@ -24,16 +27,19 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         private readonly IRepository<Answer> _answerRepository;
         private readonly IRepository<SurveyQuestion> _surveyQuestionRepository;
         private readonly IRepository<Survey> _surveyRepository;
+        private readonly ESContext _context;
         public QuestionService(
             IRepository<Question> questionRepository,
             IRepository<Answer> answerRepository,
             IRepository<SurveyQuestion> surveyQuestionRepository,
-            IRepository<Survey> surveyRepository)
+            IRepository<Survey> surveyRepository
+            , ESContext context)
         {
             _questionRepository = questionRepository;
             _answerRepository = answerRepository;
             _surveyQuestionRepository = surveyQuestionRepository;
             _surveyRepository = surveyRepository;
+            _context = context;
         }
 
         public bool Create(QuestionModel model)
@@ -47,6 +53,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 var question = new Question
                 {
                     Question1 = model.Question,
+                    SubjectId = model.SubjectId
                 };
                 _questionRepository.Insert(question);
                 model.Id = question.Id;
@@ -121,6 +128,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public  List<QuestionModel> GetAllQuestionBySurveyId(int Id)
         {
+            List<QuestionModel> listQuestionModel = new();
             var survey = _surveyRepository.Get(Id);
             var listAnswer =  _answerRepository.GetAll().ToList();
             List<AnswerModel> listAnswerModel = new();
@@ -138,10 +146,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
             var listSurveyQuestion = _surveyQuestionRepository.GetAll().Where(x => x.SurveyId == Id).ToList();
             if (listSurveyQuestion.Count == 0)
-                throw new Exception("There is no Question of this Survey existed");
+                return listQuestionModel;
             var result = listQuestion.Where(x => listSurveyQuestion.Select(y => y.QuestionId).Contains(x.Id)).ToList();
 
-            List<QuestionModel> listQuestionModel = new();
+            
             if (result.Count > 0)
             {
                 listQuestionModel = result.Select(x => new QuestionModel
@@ -209,6 +217,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 model.Id = question.Id;
                 model.Question = question.Question1;
                 model.Answers = listAnswerModel;
+                model.SubjectId = question.SubjectId;
             }
             return model;
         }
@@ -221,7 +230,9 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             else
             {
                 question.Question1 = model.Question;
+                question.SubjectId = model.SubjectId;
                 _questionRepository.Update(question);
+
                 var listAnswer = _answerRepository.GetAll().Where(x => x.QuestionId == model.Id).ToList();
                 foreach (var item in model.Answers)
                 {
@@ -237,6 +248,22 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 }
             }
             return true;
+        }
+        public int GetNumsQuestionBySubject(int id)
+        {
+            var list = _context.Questions.Where(q => q.SubjectId == id).ToList();
+            return list.Count();
+        }
+
+        public List<int> getRandomQuestion(int num)
+        {
+            var list = _context.Questions.OrderBy(q => Guid.NewGuid()).Take(num);
+            List<int> listQuestionId = new List<int>();
+            foreach (Question question in list)
+            {
+                listQuestionId.Add(question.Id);
+            }
+            return listQuestionId;
         }
     }
 }

@@ -95,8 +95,9 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public ResultModel UpdateResult(SaveUserAnswerModel model)
         {
+            var result = new ResultModel();
             if (model.ListUserAnserModel.Count == 0)
-                throw new Exception("Invalid input list model");
+                return result;
             //get all user anwers
             var listAnswer = _answerRespository.GetAll().ToList();
             var listAnswerModel = new List<AnswerModel>();
@@ -117,7 +118,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             }
             //count point
             int point = 0;
-            if (listAnswerModel.Count > 0)
+            if (listAnswerModel.Count() > 0)
             {
                 foreach (var item in listAnswerModel)
                 {
@@ -145,7 +146,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             //update result
             var resultEntity = _context.Results.Where(r => r.SurveyId == surveyId && r.UserId == userId).FirstOrDefault();
 
-            var result = new ResultModel();
+           
             if (resultEntity != null)
             {
                 resultEntity.Point = point;

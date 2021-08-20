@@ -108,7 +108,8 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
                 entity.ToTable("Subjects");
 
                 entity.Property(e => e.Subject1)
-                    .HasColumnType("text")
+                    .HasColumnType("varchar")
+                    .HasMaxLength(200)
                     .HasColumnName("Subject");
             });
 

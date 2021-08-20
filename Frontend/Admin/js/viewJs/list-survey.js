@@ -7,8 +7,6 @@ var url = new URL(url_string);
 var seminarId = url.searchParams.get("seminarId");
 
 $(document).ready(function(){
-    $("#addNewSurvey").attr("href","add-survey.html?seminarId="+seminarId);
-    
     $.ajax({
         type: "GET",
         url: domain+"/api/Seminar/"+seminarId,
@@ -19,7 +17,9 @@ $(document).ready(function(){
         datatype:"json",
         async: true,
         success: function(response) {
+          console.log(response);
             $("#title").text(response.Name);
+            $("#addNewSurvey").attr("href","add-survey.html?seminarId="+seminarId+"&subjectId="+response.Subject.Id);
         },
     });
 
@@ -140,3 +140,27 @@ $(document).on("click", 'button[id^="delete"]', function () {
         }
       });
   });
+
+  if (sessionStorage.getItem("createResponse") == "Success") {
+    sessionStorage.removeItem("createResponse");
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger mr-3",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons.fire("Create Success", "", "success");
+  } 
+
+  if (sessionStorage.getItem("editResponse") == "Success") {
+    sessionStorage.removeItem("editResponse");
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger mr-3",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons.fire("Edit Success", "", "success");
+  }

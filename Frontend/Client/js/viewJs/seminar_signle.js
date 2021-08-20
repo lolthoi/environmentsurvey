@@ -32,6 +32,25 @@ $(document).ready(function(){
     
 })
 
+function getRelatedSeminar(subject, IdSeminar){
+  $.ajax({
+    type : "GET",
+    url: domain+"/api/Seminar/getSeminarRelated?subject="+subject+"&idSeminar="+IdSeminar+"",
+    headers: {
+      Authorization: 'Bearer '+token
+    },
+    contentType: "application/json; charset=utf-8",
+    async:false,
+    success : function(response){
+      response.forEach(function(seminar){
+        showSeminarRelate(seminar)
+      })
+      
+    },       
+})
+}
+
+
 function getListSurvey(response){
   listSurvey = response;
 }
@@ -48,12 +67,14 @@ function showSeminar_survey(listSurvey, listsurveyJoined){
     success : function(seminar){
         $('#seminar_detail_name').html(seminar.Name);	
         if(status == "" ){
+          getRelatedSeminar(seminar.Subject.Subject, id)
           showSeminarDetail(seminar);
           listSurvey.forEach(function(survey) {
             showListSurveyPendingDecline(survey)
 					});
         }else if(status == 1 ){
           showSeminarDetailRegistered(seminar);
+          getRelatedSeminar(seminar.Subject.Subject, id)
           let listSurveyJoining  = listSurvey.filter(item=> !listsurveyJoined.includes(item.Id));
           let listSurveyJoined  = listSurvey.filter(item=> listsurveyJoined.includes(item.Id));
           listSurveyJoined.forEach(function(survey) {
@@ -65,6 +86,7 @@ function showSeminar_survey(listSurvey, listsurveyJoined){
          
         }else{
           showSeminarDetailRegisteringOrDecline(seminar);
+          getRelatedSeminar(seminar.Subject.Subject, id)
           listSurvey.forEach(function(survey) {
             showListSurveyPendingDecline(survey)
 					});
@@ -93,8 +115,6 @@ function getListSurveyUserJoined(){
     },       
   })
 }
-
-
 
 function showListSurveyRegisted(survey, check){
   var arrayStartTime = survey.StartDate.split(' ');
@@ -165,9 +185,6 @@ function showListSurveyPendingDecline(survey){
   '</div>'
    );
 }
-
-
-
 
 function showSeminarDetail(seminar){
 	$('#seminar_detail').append(
@@ -242,6 +259,7 @@ function showSeminarDetail(seminar){
    +'</div>'
 	)
 }
+
 function showSeminarDetailRegisteringOrDecline(seminar){
 	$('#seminar_detail').append(
 		'<div class="row">'
@@ -311,6 +329,7 @@ function showSeminarDetailRegisteringOrDecline(seminar){
    +'</div>'
 	)
 }
+
 function showSeminarDetailRegistered(seminar){
 	$('#seminar_detail').append(
 		'<div class="row">'
@@ -436,6 +455,28 @@ $(document).ready(function() {
 	});
 	
 });
+
+function showSeminarRelate(seminar){
+	$('#relatedSeminar').append(
+		'<div class="col-lg-4 col-sm-6 mb-5">'
+			+'<div class="card p-0 border-primary rounded-0 hover-shadow">'
+			+'<img class="card-img-top rounded-0 seminar_picture" style="height=200px!important" src="'+domain+'/Images/'+seminar.Image+'" alt="course thumb">'
+			+'<div class="card-body">'
+				+'<ul class="list-inline mb-2 seminar_item">'
+				+'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+seminar.StartDate+'</li>'
+				+'<li class="list-inline-item"><a class="text-color" href="#">'+seminar.Subject.Subject+'</a></li>'
+				+'</ul>'
+				+'<p><i class="ti-location-pin text-primary mr-2"></i>'+seminar.Location+'</p>'
+				+'<a href="seminar-single.html?id='+seminar.ID+'&status=">'
+				+'<h4 class="card-title">'+seminar.Name+'</h4>'
+				+'</a>'
+				+'<p class="card-text mb-4 seminar_desc">'+seminar.Description+' </p>'
+				+'<a href="seminar-single.html?id='+seminar.ID+'&status=" class="btn btn-primary btn-sm button_register" id="button_register_'+seminar.ID+'"  >View detail</a>'
+			+'</div>'
+			+'</div>'
+		+'</div>'
+	)
+}
 
 $(document).ready(function() {
 	$("body").on("click", ".take_survey", function(){		

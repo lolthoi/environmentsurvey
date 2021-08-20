@@ -60,7 +60,7 @@ function getList(pageNumber) {
 function showHistory(result) {
   $("#list-seminar tbody").append(
     "<tr>" +
-      '<td class="text-center">' +
+      '<td >' +
       result.surveyName +
       "</td>" +
       '<td class="text-center">' +

@@ -13,45 +13,71 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     public interface ISurveyService
     {
         List<SurveyModel> GetAllSurveyBySeminarId(int seminarId);
-        bool Create(SurveyModel model);
+        SurveyModel Create(SurveyModel model);
         bool Update(SurveyModel model);
         SurveyModel GetById(int Id);
         bool Delete(int Id);
     }
     public class SurveyService : ISurveyService
     {
+        private readonly ESContext _context;
         private readonly IRepository<Survey> _surveyRespository;
         private readonly IRepository<Result> _resultRespository;
         private readonly IRepository<Seminar> _seminartRespository;
-        public SurveyService(IRepository<Survey> surveyRespository, IRepository<Result> resultRespository, IRepository<Seminar> seminartRespository)
+        public SurveyService(IRepository<Survey> surveyRespository, IRepository<Result> resultRespository, IRepository<Seminar> seminartRespository, ESContext context)
         {
             _surveyRespository = surveyRespository;
             _resultRespository = resultRespository;
             _seminartRespository = seminartRespository;
+            _context = context;
         }
 
-        public bool Create(SurveyModel model)
+        public SurveyModel Create(SurveyModel model)
         {
-            var survey = new Survey
+            var transaction = _context.Database.BeginTransaction();
+            try
             {
-                Name = model.Name,
-                StartDate = Convert.ToDateTime(model.StartDate),
-                EndTime = Convert.ToDateTime(model.EndDate),
-                Status = (int)model.Status,
-                SerminarId = model.SeminarId,
-                Serminar = _seminartRespository.Get(model.SeminarId),
-                Description = model.Description,
-            };
-            _surveyRespository.Insert(survey);
-            model.Id = survey.Id;
-            return true;
+                var survey = new Survey
+                {
+                    Name = model.Name,
+                    StartDate = Convert.ToDateTime(model.StartDate),
+                    EndTime = Convert.ToDateTime(model.EndDate),
+                    Status = (int)model.Status,
+                    SerminarId = model.SeminarId,
+                    Serminar = _seminartRespository.Get(model.SeminarId),
+                    Description = model.Description,
+                };
+                _surveyRespository.Insert(survey);
+                model.Id = survey.Id;
+
+                var seminar = _seminartRespository.Get(model.SeminarId);
+                int maxQuestion = _context.Questions.Where(q => q.SubjectId == seminar.SubjectId).ToList().Count();
+
+                if (maxQuestion < model.NumberOfQuestion) throw new Exception("Invalid input param");
+                var listRandomQuestion = _context.Questions.OrderBy(q => Guid.NewGuid()).Take(model.NumberOfQuestion);
+                foreach (Question question in listRandomQuestion)
+                {
+                    SurveyQuestion obj = new SurveyQuestion();
+                    obj.SurveyId = survey.Id;
+                    obj.QuestionId = question.Id;
+                    _context.Add(obj);
+                }
+                _context.SaveChanges();
+                transaction.Commit();
+                return model;
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+            }
+            return null;
         }
 
         public bool Update(SurveyModel model)
         {
             Survey survey = _surveyRespository.Get(model.Id);
             if (survey == null)
-                throw new Exception("Survey not found");
+                return false;
             else
             {
                 survey.Name = model.Name;

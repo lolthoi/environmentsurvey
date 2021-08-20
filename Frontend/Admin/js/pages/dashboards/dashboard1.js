@@ -123,7 +123,7 @@ $(document).ready(function(){
                 $('#reqSeminars').html(response.TotalRequestSeminars);
                 $('#surveys').html(response.TotalSurveys);
                 $('#seminars').html(response.TotalSeminars);    
-                $('#Awards').html(response.TotalSurveys*3);
+                $('#Awards').html(response.TotalAwards);
                 if(response.Top1Seminar == ""){
                     $('#top1seminar').html("No request Register");
                 }else{

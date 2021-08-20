@@ -15,5 +15,6 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public string Description { get; set; }
         public List<ResultModel> Results { get; set; }
         public List<SurveyQuestionModel> SurveyQuestions { get; set; }
+        public int NumberOfQuestion { get; set; }
     }
 }

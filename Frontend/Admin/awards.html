@@ -11,12 +11,19 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Ample Admin Lite Template by WrapPixel</title>
+    <title>List Seminar</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- SweetAlert -->
+    <link rel="stylesheet" href="plugins/sweetalert/css/sweetalert2.min.css" type="text/css">
     <!-- Custom CSS -->
-   <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -208,7 +215,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 id="page-title" class="page-title">New Question</h4>
+                        <h4 class="page-title">List Top 3 Student</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -229,76 +236,71 @@
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
+            <div class="container" style="padding:0 25px; margin-top: 20px;">
+                <div class="row">  
+                    <div class="col-md-6"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Subject">Search</label>
+                            <input type="number" autocomplete="off" class="form-control" name="Search_key"
+                                id="Search_key" placeholder="Enter SubmitTime or Point to search">
+                            <small id="subject-valid" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div style="margin-top:28px">
+                            <button type="button" id="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div style="margin-top:28px">
+                            <button type="button" id="reset" class="btn btn-primary">Reset</button>
+                        </div>
+                    </div>                    
+                </div>                                            
+            </div>
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                
                 <div class="row">
-                    <div style="margin-left: auto; margin-right: auto;" class="col-md-10">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="#" id="createForm">
-                                    <div class="form-group">
-                                        <label for="subject" class="form-label">Subject</label>
-                                        <select class="form-control" id="subject"></select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="question" class="form-label">Question</label>
-                                        <input type="text" class="form-control" id="question" placeholder="Insert Question">
-                                        <small id="issue-question" class="text-danger"></small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ans1" class="form-label">Answer 1</label>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <input class="form-check-input" type="radio" name="radioCorrect" id="correct1" disabled>
-                                            </div>
-                                            <div class="col-md-11">
-                                                <input type="hidden" id="ansId1" value ="0">
-                                                <input type="text" class="form-control answer" id="ans1" placeholder="Insert Answer 1"></input>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ans2" class="form-label">Answer 2</label>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <input class="form-check-input" type="radio" name="radioCorrect" id="correct2" disabled>
-                                            </div>
-                                            <div class="col-md-11">
-                                                <input type="hidden" id="ansId2" value ="0">
-                                                <input type="text" class="form-control answer" id="ans2" placeholder="Insert Answer 2"></input>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ans3" class="form-label">Answer 3</label>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <input class="form-check-input" type="radio" name="radioCorrect" id="correct3" disabled>
-                                            </div>
-                                            <div class="col-md-11">
-                                                <input type="hidden" id="ansId3" value ="0">
-                                                <input type="text" class="form-control answer" id="ans3" placeholder="Insert Answer 3"></input>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ans4" class="form-label">Answer 4</label>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <input class="form-check-input" type="radio" name="radioCorrect" id="correct4" disabled>
-                                            </div>
-                                            <div class="col-md-11">
-                                                <input type="hidden" id="ansId4" value ="0">
-                                                <input type="text" class="form-control answer" id="ans4" placeholder="Insert Answer 4"></input>
-                                            </div>
-                                        </div>
-                                        <small id="issue-answer" class="text-danger"></small>
-                                    </div>
-                                    
-                                    <button disabled type="button" id="saveQuestion" class="btn btn-primary">Save</button>
-                                </form>
+                                <table id="list-seminar" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:35%">Survey Name</th>
+                                            <th style="width:30%">Full Name </th>
+                                            <th style="width:20%" class="text-center">Submit time</th>
+                                            <th class="text-center">Point</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Survey Name</th>
+                                            <th>Full Name </th>
+                                            <th class="text-center">Submit time</th>
+                                            <th class="text-center">Point</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div aria-label="..." style="margin-left: 426px;" id="paginationPage">
+                                    <ul class="pagination ">
+                                      <li class="page-item ">
+                                        <a class="page-link" id="previousPage"  tabindex="-1">Previous</a>
+                                      </li>
+                                      <li class="page-item active">
+                                        <a class="page-link" href="#" id="currentPage"><span class="sr-only" ></span></a>
+                                      </li>
+                                      <li class="page-item">
+                                        <a class="page-link" id="nextPage">Next</a>
+                                      </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -344,10 +346,25 @@
     <script src="js/waves.js"></script>
     <!--Menu sidebar -->
     <script src="js/sidebarmenu.js"></script>
+    <!-- DataTables -->
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="plugins/jszip/jszip.min.js"></script>
+    <script src="plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- SweetAlert -->
+    <script src="plugins/sweetalert/js/sweetalert2.all.min.js"></script>
     <!--Custom JavaScript -->
     <script src="js/custom.js"></script>
     <script src="js/viewJs/authorize.js"></script>
-    <script src="js/viewJs/add-question.js"></script>
+    <script src="js/viewJs/awards.js"></script>
 </body>
 
 </html>

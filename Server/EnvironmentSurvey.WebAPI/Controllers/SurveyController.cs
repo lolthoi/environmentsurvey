@@ -11,9 +11,13 @@ namespace EnvironmentSurvey.WebAPI.Controllers
     public class SurveyController : ControllerBase
     {
         private readonly ISurveyService _surveyService;
-        public SurveyController(ISurveyService surveyService)
+        private readonly IQuestionService _questionService;
+        private readonly ISurveyQuestionService _surveyQuestionService;
+        public SurveyController(ISurveyService surveyService, IQuestionService questionService, ISurveyQuestionService surveyQuestionService)
         {
             _surveyService = surveyService;
+            _surveyQuestionService = surveyQuestionService;
+            _questionService = questionService;
         }
 
         [HttpGet("/api/Seminar/{id:int}/[controller]")]
@@ -29,7 +33,9 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         [HttpPost]
         public ActionResult<bool> Create(SurveyModel model)
         {
-            return _surveyService.Create(model);
+            SurveyModel modelCreated = _surveyService.Create(model);
+            if (modelCreated != null) return true;
+            return false;
         }
         [HttpPut]
         public ActionResult<bool> Update(SurveyModel model)

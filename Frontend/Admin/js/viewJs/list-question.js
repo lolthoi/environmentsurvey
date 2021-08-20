@@ -105,3 +105,27 @@ function showList(list){
       )
     }
 }
+
+if (sessionStorage.getItem("createResponse") == "Success") {
+  sessionStorage.removeItem("createResponse");
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger mr-3",
+    },
+    buttonsStyling: false,
+  });
+  swalWithBootstrapButtons.fire("Create Success", "", "success");
+} 
+
+if (sessionStorage.getItem("editResponse") == "Success") {
+  sessionStorage.removeItem("editResponse");
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger mr-3",
+    },
+    buttonsStyling: false,
+  });
+  swalWithBootstrapButtons.fire("Edit Success", "", "success");
+}

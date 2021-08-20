@@ -21,7 +21,6 @@ $(document).ready(function () {
             $("#Id").val(id);
             $("#Name").val(seminar.Name);
             $("#Author").val(seminar.Author);
-            $("#Subject").val(seminar.Subject);
             $("#Location").val(seminar.Location);
             $("#StartTime").val(seminar.StartDate);
             $("#EndTime").val(seminar.EndDate);
@@ -29,6 +28,7 @@ $(document).ready(function () {
             $("#Description").val(seminar.Description);
             $("input[name=forUser][value="+seminar.forUser+"]").prop("checked",true);
             $("#SubjectId option[value="+seminar.SubjectId+"]").prop("selected",true);
+            loadSubject(seminar.Subject);
         },      
         error: function (response) {
           window.location.replace("list-seminar.html");
@@ -60,7 +60,7 @@ $(document).ready(function () {
       } else {
         $("#author-valid").text("");
       }
-      if ($("#Subject").val().trim() == "") {
+      if ($("#SubjectId").val().trim() == "") {
         flag = false;
         $("#subject-valid").text("Subject can not be empty");
       } else {
@@ -184,7 +184,7 @@ $(document).ready(function () {
       });
 });
 
-function loadSubject(){
+function loadSubject(name){
   $.ajax({
     type: "GET",
     url: domain + "/api/Subject",
@@ -195,9 +195,16 @@ function loadSubject(){
     success: function (response) {
       console.log(response);
       response.forEach(function(subject) {
-        $('#SubjectId').append(`<option value="${subject.Id}">
+        if(subject.Subject == name){
+          $('#SubjectId').append(`<option selected value="${subject.Id}">
                                        ${subject.Subject}
                                   </option>`);
+        } else {
+          $('#SubjectId').append(`<option value="${subject.Id}">
+                                       ${subject.Subject}
+                                  </option>`);
+        }
+        
       });
     },
   });

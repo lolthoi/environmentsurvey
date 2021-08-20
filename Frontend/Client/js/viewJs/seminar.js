@@ -49,8 +49,11 @@ function callAjax(pageNumber){
 	
 	$.ajax({
         type : "POST",
-        url: domain+"/api/Seminar?PageNumber="+pageNumber+"&PageSize=3",
+        url: domain+"/api/Seminar?PageNumber="+pageNumber+"&PageSize=6",
         contentType: "application/json; charset=utf-8",
+		headers: {
+			Authorization: 'Bearer '+token
+		},
 		data: JSON.stringify(dataSearch),
 		datatype:"json",
         async:false,
@@ -86,8 +89,11 @@ function callAjax(pageNumber){
 		console.log($(this).val());
 		$.ajax({
 			type : "POST",
-			url: domain+"/api/Seminar?PageNumber="+pageNumber+"&PageSize=3",
+			url: domain+"/api/Seminar?PageNumber="+pageNumber+"&PageSize=6",
 			contentType: "application/json; charset=utf-8",
+			headers: {
+				Authorization: 'Bearer '+token
+			},
 			data: JSON.stringify(dataSearch),
 			datatype:"json",
 			async:true,
@@ -123,7 +129,7 @@ function showSeminar(seminar){
 			+'<div class="card-body">'
 				+'<ul class="list-inline mb-2 seminar_item">'
 				+'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+seminar.StartDate+'</li>'
-				+'<li class="list-inline-item"><a class="text-color" href="#">'+seminar.Subject+'</a></li>'
+				+'<li class="list-inline-item"><a class="text-color" href="#">'+seminar.Subject.Subject+'</a></li>'
 				+'</ul>'
 				+'<p><i class="ti-location-pin text-primary mr-2"></i>'+seminar.Location+'</p>'
 				+'<a href="seminar-single.html?id='+seminar.ID+'&status=">'

@@ -3,16 +3,12 @@ var role = localStorage.getItem("role");
 var username = localStorage.getItem("username");
 var token = localStorage.getItem("token");
 
-
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const surveyId = urlParams.get('id');
-
 var totalPage = '';
 
 $(document).ready(function(){
   getList(pageNumber = 1);
   pagination(pageNumber = 1, totalPage );
+  console.log(totalPage)
 })
 
 $('#submit').click(function(){
@@ -34,57 +30,48 @@ function getTotalPage(response){
 
 // get list seminar
 function getList(pageNumber) {
-  var key = 0
-  if($('#Search_key').val() != ""){
-    key = $('#Search_key').val();
-  }
-  var dataSearch = {
-    TimeOrPoint: key,
-  }
-  $.ajax({
-    type: "POST",
-    url: domain + "/api/Result/getResultBySurveyId?PageNumber="+pageNumber+"&PageSize=6&surveyId="+surveyId,
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-    contentType: "application/json; charset=utf-8",
-    data: JSON.stringify(dataSearch),
+    var key = 0
+    if($('#Search_key').val() != ""){
+        key = $('#Search_key').val();
+    }
+    var dataSearch = {
+        TimeOrPoint: key,
+    }
+	$.ajax({
+		type : "POST",
+		url: domain+"/api/Result/top3Result?PageNumber="+pageNumber+"&PageSize=6",
+		contentType: "application/json; charset=utf-8",
+		data: JSON.stringify(dataSearch),
 		datatype:"json",
-    async: false,
-    success: function (response) {
-      getTotalPage(response.TotalPage);
-      if(response.listResult.length == 0){
-        $("#list-seminar tbody ").append(
-          "<tr>" +
-            '<td colspan="7" class="text-center"> No data</td>' +
-          "</tr>"
-        )};
-      response.listResult.forEach(function (model) {
-        showSeminar(model);
-      });
-      $('#currentPage').html(response.PageNumber);
-      $('#surveyName').html(response.listResult[0].surveyName);
-    },
-  });
+		async:false,
+		success : function(response){	
+            getTotalPage(response.TotalPage);
+			response.listResult.forEach(function(result){
+				showTopStudent(result)
+			});
+		},       
+	})
 }
+
+
 //show seminar
-function showSeminar(model) {
+function showTopStudent(result) {
     $("#list-seminar tbody").append(
       "<tr>" +
         "<td>" +
-        model.FullName +
+        result.surveyName +
+        "</td>" +
+        "<td>" +
+        result.FullName +
         "</td>" +
         '<td class="text-center">' +
-        model.SubmitTime +
+        result.SubmitTime +
         "</td>" +
         '<td class="text-center">' +
-        model.point +
-        "</td>" +
-        '<td class="text-center">' +
-        model.Ranked+
+        result.point+
         "</td>" +
         "</tr>"
-    )   
+    );
 }
 
 function ClearData(){

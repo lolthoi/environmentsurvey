@@ -4,12 +4,36 @@ var tempList = null;
 
 $(document).ready(function(){
     getList();
+
+    if (sessionStorage.getItem("createResponse") == "Success") {
+      sessionStorage.removeItem("createResponse");
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger mr-3",
+        },
+        buttonsStyling: false,
+      });
+      swalWithBootstrapButtons.fire("Create Success", "", "success");
+    } 
+  
+    if (sessionStorage.getItem("editResponse") == "Success") {
+      sessionStorage.removeItem("editResponse");
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger mr-3",
+        },
+        buttonsStyling: false,
+      });
+      swalWithBootstrapButtons.fire("Edit Success", "", "success");
+    }
 })
 
 function getList(){
     $.ajax({
         type: "GET",
-        url: domain+"/api/Subject/",
+        url: domain+"/api/Subject",
         headers: {
             Authorization: "Bearer " + token,
         },
@@ -17,6 +41,7 @@ function getList(){
         datatype:"json",
         async: true,
         success: function(response) {
+          console.log(response);
             tempList = response;
             showList(tempList);
         },
@@ -26,9 +51,10 @@ function getList(){
 function showList(list){
     $("#listSubjectTbody").html("");
     for(var i=0; i<list.length; i++){
+      var No = i+1;
         $("#listSubjectTbody").append(
             '<tr>'
-                +'<td>'+i+1+'</td>'
+                +'<td>'+No+'</td>'
                 +'<td>'+list[i].Subject+'</td>'
                 +'<td>'
                     +'<a href="add-subject.html?subjectId='+list[i].Id+'" class="btn btn-block btn-warning"><i class=" ti-pencil"></i></a>  '
@@ -102,3 +128,5 @@ $(document).on("click", 'button[id^="delete"]', function () {
         }
       });
   });
+
+  

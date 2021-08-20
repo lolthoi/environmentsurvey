@@ -258,6 +258,11 @@
                                     </div>
                                     <input type="hidden" id="startTime" name="StartDate">
                                     <input type="hidden" id="endTime" name="EndDate">
+                                    <div id="questionNumber" class="form-group">
+                                        <label for="numQuestion" class="form-label">Number Of Question</label>
+                                        <input type="number" class="form-control" id="numQuestion" placeholder="Number Of Question"></input>
+                                        <small id="issue-number" class="text-danger"></small>
+                                    </div>
                                     <button  type="button" id="saveForm" class="btn btn-primary">Save</button>
                                 </form>
                             </div>
@@ -309,25 +314,9 @@
     <script src="js/custom.js"></script>
     <script src="js/moment.min.js"></script>
     <script src="js/daterangepicker.js"></script>
-    <!-- <script src="js/viewJs/authorize.js"></script> -->
+    <script src="js/viewJs/authorize.js"></script>
     <script src="js/viewJs/add-survey.js"></script>
-    <script>
-        // var today = new Date().toLocaleString();
-
-        // $(function() {
-        //   $('input[name="datetimes"]').daterangepicker({
-        //     opens : 'center',
-        //     "minDate" : today,
-        //     timePicker: true,
-        //     locale: {
-        //       format: 'M/DD hh:mm A'
-        //     }
-        //   }, function(start, end, label) {
-        //     $("#startTime").val(start.format('DD/MM/YYYY hh:mm:ss A'));
-		// 	$("#endTime").val(end.format('DD/MM/YYYY hh:mm:ss A'));
-		//   });;
-        // });
-    </script>
+    
 </body>
 
 </html>

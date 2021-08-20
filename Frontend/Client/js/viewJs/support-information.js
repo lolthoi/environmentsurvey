@@ -2,7 +2,7 @@ var domain = "https://localhost:44304";
 $(document).ready(function () {
     $.ajax({
         type : "GET",
-        url: domain+"/api/SupportInfo/",
+        url: domain+"/api/SupportInfo",
         contentType: "application/json; charset=utf-8",
         async:true,
         success : function(si){

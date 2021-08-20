@@ -21,10 +21,12 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         public Task<ResponsePagedModel> GetAll(SearchModel model, PaginationClientModel paginationClientModel);
         public Task<SeminarModel> GetByID(int id);
         public Task<SeminarModel> GetByIDManage(int id);
-        public Task<List<SeminarModel>> GetListSeminar();
+        public Task<List<SeminarModel>> GetListSeminar(string status);
         public Task<bool> Create(SeminarModel model);
         public Task<bool> Update(SeminarModel model);
         public Task<bool> Delete(int Id);
+        public Task<List<SeminarModel>> UpComingSeminar();
+        public Task<List<SeminarModel>> RelatedSeminar(string subject, int idSeminar);
     }
     public class SeminarService : ISeminarService
     {
@@ -192,9 +194,19 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             }
         }
 
-        public async Task<List<SeminarModel>> GetListSeminar()
+        public async Task<List<SeminarModel>> GetListSeminar(string status)
         {
-            var listSeminar = await _context.Seminars.ToListAsync();
+            DateTime dt = DateTime.UtcNow;
+            List<Seminar> listSeminar = new();
+            if (status == "upcoming")
+            {
+                listSeminar = await _context.Seminars.Where(s=> s.StartDate > dt).OrderByDescending(s=> s.StartDate).ToListAsync();
+            }
+            if (status == "happening")
+            {
+                listSeminar = await _context.Seminars.Where(s => s.EndTime > dt).OrderBy(s => s.StartDate).ToListAsync();
+            }
+
             var seminarModel = listSeminar.Where(x => !x.DeletedDate.HasValue).Select(x => new SeminarModel
             {
                 ID = x.Id,
@@ -207,8 +219,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 forUser = x.forUser,
                 StartDate = x.StartDate.ToString("yyyy-MM-dd"),
                 EndDate = x.EndTime.ToString("yyyy-MM-dd")
-            }).OrderBy(s => s.StartDate);
-            return seminarModel.ToList();
+            });
+            return seminarModel.Take(3).ToList();
         }
 
         public async Task<bool> Update(SeminarModel model)
@@ -303,6 +315,61 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     };
                     return seminarModel;
                 }
+            }
+        }
+
+        public async Task<List<SeminarModel>> UpComingSeminar()
+        {
+            DateTime dt = DateTime.UtcNow;
+            List<SeminarModel> listUpcomingSeminar = new();
+            var listSeminar = await _context.Seminars.Where(s => s.StartDate > dt).ToListAsync();
+            if(listSeminar.Count() > 0)
+            {
+                listUpcomingSeminar = listSeminar.Select(x => new SeminarModel
+                {
+                    ID = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Image = x.Image,
+                    Location = x.Location,
+                    Author = x.Author,
+                    Subject = _subjectService.GetById(x.SubjectId),
+                    forUser = x.forUser,
+                    StartDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    EndDate = x.EndTime.ToString("yyyy-MM-dd")
+                }).Take(3).ToList();
+                return listUpcomingSeminar;
+            }
+            else
+            {
+                return listUpcomingSeminar;
+            }
+        }
+
+        public async Task<List<SeminarModel>> RelatedSeminar(string subject, int idSeminar)
+        {
+            List<SeminarModel> listUpcomingSeminar = new();
+            var listSeminar = await _context.Seminars.Where(s=> s.Subject.Subject1.Equals(subject) && s.Id != idSeminar).OrderByDescending(s => s.CreatedDate).ToListAsync();
+            if (listSeminar.Count() > 0)
+            {
+                listUpcomingSeminar = listSeminar.Select(x => new SeminarModel
+                {
+                    ID = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Image = x.Image,
+                    Location = x.Location,
+                    Author = x.Author,
+                    Subject = _subjectService.GetById(x.SubjectId),
+                    forUser = x.forUser,
+                    StartDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    EndDate = x.EndTime.ToString("yyyy-MM-dd")
+                }).Take(3).ToList();
+                return listUpcomingSeminar;
+            }
+            else
+            {
+                return listUpcomingSeminar;
             }
         }
     }

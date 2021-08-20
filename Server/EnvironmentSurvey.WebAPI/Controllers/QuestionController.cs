@@ -56,5 +56,11 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         {
             return _questionService.Delete(id);
         }
+
+        [HttpGet("/api/Subject/{id:int}/[controller]")]
+        public ActionResult<int> GetNumQuestionBySubject(int id)
+        {
+            return _questionService.GetNumsQuestionBySubject(id);
+        }
     }
 }

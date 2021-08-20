@@ -42,29 +42,57 @@ $(document).ready(function(){
     })
 
     $("#saveQuestion").click(function(){
-        var data = {
-            Question : $("#question").val(),
-            Answers : returnData()
-        }
-        console.log(data);
-        
-        $.ajax({
-            type: "POST",
-            url: domain+"/api/Question",
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-            contentType: "application/json; charset=utf-8",
-            data : JSON.stringify(data),
-            datatype:"json",
-            async: true,
-            success: function(response) {
-                if(response == true){
-                    window.location.href = "/Admin/list-survey.html?seminarId="+seminarId;
-                }
-            },
-        });
-    })
+        if(questionId == null){
+            var data = {
+                Question : $("#question").val(),
+                Answers : returnData(),
+                SubjectId : $("#subject").val()
+            }
+            
+            $.ajax({
+                type: "POST",
+                url: domain+"/api/Question",
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+                contentType: "application/json; charset=utf-8",
+                data : JSON.stringify(data),
+                datatype:"json",
+                async: true,
+                success: function(response) {
+                    if(response == true){
+                        sessionStorage.setItem('createResponse', "Success");
+                        window.location.href = "/Admin/list-question.html";
+                    }
+                },
+            });
+        } else {
+            var data = {
+                Id : questionId,
+                Question : $("#question").val(),
+                Answers : returnData(),
+                SubjectId : $("#subject").val()
+            }
+            
+            $.ajax({
+                type: "PUT",
+                url: domain+"/api/Question",
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+                contentType: "application/json; charset=utf-8",
+                data : JSON.stringify(data),
+                datatype:"json",
+                async: true,
+                success: function(response) {
+                    if(response == true){
+                        sessionStorage.setItem('editResponse', "Success");
+                        window.location.href = "/Admin/list-question.html";
+                    }
+                },
+            });
+        };
+    });
 
 })
 
@@ -167,6 +195,7 @@ function loadAllSubject(subjectId){
         datatype:"json",
         async: true,
         success: function(response) {
+            console.log(response);
             response.forEach(e => {
                 if(e.id == subjectId){
                     $("#subject").append(
@@ -180,7 +209,5 @@ function loadAllSubject(subjectId){
             });
         },
     });
-
-    
 }
 
