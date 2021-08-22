@@ -27,7 +27,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             DateTime dt = DateTime.Now;
             var seminars = await _context.Seminars.ToListAsync();
             var totalseminars = seminars.Count();
-            var users = await _context.Users.Where(u=> u.Status.Equals(1)).ToListAsync();
+            var users = await _context.Users.Where(u=> u.Status.Equals(1)).Where(s=> !s.DeletedDate.HasValue).Where(s => !s.Role.Equals("ADMIN")).ToListAsync();
             var totalUser = users.Count();
             var newUsers = await _context.Users.Where(u => u.Status.Equals(1) && u.CreatedDate.Year == dt.Year && u.CreatedDate.Month == dt.Month && u.CreatedDate.Day == dt.Day)
                             .ToListAsync();

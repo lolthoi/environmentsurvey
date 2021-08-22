@@ -7,9 +7,10 @@ var token = localStorage.getItem("token");
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const surveyId = urlParams.get('id');
-
+var surveyName = '';
 var totalPage = '';
-
+var emailUser = [];
+var listIdChecked = [];
 $(document).ready(function(){
   getList(pageNumber = 1);
   pagination(pageNumber = 1, totalPage );
@@ -31,7 +32,9 @@ $('#reset').click(function(){
 function getTotalPage(response){
   totalPage = response;
 }
-
+// function getSurveyName(response){
+//   surveyName = response;
+// }
 // get list seminar
 function getList(pageNumber) {
   var key = 0
@@ -43,7 +46,7 @@ function getList(pageNumber) {
   }
   $.ajax({
     type: "POST",
-    url: domain + "/api/Result/getResultBySurveyId?PageNumber="+pageNumber+"&PageSize=6&surveyId="+surveyId,
+    url: domain + "/api/Result/getResultBySurveyId?PageNumber="+pageNumber+"&PageSize=1&surveyId="+surveyId,
     headers: {
       Authorization: "Bearer " + token,
     },
@@ -53,6 +56,7 @@ function getList(pageNumber) {
     async: false,
     success: function (response) {
       getTotalPage(response.TotalPage);
+      //getSurveyName(response.listResult[0].surveyName)
       if(response.listResult.length == 0){
         $("#list-seminar tbody ").append(
           "<tr>" +
@@ -60,15 +64,16 @@ function getList(pageNumber) {
           "</tr>"
         )};
       response.listResult.forEach(function (model) {
-        showSeminar(model);
+        showSurvey_Result(model);
+        //checkedElement(listIdChecked);        
       });
       $('#currentPage').html(response.PageNumber);
-      $('#surveyName').html(response.listResult[0].surveyName);
+      $('#surveyName').html(response.listResult[0].NameSeminar +">"+ response.listResult[0].surveyName);
     },
   });
 }
 //show seminar
-function showSeminar(model) {
+function showSurvey_Result(model) {
     $("#list-seminar tbody").append(
       "<tr>" +
         "<td>" +
@@ -83,9 +88,75 @@ function showSeminar(model) {
         '<td class="text-center">' +
         model.Ranked+
         "</td>" +
+        // '<td class="text-center">' +
+        // '<input class="form-check-input checkBox" type="checkbox" onclick="checkBox('+model.Id+')" value="'+model.Email+'/'+model.FullName+'" id="'+model.Id+'">'+
+        // "</td>" +
         "</tr>"
     )   
 }
+
+
+
+// function checkBox(id){
+//   if($('#'+id+'').is(":checked")){
+//     emailuser = $('#'+id+'').val();
+//     let array = emailuser.split("/");
+//     var object = {};
+//     object["Email"] = array[0];
+//     object["FullName"] = array[1];
+//     emailUser.push(object);
+//     listIdChecked.push(id)
+    
+//   }
+//   if(!$('#'+id+'').is(":checked")){
+//     emailuser = $('#'+id+'').val();
+//     let array = emailuser.split("/");
+//     var object = {};
+//     object["Email"] = array[0];
+//     object["FullName"] = array[1];
+//     emailUser = emailUser.filter(x=> x.Email!=array[0])
+//     const index = listIdChecked.indexOf(id);
+//     if (index > -1) {
+//       listIdChecked.splice(index, 1);
+//     }
+    
+//   }
+
+//   //sendEmail(emailUser, surveyName);
+// }
+//sendEmail(emailUser, surveyName);
+
+// function checkedElement(listIdChecked){
+//   listIdChecked.forEach(function(id){
+//     $('#'+id+'').prop("checked", true);
+//   })
+// }
+// function sendEmail(emailUser, surveyName){
+//   $('#sendEmail').click(function(){
+//     console.log("send email");
+//     var dataSendEmail = {
+//       ListEmailUser: emailUser,
+//       SurveyName : surveyName
+//     }
+//     console.log(dataSendEmail);
+//     // $.ajax({
+//     //   type: "POST",
+//     //   url: domain + "/api/Result/sendEmailAward",
+//     //   headers: {
+//     //     Authorization: "Bearer " + token,
+//     //   },
+//     //   contentType: "application/json; charset=utf-8",
+//     //   data: JSON.stringify(dataSendEmail),
+//     //   datatype:"json",
+//     //   async: false,
+//     //   success: function (response) {
+//     //     console.log(response);
+//     //   },
+//     // });
+//   });
+// }
+
+
 
 function ClearData(){
   $("#list-seminar tbody").empty();

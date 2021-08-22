@@ -13,5 +13,6 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public List<UserModel> ListUser { get; set; }
         public List<ResUserSemiModel> ListUserSeminar { get; set; }
         public List<ResultModel>  listResult { get; set; }
+        public List<SurveyModel> ListSurvey { get; set; }
     }
 }

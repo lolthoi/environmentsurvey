@@ -22,14 +22,14 @@ namespace EnvironmentSurvey.WebAPI.Controllers
 
         [HttpGet]
         [Route("getUserResult")]
-        [Authorize(Roles = "ADMIN, STUDENT, EMPOYEE")]
+        [Authorize(Roles = "ADMIN, STUDENT, EMPLOYEE")]
         public async Task<ResponsePagedModel> getResult([FromQuery] PaginationClientModel paginationClientModel,int userId)
         {
             return await _resultService.showResultUser(paginationClientModel , userId);
         }
 
         [HttpPost("getResultBySurveyId")]
-        [Authorize(Roles = "ADMIN, STUDENT, EMPOYEE")]
+        [Authorize(Roles = "ADMIN, STUDENT, EMPLOYEE")]
         public async Task<ResponsePagedModel> getResultBySurveyId([FromQuery] PaginationClientModel paginationClientModel, int surveyId, SearchModel model)
         {
             return await _resultService.showResultBySurveyId(paginationClientModel, surveyId, model);
@@ -48,24 +48,31 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             return _resultService.Top3Result(paginationClientModel, model);
         }
         [HttpPost("saveResultUser")]
-        [Authorize(Roles = "ADMIN, STUDENT, EMPOYEE")]
+        [Authorize(Roles = "ADMIN, STUDENT, EMPLOYEE")]
         public async Task<string> saveResultUser(SaveResultModel model)
         {
             return await _resultService.SaveResult(model);
         }
 
         [HttpPost("checkResultExists")]
-        [Authorize(Roles = "ADMIN, STUDENT, EMPOYEE")]
+        [Authorize(Roles = "ADMIN, STUDENT, EMPLOYEE")]
         public async Task<bool> checkResultExists(SaveResultModel model)
         {
             return await _resultService.checkResultExists(model);
         }
 
         [HttpGet("getAllUserResultJoined")]
-        //[Authorize(Roles = "ADMIN, STUDENT, EMPOYEE")]
+        [Authorize(Roles = "ADMIN, STUDENT, EMPLOYEE")]
         public async Task<List<int>> getAllUserResultJoined(int userId)
         {
             return await _resultService.listSurveyIdUser(userId);
+        }
+
+        [HttpPost("sendEmailAward")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<bool> sendEmailAward(AwardModel model)
+        {
+            return await _resultService.SendEmailAward(model);
         }
     }
 }

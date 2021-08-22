@@ -38,42 +38,7 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             }
             else
                 return BadRequest(response);
-            ////var dict = HttpContext.Request.Form.ToDictionary(x => x.Key, x => x.Value.ToString());
-
-            //var formCollection = await Request.ReadFormAsync();
-            //var dict = formCollection.ToDictionary(x => x.Key, x => x.Value.ToString());
-            //var file = formCollection.Files.First();
-            ////var files = HttpContext.Request.Form.Files;
-            //string imgPath = null;
-            //if (file != null)
-            //{
-            //    string imageFolderPath = hostingEnvironment.WebRootPath+ "\\Images";
-            //    if (!Directory.Exists(imageFolderPath))
-            //    {
-            //        Directory.CreateDirectory(imageFolderPath);
-            //    }
-            //    FileInfo fi = new FileInfo(file.FileName);
-            //    var newfilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + fi.Extension;
-            //    var path = Path.Combine("", hostingEnvironment.WebRootPath + "\\Images\\" + newfilename);
-            //    using (var stream = new FileStream(path, FileMode.Create))
-            //    {
-            //        file.CopyTo(stream);
-            //        imgPath =  newfilename;
-            //    }
-            //}
-            //var response = await _accountService.Register(dict, imgPath);
-            //if (response.Equals("Success"))
-            //{
-            //    var email = dict["userEmail"];
-            //    var username = dict["username"];
-            //    var token = username;
-            //    await _sendMailService.SendWelcomeEmailAsync(email, "Verify Account", username, token);
-            //    return Ok("Success");
-            //}                
-            ///*else if (response.Equals("Duplicate"))
-            //    return BadRequest("Username has already been taken!");*/
-            //else
-            //    return BadRequest(response);
+            
         }
 
         [HttpPost]

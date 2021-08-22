@@ -21,6 +21,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         Task<List<InforTakeSurveyModel>> TakeInfor(int seminarId);
         Task<ResponsePagedModel> Top3Result(PaginationClientModel paginationClientModel, SearchModel model);
         Task<List<int>> listSurveyIdUser(int userId);
+        Task<bool> SendEmailAward(AwardModel model);
     }
     public class ResultService : IResultService
     {
@@ -31,12 +32,14 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         private readonly IRepository<Result> _resultRepository;
         private readonly IRepository<User> _userRespository;
         private readonly IRepository<Survey> _surveyRespository;
+        private readonly ISendMailService _sendMailService;
         public ResultService(ESContext context,
             IRepository<Answer> answerRespository,
             IRepository<SurveyQuestion> surveyQuestionRepository,
             IRepository<Result> resultRepository,
             IRepository<User> userRespository,
-            IRepository<Survey> surveyRespository)
+            IRepository<Survey> surveyRespository,
+            ISendMailService sendMailService)
         {
             _context = context;
             _answerRespository = answerRespository;
@@ -44,6 +47,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             _resultRepository = resultRepository;
             _userRespository = userRespository;
             _surveyRespository = surveyRespository;
+            _sendMailService = sendMailService;
         }
 
         public async Task<ResponsePagedModel> showResultUser(PaginationClientModel paginationClientModel, int userId)
@@ -216,10 +220,12 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     {
                         Id = r.Id,
                         surveyName = _surveyRespository.Get(r.SurveyId).Name,
+                        NameSeminar = _context.Seminars.Where(s=>s.Id == _surveyRespository.Get(r.SurveyId).SerminarId).FirstOrDefault().Name,
                         point = r.Point,
                         SubmitTime = r.SubmitTime,
                         FullName = _userRespository.Get(r.UserId).FirstName + " " + _userRespository.Get(r.UserId).LastName,
-                        Ranked = i + 1
+                        Ranked = i + 1,
+                        Email = _userRespository.Get(r.UserId).Email
                     };
                     lsresultModel.Add(result);
                 }
@@ -366,6 +372,30 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             List<int> listSurveyId = new List<int>();
             listSurveyId =  await _context.Results.Where(r => r.UserId == userId).Select(r => r.SurveyId).ToListAsync();
             return listSurveyId;
+        }
+
+        public async Task<bool> SendEmailAward(AwardModel model)
+        {
+            var listEmailUser = model.ListEmailUser;
+            var surveyName = model.SurveyName;
+            var subject = "Announce Award";
+            var message = "Thank you for participating in our <b>" + surveyName + "</b> survey. We are pleased to announce that you have entered the top 3  with the best survey scores. To receive the reward please contact: 19000001. Thanks you !";
+            try
+            {
+                foreach (var x in listEmailUser)
+                {
+                    string email = x.Email;
+                    var username = x.FullName;
+                    await _sendMailService.SendEmailAward(email, surveyName, username, subject, message);
+                    
+                }
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+            
+            
         }
     }
 }

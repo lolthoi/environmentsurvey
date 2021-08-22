@@ -15,7 +15,10 @@ var listSurvey = '';
 var listSurveyJoined = '';
 $(document).ready(function(){
 	//$('#loadListSurvey').load("listSurvey.html");
-    getListSurveyUserJoined();
+    if(userId != null){
+      getListSurveyUserJoined();
+    }
+
     $.ajax({
         type : "GET",
         url: domain+"/api/Seminar/"+id+"/Survey",

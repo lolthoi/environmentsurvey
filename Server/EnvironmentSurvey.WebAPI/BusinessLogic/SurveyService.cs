@@ -3,6 +3,7 @@ using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using EnvironmentSurvey.WebAPI.DataAccess;
 using EnvironmentSurvey.WebAPI.DataAccess.Domains;
 using EnvironmentSurvey.WebAPI.DataAccess.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         bool Update(SurveyModel model);
         SurveyModel GetById(int Id);
         bool Delete(int Id);
+        Task<ResponsePagedModel> GetAllSurvey(PaginationClientModel papaginationClientModel, SearchModel model);
     }
     public class SurveyService : ISurveyService
     {
@@ -210,6 +212,65 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 
             
             return result;
+        }
+
+        public async Task<ResponsePagedModel> GetAllSurvey(PaginationClientModel paginationClientModel, SearchModel model)
+        {
+            DateTime dateTime = DateTime.Now;
+            var query = _context.Surveys;
+            if (model.FromDate == "" && model.ToDate == "" && model.Search_key == "")
+            {
+
+            }
+            if (model.Search_key != "")
+            {
+                var key = model.Search_key;
+                query = (DbSet<Survey>)query.Where(u => u.Name.Contains(key));
+            }
+            if (model.FromDate != "")
+            {
+                DateTime fromDate = Convert.ToDateTime(model.FromDate);
+                query = (DbSet<Survey>)query.Where(s => s.StartDate >= fromDate);
+            }
+            if (model.ToDate != "")
+            {
+                DateTime toDate = Convert.ToDateTime(model.ToDate);
+                query = (DbSet<Survey>)query.Where(s => s.StartDate <= toDate);
+            }
+            if (model.Status == 1)// close
+            {
+                query = (DbSet<Survey>)query.Where(s => s.EndTime < dateTime);
+            }
+            if (model.Status == 2) // happening
+            {
+                query = (DbSet<Survey>)query.Where(s => s.StartDate < dateTime && dateTime < s.EndTime);
+            }
+            if (model.Status == 3) //planed
+            {
+                query = (DbSet<Survey>)query.Where(s => s.StartDate > dateTime);
+            }
+
+            var listSurvey = await query.ToListAsync();
+            int totalPage = (int)Math.Ceiling(listSurvey.Count() / (double)paginationClientModel.PageSize);
+            var listSurveyClient = await query
+                                    .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                                    .Take(paginationClientModel.PageSize)
+                                    .ToListAsync();
+            var surveyModel = listSurveyClient.Select(x => new SurveyModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                StartDate = x.StartDate.ToString("yyyy-MM-dd HH:mm:ss tt"),
+                EndDate = x.EndTime.ToString("yyyy-MM-dd HH:mm:ss tt"),
+                Description = x.Description,
+            }).ToList();
+            var responsePagedModel = new ResponsePagedModel
+            {
+                ListSurvey = surveyModel.ToList(),
+                PageNumber = paginationClientModel.PageNumber,
+                TotalPage = totalPage
+            };
+            return responsePagedModel;
         }
     }
 }

@@ -80,7 +80,7 @@ $(document).ready(function(){
 		datatype:"json",
         async:true,
         success : function(response){
-			//console.log(response)
+			console.log(response)
 			if(role == null || role == "ADMIN"){
 				response.forEach(function(seminar) {
 					showSeminarUpcoming(seminar)		
@@ -119,7 +119,7 @@ $(document).ready(function(){
 
 function showTop3StudentSurvey(result) {	    	
     $('.owl-carousel').owlCarousel('add', 
-		'<div class=" item">'+
+		'<div class="item">'+
 			'<div class="card border-0 rounded-0 hover-shadow">'+
 				'<img class="card-img-top rounded-0" src="https://localhost:44304/Images/'+result.Image+'" alt="teacher">'+
 				'<div class="card-body">'+

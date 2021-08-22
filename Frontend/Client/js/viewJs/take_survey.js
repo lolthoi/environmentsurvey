@@ -16,6 +16,7 @@ var check = "";
 
 $(document).ready(function(){
   checkResultUser(id, UserId);
+  console.log(check)
   if(check){
     console.log("check ok");
     SaveResult(id, UserId);
@@ -281,52 +282,7 @@ function RemoveClass(element){
     parent.siblings().children().removeClass('selected-option')
 }
 
-// function submit(listQuestion,intervalTime, time){
-//     $("body").on("click", '#submit', function(){	
-//       var data = [];	
-//       var datacheck = [];
-//       var siblings = $(this).parent().siblings();
-//       var resultSelect = siblings.children().children().siblings('#options').children().children().siblings('.selected-option').siblings();
-      
-//       for(var i=0; i<resultSelect.length; i++){
-//         var array = split(resultSelect[i].defaultValue);
-//         var object = {};
-//         object['SurveyQuestionId'] = parseInt(array[0]);
-//         object['AnswerId'] = parseInt(array[1]);
-//         object['UserId']  = parseInt(UserId);
-//         datacheck.push(parseInt(array[0]));
-//         data.push(object);
-//       }
-//       var dataNul  = listQuestion.filter(item=> !datacheck.includes(item.SurveyQuestionId));
-//       dataNul.forEach(function (question) {
-//         var object = {};
-//         object['SurveyQuestionId'] = question.SurveyQuestionId;
-//         object['AnswerId'] = null;
-//         object['UserId']  = parseInt(UserId);
-//         data.push(object);
-//       });
-//       var dataSave = {
-//         ListUserAnserModel: data,
-//         SubmitTime : 100
-//       }
-//       if(role != null && token!= null && username!= null){
-//         $.ajax({
-//           type : "POST",
-//           url: domen+"/api/UserAnswer",
-//           headers: {
-//             Authorization: 'Bearer '+token
-//           },
-//           contentType: "application/json; charset=utf-8",
-//           data: JSON.stringify(dataSave),
-//           datatype:"json",
-//           async:false,
-//           success : function(response){
-//             console.log(response);
-//           },       
-//         });
-//       } 
-//     });  
-// }
+
 function split(string){
     return string.split('-')
 }
@@ -349,11 +305,7 @@ function getList() {
     success: function (response) {
       $('#totalQuestion').html(response.length)
          doWork(response);
-      // response.forEach(function (seminar, index) {
-      //   showQuestion(seminar, index + 1);
-      // });
-      // addButtonSubmit();
-      // $('#nameSurvey').html(response[0].NameSurvey)
+
     },
   });
 }
@@ -368,24 +320,7 @@ function showQuestion(model, index) {
           '<div class="card-body pt-0 pb-2">'+
               '<h3 style="font-size: 22px;margin: 15px 0">Question '+index+': '+model.Question+'</h3>'+   
               '<ul id="options" class="col-xs-12 options'+index+'">'+
-                  // '<li class="input-group border mb-2  " >'+
-                  //     '<input type="radio" class="ml-1 option-radio " id="answer'+anser1.Id+'" value="'+model.SurveyQuestionId+'-'+anser1.Id+'" style="opacity: 0;" />'+
-                  //     '<label for="answer'+model.Answers[0].Id+'" class="form-control option-label-radio  optionA rounded-0" style="font-size: 20px;">'+model.Answers[0].Answer+'</label>'+
-                  // '</li>'+
-                  // '<li class="input-group border mb-2 ">'+
-                  //     '<input type="radio" class="ml-1 option-radio" id="answer'+model.Answers[1].Id+'" value="'+model.SurveyQuestionId+'-'+model.Answers[1].Id+'" style="opacity: 0;"/>'+
-                  //     '<label for="answer'+model.Answers[1].Id+'" class="form-control option-label-radio optionB rounded-0" style="font-size: 20px;">'+model.Answers[1].Answer+'</label>'+
-                  // '</li>'+
-
-                  // '<li class="input-group border mb-2 ">'+
-                  //     '<input type="radio" class="ml-1 option-radio" id="answer'+model.Answers[2].Id+'" value="'+model.SurveyQuestionId+'-'+model.Answers[2].Id+'" style="opacity: 0;"/>'+
-                  //     '<label for="answer'+model.Answers[2].Id+'" class="form-control option-label-radio optionC rounded-0" style="font-size: 20px;">'+model.Answers[2].Answer+'</label>'+
-                  // '</li>'+
-
-                  // '<li class="input-group border mb-2 ">'+
-                  //     '<input type="radio" class="ml-1 option-radio" id="answer'+model.Answers[3].Id+'" value="'+model.SurveyQuestionId+'-'+model.Answers[3].Id+'" style="opacity: 0;"/>'+
-                  //     '<label for="answer'+model.Answers[3].Id+'" class="form-control option-label-radio optionD rounded-0" style="font-size: 20px;">'+model.Answers[3].Answer+'</label>'+
-                  // '</li>'+                       
+                                
               '</ul>'+
           '</div>'+      
       '</div>'
