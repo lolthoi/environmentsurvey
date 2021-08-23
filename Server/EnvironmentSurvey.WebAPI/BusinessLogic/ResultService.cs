@@ -22,6 +22,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         Task<ResponsePagedModel> Top3Result(PaginationClientModel paginationClientModel, SearchModel model);
         Task<List<int>> listSurveyIdUser(int userId);
         Task<bool> SendEmailAward(AwardModel model);
+        Task ScheduleGetTopResult();
     }
     public class ResultService : IResultService
     {
@@ -394,8 +395,40 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 return false;
             }
-            
-            
+        }
+
+        public async Task ScheduleGetTopResult()
+        {
+            DateTime currentDate = DateTime.Now;
+            DateTime yesterday = DateTime.Now.AddDays(-1);
+            var listSurveyEnd = await _context.Surveys.Where(s => s.EndTime < currentDate && s.EndTime > yesterday).ToListAsync();
+            if (listSurveyEnd.Count > 0)
+            {
+                foreach (Survey survey in listSurveyEnd)
+                {
+                    List<EmailUserModel> listTopUser = new List<EmailUserModel>();
+                    var listTopResult = await _context.Results
+                            .Where(r => r.SurveyId == survey.Id)
+                            .OrderByDescending(r => r.Point)
+                            .ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate)
+                            .Take(3)
+                            .ToListAsync();
+
+                    foreach (Result result in listTopResult)
+                    {
+                        User user = await _context.Users.FindAsync(result.UserId);
+                        EmailUserModel obj = new EmailUserModel();
+                        obj.Email = user.Email;
+                        obj.FullName = user.FirstName + " " + user.LastName;
+                        listTopUser.Add(obj);
+                    }
+                    AwardModel award = new AwardModel();
+                    award.SurveyName = survey.Name;
+                    award.ListEmailUser = listTopUser;
+                    var sendMailResult = await SendEmailAward(award);
+                    if (sendMailResult == false) throw new Exception("Faild to send Email.");
+                }
+            }
         }
     }
 }

@@ -83,6 +83,11 @@ namespace EnvironmentSurvey.WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EnvironmentSurvey.WebAPI", Version = "v1" });
             });
+            services.AddCronJob<ScheduleTask>(c =>
+            {
+                c.TimeZoneInfo = TimeZoneInfo.Local;
+                c.CronExpression = @"*/2 * * * *";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
