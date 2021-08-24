@@ -1,6 +1,7 @@
 ﻿using EnvironmentSurvey.WebAPI.ClientSide.Common;
 using EnvironmentSurvey.WebAPI.ClientSide.Models;
 using MailKit.Security;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using System;
@@ -21,15 +22,17 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     public class SendMailService : ISendMailService
     {
         private readonly MailSettings mailSettings;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public SendMailService(IOptions<MailSettings> _mailSettings)
+        public SendMailService(IOptions<MailSettings> _mailSettings, IHostingEnvironment hostingEnvironment)
         {
             mailSettings = _mailSettings.Value;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task SendWelcomeEmailAsync(string email, string subject, string username, string token)
         {
-            string FilePath = Directory.GetCurrentDirectory() + "\\Templates\\EmailTemplate.html";
+            string FilePath = _hostingEnvironment.WebRootPath + @"/templ/email.html";
             StreamReader str = new StreamReader(FilePath);
             string MailText = str.ReadToEnd();
             str.Close();
@@ -69,7 +72,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public async Task SendEmailConfirm(string email, string subject, string username, string message)
         {
-            string FilePath = Directory.GetCurrentDirectory() + "\\Templates\\ConfirmRegSeminarTemp.html";
+            string FilePath = _hostingEnvironment.WebRootPath + @"/templ/confirm.html";
             StreamReader str = new StreamReader(FilePath);
             string MailText = str.ReadToEnd();
             str.Close();
@@ -85,7 +88,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public async Task SendEmailAward(string email, string surveyName, string username, string subject, string message)
         {
-            string FilePath = Directory.GetCurrentDirectory() + "\\Templates\\ConfirmRegSeminarTemp.html";
+            string FilePath = _hostingEnvironment.WebRootPath + @"/templ/confirm.html";
             StreamReader str = new StreamReader(FilePath);
             string MailText = str.ReadToEnd();
             str.Close();

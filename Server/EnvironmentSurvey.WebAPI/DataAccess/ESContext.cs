@@ -33,11 +33,7 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=LAP-015\\SQLEXPRESS01;Database=ES;Trusted_Connection=True;");
-            }
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -107,10 +103,10 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
             {
                 entity.ToTable("Subjects");
 
-                entity.Property(e => e.Subject1)
+                /*entity.Property(e => e.Subject1)
                     .HasColumnType("varchar")
                     .HasMaxLength(200)
-                    .HasColumnName("Subject");
+                    .HasColumnName("Subject");*/
             });
 
             modelBuilder.Entity<Result>(entity =>
@@ -213,14 +209,11 @@ namespace EnvironmentSurvey.WebAPI.DataAccess
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasIndex(e => e.Username, "UQ__Users__536C85E4BBB71199")
-                    .IsUnique();
+                entity.Property(e => e.Username);
 
-                entity.HasIndex(e => e.Email, "UQ__Users__A9D105343684F975")
-                    .IsUnique();
+                entity.Property(e => e.Email);
 
-                entity.HasIndex(e => e.Tel, "UQ__Users__C451FA8D3CE481DA")
-                    .IsUnique();
+                entity.Property(e => e.Tel);
 
                 entity.Property(e => e.Address).HasColumnType("text");
 

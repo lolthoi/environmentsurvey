@@ -74,5 +74,12 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         {
             return await _resultService.SendEmailAward(model);
         }
+
+        [HttpGet]
+        [Route("getAward")]
+        public async Task getAward()
+        {
+            await _resultService.ScheduleGetTopResult();
+        }
     }
 }

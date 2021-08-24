@@ -48,14 +48,14 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             var file = model.File;
             if (file != null)
             {
-                string imageFolderPath = _hostingEnvironment.WebRootPath + "\\Images";
+                string imageFolderPath = _hostingEnvironment.WebRootPath + "/Images";
                 if (!Directory.Exists(imageFolderPath))
                 {
                     Directory.CreateDirectory(imageFolderPath);
                 }
                 FileInfo fi = new FileInfo(file.FileName);
                 var newfilename = "Image_" + DateTime.UtcNow.ToString("yyyyMMddHHmmssfff") + fi.Extension;
-                var path = Path.Combine("", _hostingEnvironment.WebRootPath + "\\Images\\" + newfilename);
+                var path = Path.Combine("", _hostingEnvironment.WebRootPath + "/Images/" + newfilename);
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
                     file.CopyTo(stream);
@@ -232,17 +232,17 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 if(model.File != null)
                 {
-                    string imagePath = _hostingEnvironment.WebRootPath + "\\Images\\" + seminar.Image;
+                    string imagePath = _hostingEnvironment.WebRootPath + "/Images/" + seminar.Image;
                     File.Delete(imagePath);
                     var file = model.File;
-                    string imageFolderPath = _hostingEnvironment.WebRootPath + "\\Images";
+                    string imageFolderPath = _hostingEnvironment.WebRootPath + "/Images";
                     if (!Directory.Exists(imageFolderPath))
                     {
                         Directory.CreateDirectory(imageFolderPath);
                     }
                     FileInfo fi = new FileInfo(file.FileName);
                     var newfilename = "Image_" + DateTime.UtcNow.ToString("yyyyMMddHHmmssfff") + fi.Extension;
-                    var path = Path.Combine("", _hostingEnvironment.WebRootPath + "\\Images\\" + newfilename);
+                    var path = Path.Combine("", _hostingEnvironment.WebRootPath + "/Images/" + newfilename);
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         file.CopyTo(stream);
@@ -274,7 +274,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 throw new Exception("Seminar not found");
             else
             {
-                string imagePath = _hostingEnvironment.WebRootPath + "\\Images\\" + seminar.Image;
+                string imagePath = _hostingEnvironment.WebRootPath + "/Images/" + seminar.Image;
                 File.Delete(imagePath);
                 seminar.DeletedDate = DateTime.UtcNow;
                 var result = await _context.SaveChangesAsync();
