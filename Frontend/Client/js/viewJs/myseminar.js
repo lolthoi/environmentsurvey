@@ -21,19 +21,21 @@ $(document).ready(function(){
 		success : function(response){
 			var i = 0;
 			var j = 0;
+			var k = 0;
 			response.forEach(function(userseminar) {
 				
                 if(userseminar.Status == 1){
-					i++;                   
+					                 
 					var dateSeminar = userseminar.Seminar.EndDate;
 					var datTime = new Date(dateSeminar);
 					var now = new Date();
 					if(now > datTime){
+						k++
 						showSeminarClosed(userseminar.Seminar,userseminar.Status)
 					}else{
+						i++;  
 						showSeminar(userseminar.Seminar,userseminar.Status );
-					}
-					
+					}					
                 }
                 if(userseminar.Status == 2){
 					j++;
@@ -50,6 +52,9 @@ $(document).ready(function(){
 			}
 			if(j == 0){
 				$('#messageRegistering').html('You do not have a seminar entry pending approval or denied at the moment!.')
+			}
+			if(k == 0){
+				$('#messageClosed').html('You have not completed any seminar at the moment!.')
 			}
 		},       
 	});
