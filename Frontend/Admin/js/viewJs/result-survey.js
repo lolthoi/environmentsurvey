@@ -46,7 +46,7 @@ function getList(pageNumber) {
   }
   $.ajax({
     type: "POST",
-    url: domain + "/api/Result/getResultBySurveyId?PageNumber="+pageNumber+"&PageSize=1&surveyId="+surveyId,
+    url: domain + "/api/Result/getResultBySurveyId?PageNumber="+pageNumber+"&PageSize=6&surveyId="+surveyId,
     headers: {
       Authorization: "Bearer " + token,
     },
@@ -68,7 +68,7 @@ function getList(pageNumber) {
         //checkedElement(listIdChecked);        
       });
       $('#currentPage').html(response.PageNumber);
-      $('#surveyName').html(response.listResult[0].NameSeminar +">"+ response.listResult[0].surveyName);
+      $('#surveyName').html( response.listResult[0].surveyName);
     },
   });
 }
@@ -98,6 +98,7 @@ function showSurvey_Result(model) {
 
 
 // function checkBox(id){
+//   var check = false;
 //   if($('#'+id+'').is(":checked")){
 //     emailuser = $('#'+id+'').val();
 //     let array = emailuser.split("/");
@@ -106,7 +107,7 @@ function showSurvey_Result(model) {
 //     object["FullName"] = array[1];
 //     emailUser.push(object);
 //     listIdChecked.push(id)
-    
+//     check = false;   
 //   }
 //   if(!$('#'+id+'').is(":checked")){
 //     emailuser = $('#'+id+'').val();
@@ -119,10 +120,12 @@ function showSurvey_Result(model) {
 //     if (index > -1) {
 //       listIdChecked.splice(index, 1);
 //     }
-    
+//     check = false; 
 //   }
-
-//   //sendEmail(emailUser, surveyName);
+//   if(!check){
+//     sendEmail(emailUser, surveyName);
+//   }
+  
 // }
 //sendEmail(emailUser, surveyName);
 

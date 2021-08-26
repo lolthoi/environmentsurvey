@@ -20,7 +20,7 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public string EndDate { get; set; }
         public IFormFile File { get; set; }
         public SubjectModel Subject { get; set; }
-
+        public int TotalRequestAccept { get; set; }
 
     }
 }

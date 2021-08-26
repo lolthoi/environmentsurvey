@@ -56,5 +56,13 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             return response;
         }
 
+        [HttpPost]
+        [Route("getUserSeminarRegistered")]
+        public async Task<ResponsePagedModel> getUserSeminarRegistered(SearchModel model, [FromQuery] PaginationClientModel paginationClientModel, int SeminarId)
+        {
+            var response = await _userSeminarService.GetUserSeminarAccepted(model, paginationClientModel, SeminarId);
+            return response;
+        }
+
     }
 }

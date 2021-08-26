@@ -42,6 +42,12 @@
             <div class="lds-pos"></div>
         </div>
     </div>
+    <!-- model load -->
+    <div class="modal " id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered text-center" role="document">
+          <div class="loader"></div>
+        </div>
+      </div>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -215,7 +221,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">List Seminars</h4>
+                        <h4 class="page-title" id="title"></h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -237,9 +243,9 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container" style="padding:0 25px; margin-top: 20px;">
-                <a href="create-seminar.html" class="btn btn-block btn-primary mb-3">Create Seminar</a>
-                <div class="row">  
-                    <div class="col-md-2">
+                <div class="row"> 
+                    <div class="col-md-7"></div> 
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="Subject">Search key</label>
                             <input type="text" autocomplete="off" class="form-control" name="Search_key"
@@ -247,7 +253,7 @@
                             <small id="subject-valid" class="text-danger"></small>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <!-- <div class="col-md-3">
                         <div class="form-group">
                             <label for="StartTime">Start Date</label>
                             <input type="date" autocomplete="off" class="form-control" name="StartTime"
@@ -255,35 +261,14 @@
                             <small id="st-valid" class="text-danger"></small>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="EndTime">End Date</label>
                             <input type="date" autocomplete="off" class="form-control" name="EndTime"
                                 id="ToDate" >
                             <small id="et-valid" class="text-danger"></small>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control mb-3" id="status">
-                                <option value="0">All</option>
-                                <option value="1">Closed</option>
-                                <option value="2">Happening</option>
-                                <option value="3">Planed</option>
-                            </select>
-                        </div>
-                    </div> 
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="forUser">For User</label>
-                            <select class="form-control mb-3" id="forUser">
-                                <option value="">All</option>
-                                <option value="EMPLOYEE">Employee</option>
-                                <option value="STUDENT">Student</option>
-                            </select>
-                        </div>
-                    </div> 
+                    </div> -->
                     <div class="col-md-1">
                         <div style="margin-top:28px">
                             <button type="button" id="submit" class="btn btn-primary">Submit</button>
@@ -309,28 +294,24 @@
                                 <table id="list-seminar" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="width:20%">Name</th>
-                                            <th style="width:20%">Location</th>
-                                            <th>Author</th>
-                                            <th>Subject</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>Registered</th>
-                                            <th style="width: 16%;"></th>
+                                            
+                                            <th style="width:20%">User</th>
+                                            <th style="width:20%">First Name</th>
+                                            <th style="width:20%">Last Name</th>
+                                            <th style="width:17%">User ID Number</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Location</th>
-                                            <th>Author</th>
-                                            <th>Subject</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>Registered</th>
-                                            <th></th>
+                                           
+                                            <th>User</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>User ID Number</th>
+                                            
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -410,7 +391,7 @@
     <!--Custom JavaScript -->
     <script src="js/custom.js"></script>
     <script src="js/viewJs/authorize.js"></script>
-    <script src="js/viewJs/list-seminar.js"></script>
+    <script src="js/viewJs/user_seminar.js"></script>
 </body>
 
 </html>

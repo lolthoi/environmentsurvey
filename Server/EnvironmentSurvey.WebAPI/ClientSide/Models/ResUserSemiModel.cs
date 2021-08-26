@@ -17,5 +17,8 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public int Status { get; set; }
         public virtual SeminarModel Seminar { get; set; }
         public string FullName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
     }
 }

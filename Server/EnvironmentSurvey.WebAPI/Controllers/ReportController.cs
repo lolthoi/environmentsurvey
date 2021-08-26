@@ -26,5 +26,11 @@ namespace EnvironmentSurvey.WebAPI.Controllers
             return await _reportSevice.DataDashboard();
         }
 
+        [HttpGet]
+        [Route("getGeneralInfor")]
+        public async Task<GeneralModel> getGeneralInfor()
+        {
+            return await _reportSevice.GeneralInfor();
+        }
     }
 }

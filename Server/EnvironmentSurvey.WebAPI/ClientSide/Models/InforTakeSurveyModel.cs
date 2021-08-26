@@ -12,5 +12,6 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
         public string SurveyName { get; set; }
         public int TotalRegister { get; set; }
         public int TotalTakeSurvey { get; set; }
+        public int SeminarId { get; set; }
     }
 }

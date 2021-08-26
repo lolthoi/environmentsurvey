@@ -14,6 +14,7 @@ $(document).ready(function(){
 		autoplay:true,
 		autoplayTimeout:2000,
 		autoplayHoverPause:true,
+
 		
 	});
 	
@@ -44,35 +45,46 @@ $(document).ready(function(){
 	}
 
 	// get all seminar
+
+	var dataSearch = {
+		Search_key : "",	
+		Role : role != null ? role:"",
+		FromDate : "",
+		ToDate : "",
+		Status : 3
+	}
+
 	$.ajax({
-        type : "GET",
-        url: domain+"/api/Seminar?status=happening",
+        type : "POST",
+        url: domain+"/api/Seminar?PageNumber=1&PageSize=6",
+        contentType: "application/json; charset=utf-8",
 		headers: {
 			Authorization: 'Bearer '+token
 		},
-        contentType: "application/json; charset=utf-8",
-		//data: JSON.stringify(dataSearch),
+		contentType: "application/json; charset=utf-8",
+		data: JSON.stringify(dataSearch),
 		datatype:"json",
-        async:true,
+        async:false,
         success : function(response){
-			//console.log(response)
 			if(role == null || role == "ADMIN"){
-				response.forEach(function(seminar) {
+				response.ListData.forEach(function(seminar) {
 					showSeminar(seminar);					
 				});
 			}else{
 				let lsUserSeminarID =  listUserSeminar.map(item => {return item.SeminarId});
 				let listSeminar  = response.ListData.filter(item=> !lsUserSeminarID.includes(item.ID));
 				listSeminar.forEach(function(seminar) {
-					showSeminar(seminar);					
+					showSeminar(seminar);
+					
 				});				
-			}	
-        },       
+			}			
+        },  
+		     
     })
 
 	$.ajax({
         type : "GET",
-        url: domain+"/api/Seminar?status=upcoming",
+        url: domain+"/api/Report/getGeneralInfor",
 		headers: {
 			Authorization: 'Bearer '+token
 		},
@@ -80,22 +92,14 @@ $(document).ready(function(){
 		datatype:"json",
         async:true,
         success : function(response){
-			console.log(response)
-			if(role == null || role == "ADMIN"){
-				response.forEach(function(seminar) {
-					showSeminarUpcoming(seminar)		
-				});
-			}else{
-				let lsUserSeminarID =  listUserSeminar.map(item => {return item.SeminarId});
-				let listSeminar  = response.ListData.filter(item=> !lsUserSeminarID.includes(item.ID));
-				listSeminar.forEach(function(seminar) {
-					showSeminarUpcoming(seminar)		
-				});				
-			}	
+			$('#totalStaff').attr("data-count",response.TotalStaff); 
+			$('#totalStudent').attr("data-count",response.TotalStudent); 
+			$('#closedSurvey').attr("data-count",response.TotalClosedSurvey); 
+			$('#upcomingSurvey').attr("data-count",response.TotalUpcomingSurvey); 
+			$('#awards').attr("data-count",response.TotalAwards	); 			
         },       
     })
-
-
+	
 
 	var dataTopStudent = {
 		TimeOrPoint : 0

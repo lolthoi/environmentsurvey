@@ -26,8 +26,8 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         [HttpPost]
         public async Task<ResponsePagedModel> getAll(SearchModel model, [FromQuery] PaginationClientModel paginationClientModel)
         {
-            var listUser = await _seminarSevice.GetAll(model, paginationClientModel);
-            return listUser;
+            var listSeminar = await _seminarSevice.GetAll(model, paginationClientModel);
+            return listSeminar;
         }
 
         [HttpGet("{id:int}")]

@@ -43,7 +43,7 @@ function showSeminar(model) {
         model.SurveyName+
         "</td>" +
         '<td class="text-center">' +
-        '<a href="result-survey.html?id='+model.SurveyId+'" title="View detail">'+ model.TotalRegister+'</a>'+
+        '<a href="user_seminar.html?id='+model.SeminarId+'" title="View detail">'+ model.TotalRegister+'</a>'+
         "</td>" +
         '<td class="text-center">' +
         '<a href="result-survey.html?id='+model.SurveyId+'" title="View detail">'+model.TotalTakeSurvey+'</a>'+

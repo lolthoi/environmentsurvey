@@ -19,6 +19,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         Task<ResponsePagedModel> getAllSeminarPending(SearchModel model, PaginationClientModel paginationClientModel);
 
         Task<string> changeUserSeminarStatus(int option, int userSeminarId);
+        Task<ResponsePagedModel> GetUserSeminarAccepted(SearchModel model, PaginationClientModel paginationClientModel, int SeminarId);
     }
     public class UserSeminarService : IUserSeminarService
     {
@@ -67,16 +68,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
 
             }
-            /*if(model.FromDate != "")
-            {
-                DateTime fromDate = Convert.ToDateTime(model.FromDate);
-                query = (IOrderedQueryable<UserSeminar>)query.Where(s => s.CreatedDate >= fromDate);
-            }
-            if(model.ToDate != "")
-            {
-                DateTime toDate = Convert.ToDateTime(model.ToDate);
-                query = (IOrderedQueryable<UserSeminar>)query.Where(s => s.CreatedDate <= toDate);
-            }*/
+            
             if(model.Search_key != "")
             {
                 var key = model.Search_key;
@@ -101,6 +93,49 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     UserNumberId = userSeminar.User.NumberId,
                     seminarName = seminar.Name,
                     FullName =  user.FirstName + " " + user.LastName
+                };
+                returnList.Add(obj);
+            }
+            var responsePagedModel = new ResponsePagedModel
+            {
+                ListUserSeminar = returnList.ToList(),
+                PageNumber = paginationClientModel.PageNumber,
+                TotalPage = totalPage
+            };
+            return responsePagedModel;
+        }
+
+        public async Task<ResponsePagedModel> GetUserSeminarAccepted(SearchModel model, PaginationClientModel paginationClientModel, int SeminarId)
+        {
+            var query = _context.UserSeminars.Where(us => us.SeminarId == SeminarId).Where(us=> us.Status == 1);
+            if(model.Search_key == "")
+            {
+
+            }
+            if(model.Search_key != "")
+            {
+                var key = model.Search_key;
+                query = query.Where(s => s.User.Username.Contains(key) || s.User.FirstName.Contains(key) || s.User.LastName.Contains(key));
+            }
+            var listUserSeminar = await query.ToListAsync();
+            int totalPage = (int)Math.Ceiling(listUserSeminar.Count() / (double)paginationClientModel.PageSize);
+            var list = await query
+                            .Skip((paginationClientModel.PageNumber - 1) * paginationClientModel.PageSize)
+                            .Take(paginationClientModel.PageSize)
+                            .ToListAsync();
+            List<ResUserSemiModel> returnList = new List<ResUserSemiModel>();
+            foreach (var userSeminar in list)
+            {
+                User user = _context.Users.Find(userSeminar.UserId);
+                Seminar seminar = _context.Seminars.Find(userSeminar.SeminarId);
+                var obj = new ResUserSemiModel
+                {
+                    UserSeminarId = userSeminar.Id,
+                    UserName = user.Username,
+                    UserNumberId = userSeminar.User.NumberId,
+                    seminarName = seminar.Name,
+                    FirstName = user.FirstName ,
+                    LastName = user.LastName
                 };
                 returnList.Add(obj);
             }
