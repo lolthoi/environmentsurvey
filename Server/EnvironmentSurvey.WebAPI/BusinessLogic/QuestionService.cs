@@ -20,6 +20,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         bool Delete(int Id);
         int GetNumsQuestionBySubject(int id);
         List<int> getRandomQuestion(int num);
+        List<QuestionModel> GetAllQuestionBySeminarSubject(int seminarId);
     }
     public class QuestionService : IQuestionService
     {
@@ -120,6 +121,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 Id = x.Id,
                 Question = x.Question1,
+                SubjectId = x.SubjectId,
                 Answers = listAnswerModel.Count > 0 ? listAnswerModel.Where(y => y.QuestionId == x.Id).ToList() : null,
                 SurveyQuestions = listSurveyQuestionModel.Count > 0 ? listSurveyQuestionModel.Where(y => y.QuestionId == x.Id).ToList() : null,
             }).ToList();
@@ -264,6 +266,50 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 listQuestionId.Add(question.Id);
             }
             return listQuestionId;
+        }
+
+        public List<QuestionModel> GetAllQuestionBySeminarSubject(int seminarId)
+        {
+            var seminar = _context.Seminars.Find(seminarId);
+            var subjectId = seminar.SubjectId;
+            var listAnswer = _answerRepository.GetAll().ToList();
+            List<AnswerModel> listAnswerModel = new();
+            if (listAnswer.Count > 0)
+            {
+                listAnswerModel = listAnswer.Select(x => new AnswerModel
+                {
+                    Id = x.Id,
+                    Answer = x.Answer1,
+                    IsCorrect = null,
+                    QuestionId = x.QuestionId
+                }).ToList();
+            }
+
+            var listSurveyQuestion = _surveyQuestionRepository.GetAll().ToList();
+            List<SurveyQuestionModel> listSurveyQuestionModel = new();
+            if (listSurveyQuestion.Count > 0)
+            {
+                listSurveyQuestionModel = listSurveyQuestion.Select(x => new SurveyQuestionModel
+                {
+                    Id = x.Id,
+                    SurveyId = x.SurveyId,
+                    QuestionId = x.QuestionId,
+                }).ToList();
+            }
+
+            var listQuestion = _context.Questions.Where(q => q.SubjectId == subjectId).ToList();
+            if (listQuestion.Count == 0)
+                throw new Exception("There is no question existed");
+
+            var result = listQuestion.Select(x => new QuestionModel
+            {
+                Id = x.Id,
+                Question = x.Question1,
+                SubjectId = x.SubjectId,
+                Answers = listAnswerModel.Count > 0 ? listAnswerModel.Where(y => y.QuestionId == x.Id).ToList() : null,
+                SurveyQuestions = listSurveyQuestionModel.Count > 0 ? listSurveyQuestionModel.Where(y => y.QuestionId == x.Id).ToList() : null,
+            }).ToList();
+            return result;
         }
     }
 }

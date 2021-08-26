@@ -17,7 +17,6 @@ $(document).ready(function(){
         datatype:"json",
         async: true,
         success: function(response) {
-          console.log(response);
             $("#title").text(response.Name);
             $("#addNewSurvey").attr("href","add-survey.html?seminarId="+seminarId+"&subjectId="+response.Subject.Id);
         },
