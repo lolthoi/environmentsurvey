@@ -46,7 +46,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         {
             SupportInformation si = await _context.SupportInformations.FindAsync(Id);
             if (si == null)
-                throw new Exception("Support Information not found");
+                return false;
             else
             {
                 si.DeletedDate = DateTime.UtcNow;
@@ -76,7 +76,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         {
             SupportInformation si = await _context.SupportInformations.FindAsync(model.Id);
             if (si == null)
-                throw new Exception("Support Information not found");
+                return await Create(model);
             else
             {
                 si.Company = model.Company;
