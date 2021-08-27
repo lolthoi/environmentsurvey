@@ -88,7 +88,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public async Task SendEmailAward(string email, string surveyName, string username, string subject, string message)
         {
-            string FilePath = _hostingEnvironment.WebRootPath + @"/templ/confirm.html";
+            string FilePath = _hostingEnvironment.WebRootPath + @"/templ/AwardTemplate.html";
             StreamReader str = new StreamReader(FilePath);
             string MailText = str.ReadToEnd();
             str.Close();
