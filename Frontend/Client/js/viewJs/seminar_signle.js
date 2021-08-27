@@ -121,7 +121,7 @@ function getListSurveyUserJoined(){
 
 function showListSurveyRegisted(survey, check){
   var arrayStartTime = survey.StartDate.split(' ');
-  var arrayEndTime = survey.StartDate.split(' ');
+  var arrayEndTime = survey.EndDate.split(' ');
   var text = "";
   if(survey.Status == 1){
     text = "Closed";
@@ -164,7 +164,7 @@ function showListSurveyRegisted(survey, check){
 
 function showListSurveyPendingDecline(survey){
   var arrayStartTime = survey.StartDate.split(' ');
-  var arrayEndTime = survey.StartDate.split(' ');
+  var arrayEndTime = survey.EndDate.split(' ');
    $('#listSurvey').append(
     '<div class="col-4 mb-4 ">'+
     '<div class="card p-0 border-primary rounded-0 hover-shadow">'+
