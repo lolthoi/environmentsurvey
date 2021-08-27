@@ -7,52 +7,13 @@ var seminarId = url.searchParams.get("seminarId");
 var surveyId = url.searchParams.get("surveyId");
 var subjectId = url.searchParams.get("subjectId");
 var maxNumQuestion;
+var seminarStartDate;
+var seminarEndDate;
+var today = getCurrentDateTime();
 
 $(document).ready(function(){
 
-    if(surveyId != null){
-        $("#page-title").text("Edit Survey");
-        $("#questionNumber").remove();
-
-        $.ajax({
-            type: "GET",
-            url: domain+"/api/Survey/"+surveyId,
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-            contentType: "application/json; charset=utf-8",
-            datatype:"json",
-            async: true,
-            success: function(response) {
-                $("#surveyName").val(response.Name);
-                $("#des").text(response.Description);
-                var startTime = convertDatetime(response.StartDate);
-                var endTime = convertDatetime(response.EndDate);
-                console.log(response.EndDate);
-                console.log(endTime);
-                formatDatePicker(startTime,endTime);
-            },
-        });
-        $("#saveForm").removeAttr("disabled");
-    } else {
-        formatDatePicker(null, null);
-        loadNumberOfQuestion();
-    }
-
-
-    $.ajax({
-        type: "GET",
-        url: domain+"/api/Seminar/"+seminarId,
-        headers: {
-            Authorization: "Bearer " + token,
-        },
-        contentType: "application/json; charset=utf-8",
-        datatype:"json",
-        async: true,
-        success: function(response) {
-            $("#title").text(response.Name);
-        },
-    });
+    loadPage();
 
     $("#saveForm").click(function(){
         if(validateName() && validateDate() && validateNumsQuestion()){
@@ -112,6 +73,65 @@ $(document).ready(function(){
         
     });
 })
+async function loadPage(){
+    await getSeminar();
+    if(surveyId != null){
+        $("#page-title").text("Edit Survey");
+        $("#questionNumber").remove();
+
+        $.ajax({
+            type: "GET",
+            url: domain+"/api/Survey/"+surveyId,
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+            contentType: "application/json; charset=utf-8",
+            datatype:"json",
+            async: true,
+            success: function(response) {
+                $("#surveyName").val(response.Name);
+                $("#des").text(response.Description);
+                console.log(response.StartDate);
+                var startTime = convertDatetime(response.StartDate);
+                var endTime = convertDatetime(response.EndDate);
+                formatDatePicker(startTime,endTime);
+            },
+        });
+        $("#saveForm").removeAttr("disabled");
+    } else {
+        formatDatePicker(null, null);
+        loadNumberOfQuestion();
+    }
+}
+
+function getSeminar(){
+    return new Promise((resolve, reject)=>{
+        $.ajax({
+            type: "GET",
+            url: domain+"/api/Seminar/"+seminarId,
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+            contentType: "application/json; charset=utf-8",
+            datatype:"json",
+            async: true,
+            success: function(response) {
+                $("#title").text(response.Name);
+                tempDate = convertMinDate(response.StartDate);
+                seminarEndDate = convertMaxDate(response.EndDate);
+                var check = dateCompare(today,tempDate);
+                if(check < 0){
+                    seminarStartDate = tempDate;
+                } else {
+                    seminarStartDate = today;
+                }
+                resolve();
+            },
+        });
+
+    })
+    
+}
 
 function validateName(){
     if($("#surveyName").val() == ""){
@@ -162,18 +182,37 @@ function convertDatetime(string){
     return dateTimeConverted;
 }
 
-function formatDatePicker(startdate, enddate){
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-    today = mm + "/" + dd + "/" + yyyy;
+function convertMinDate(string){
+    var date = string.split(' ')[0];
+    var dates = date.split('-');
+    var year = dates[0];
+    var month = dates[1];
+    var day = dates[2];
 
+    var dateConverted = month+"/"+day+"/"+year+" 00:00 AM";
+    return dateConverted;
+}
+
+function convertMaxDate(string){
+    var date = string.split(' ')[0];
+    var dates = date.split('-');
+    var year = dates[0];
+    var month = dates[1];
+    var day = dates[2];
+
+    var dateConverted = month+"/"+day+"/"+year+" 12:00 PM";
+    return dateConverted;
+}
+
+function formatDatePicker(startdate, enddate){
     if(startdate == null){
         $(function() {
             $('input[name="datetimes"]').daterangepicker({
             opens : 'center',
-            "minDate" : today,
+            minDate : seminarStartDate,
+            maxDate : seminarEndDate,
+            startDate: seminarStartDate,
+            endDate: seminarEndDate,
             timePicker: true,
             locale: {
                 format: 'M/DD hh:mm A'
@@ -189,7 +228,8 @@ function formatDatePicker(startdate, enddate){
         $(function() {
             $('input[name="datetimes"]').daterangepicker({
             opens : 'center',
-            "minDate" : today,
+            minDate : seminarStartDate,
+            maxDate : seminarEndDate,
             startDate : startdate,
             endDate : enddate,
             timePicker: true,
@@ -219,5 +259,35 @@ function loadNumberOfQuestion(){
             maxNumQuestion = response;
         }
     });
+}
+
+function dateCompare(d1,d2){
+    var d1Convert = d1.split(' ')[0];
+    var d2Convert = d2.split(' ')[0];
+    const date1 = new Date(d1Convert);
+    const date2 = new Date(d2Convert);
+
+    if(date1 < date2){
+        return -1;
+    } else {
+        return 1;
+    }
+}
+
+function getCurrentDateTime(){
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    let hh = today.getHours();
+    let mi = today.getMinutes();
+    let tt;
+    if(hh <= 12){
+        tt = "AM";
+    } else {
+        tt= "PM";
+    }
+    today = mm + "/" + dd + "/" + yyyy+" "+hh+":"+mi+" "+tt;
+    return today;
 }
 

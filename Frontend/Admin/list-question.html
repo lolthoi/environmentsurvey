@@ -22,7 +22,8 @@
      <!-- SweetAlert -->
      <link rel="stylesheet" href="plugins/sweetalert/css/sweetalert2.min.css" type="text/css">
     <!-- Custom CSS -->
-   <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -239,9 +240,22 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <div class="row">
+                <div class="row searchFilter">
                     <div class="col-md-12">
                         <a style="margin-bottom: 2%;" class="btn btn-primary" href="add-question.html">Add New</a>
+                        <div class="input-group" style="padding-bottom: 2%;">
+                            <div class="col-md-6">
+                                <input id="table_filter" type="text" class="form-control" aria-label="Text input with segmented button dropdown" >
+                            </div>
+                            <div class="col-md-6" style="padding-left: 3%;">
+                                <div class="input-group-btn" >
+                                    <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" ><span class="label-icon" >Category</span> <span class="caret" >&nbsp;</span></button>
+                                    <ul id="listSubject" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    
+                                    </ul>
+                                   </div>
+                            </div>
+                        </div>
                         <div class="card">
                             <div class="card-body">
                                 <table id="listQuestion" class="table table-bordered table-striped">
@@ -263,6 +277,19 @@
                                     </tr>
                                     </tfoot>
                                   </table>
+                                  <div aria-label="..." style="margin-left: 426px;" id="paginationPage">
+                                    <ul class="pagination ">
+                                      <li class="page-item ">
+                                        <a class="page-link" id="previousPage"  tabindex="-1">Previous</a>
+                                      </li>
+                                      <li class="page-item active">
+                                        <a class="page-link" href="#" id="currentPage">1</a>
+                                      </li>
+                                      <li class="page-item">
+                                        <a class="page-link" id="nextPage">Next</a>
+                                      </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

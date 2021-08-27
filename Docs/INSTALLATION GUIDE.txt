@@ -1,0 +1,25 @@
+I.Requirement
+ Before running out application, please install these following software:
+  1. Microsoft Visual Studio
+  2. MySql WorkBench
+  3. Microsoft Visual Code
+   - In Visual Code, install Live Server Extenstion
+
+II.Running
+ 1.Unpack file project.
+ 2.Open MySql WorkBench and create new Connection.
+ 3.Open Connection created, at Server tab, open Data Import.
+ 4.Select Import from Self-Contained File, then select file data.sql in project folder -> Database, finally select Start Import.
+ 5.In project folder, open Server Folder, open EnviromentSurvey.sln by Microsoft Visual Studio.
+ 6.Wait for project finish setup all dependency.
+ 7.Press F5 to start project, project will open in new window browser, leave this window open.
+ 8.Open Microsoft Studio Code, File -> Open Folder, select folder Frontend in project folder.
+ 9.Expand tab Client, right click on index.html and select Open with Live Server.
+ 10.Open new window browser, insert "http://localhost:5500/Client/Index.html" in address bar to go to Index Page.
+
+III. Account for Access Admin Page
+ - Username: admin
+ - Password: admin123
+
+
+

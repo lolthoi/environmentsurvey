@@ -62,5 +62,11 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         {
             return _questionService.GetNumsQuestionBySubject(id);
         }
+
+        [HttpGet("/api/Seminar/{id:int}/[controller]")]
+        public ActionResult<List<QuestionModel>> GetAllQuestionBySeminarSubject(int id)
+        {
+            return _questionService.GetAllQuestionBySeminarSubject(id);
+        }
     }
 }

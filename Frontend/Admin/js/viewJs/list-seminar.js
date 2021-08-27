@@ -20,7 +20,8 @@ $('#reset').click(function(){
   $('#Search_key').val('');
   $('#FromDate').val('');
   $('#ToDate').val('');
-  Status : $('#status').val(0)
+  $('#status').val(0);
+  $('#forUser').val(""),
   ClearData();
   getList(pageNumber = 1);
   pagination(pageNumber = 1, totalPage );
@@ -36,7 +37,7 @@ function getList(pageNumber) {
     Search_key: $('#Search_key').val(),
     FromDate : $('#FromDate').val(),
     ToDate : $('#ToDate').val(),
-    Role : "",
+    Role : $('#forUser').val(),
     Status : $('#status').val()
   }
   $.ajax({
@@ -170,6 +171,9 @@ function showSeminar(seminar) {
         "<td>" +
         seminar.EndDate +
         "</td>" +
+        '<td class="text-center">' +
+        '<a href="user_seminar.html?id='+seminar.ID+'" title="View List Registered">'+seminar.TotalRequestAccept+'</a>'+
+        "</td>" +
         '<td>'+
         '<button title="Delete Seminar" type="button" class="btn btn-block btn-danger text-white" id="delete' +
         seminar.ID +
@@ -201,6 +205,9 @@ function showSeminar(seminar) {
         "<td>" +
         seminar.EndDate +
         "</td>" +
+        '<td class="text-center">' +
+        '<a href="user_seminar.html?id='+seminar.ID+'" title="View List Registered">'+seminar.TotalRequestAccept+'</a>'+
+        "</td>" +
         '<td><a href="edit-seminar.html?id=' +
         seminar.ID +
         '" class="btn btn-block btn-warning" title="Edit Seminar"><i class=" ti-pencil"></i></a> ' +
@@ -211,7 +218,7 @@ function showSeminar(seminar) {
         '" class="btn btn-block btn-info text-white" title="List Surveys"><i class="fas fa-list"></i></a> ' +
         '<a href="inforSeminar.html?id=' +
         seminar.ID +
-        '&status=" class="btn btn-block btn-info text-white" title="View detail" target="_blank"><i class=" ti-book"></i></a></td>' +
+        '&status=" class="btn btn-block btn-info text-white" title="View detail" ><i class=" ti-book"></i></a></td>' +
         "</tr>"
     );
   }

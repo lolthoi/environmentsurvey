@@ -26,7 +26,7 @@ $(document).ready(function(){
 
     $.ajax({
         type: "GET",
-        url: domain+"/api/Question",
+        url: domain+"/api/Seminar/"+seminarId+"/Question",
         headers: {
             Authorization: "Bearer " + token,
         },
@@ -41,7 +41,6 @@ $(document).ready(function(){
                 for (let j = 0; j < listSurveyQuestion.length; j++) {
                     var surveyIdinside = listSurveyQuestion[j].SurveyId;
                     if(surveyIdinside === surveyId){
-                        console.log("da chay");
                         selectedList.push(response[i]);
                         flag = 1;
                         break;

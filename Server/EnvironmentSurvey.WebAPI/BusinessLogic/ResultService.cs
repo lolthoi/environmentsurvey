@@ -253,6 +253,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 {
                     InforTakeSurveyModel model = new InforTakeSurveyModel
                     {
+                        SeminarId = seminarId,
                         SurveyId = survey.Id,
                         TotalRegister = totalRquestSeminars,
                         SeminarName = _context.Seminars.Where(s=> s.Id == seminarId).FirstOrDefault().Name,
@@ -273,7 +274,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             foreach (var surveyId in listSurveyId)
             {
                 var list = await _context.Results
-                        .Where(r => r.SurveyId == (surveyId))
+                        .Where(r => r.SurveyId == (surveyId) && !r.UserId.Equals(1))
                         .OrderByDescending(r => r.Point)
                         .ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate)
                         .Take(3)

@@ -40,7 +40,8 @@ function callAjax(pageNumber){
 		Search_key : $('#search_key').val(),	
 		Role : role != null ? role:"",
 		FromDate : "",
-		ToDate : ""
+		ToDate : "",
+		Status : 3
 	}
 	var totalPage = "";
 	function getTotalPage(total){
@@ -58,6 +59,7 @@ function callAjax(pageNumber){
 		datatype:"json",
         async:false,
         success : function(response){
+
 			getTotalPage(response.TotalPage);
 			//localStorage.setItem("response",response);
 			if(role == null || role == "ADMIN"){

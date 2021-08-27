@@ -12,6 +12,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
     public interface IReportSevice
     {
         public Task<DashboardModel> DataDashboard();
+        public Task<GeneralModel> GeneralInfor();
     }
 
     public class ReportService : IReportSevice
@@ -34,7 +35,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             var totalNewUser = newUsers.Count();
             var surveys = await _context.Surveys.ToListAsync();
             var totalSurvey = surveys.Count();
-            var requestSeminars = await _context.UserSeminars.ToListAsync();
+            var requestSeminars = await _context.UserSeminars.Where(s=> s.Status == 1).ToListAsync();
             var totalRquestSeminars = requestSeminars.Count();
             var newRquestSeminars = await _context.UserSeminars.Where(u => u.Status.Equals(1) && u.CreatedDate.Year == dt.Year && u.CreatedDate.Month == dt.Month && u.CreatedDate.Day == dt.Day)
                                   .ToListAsync();
@@ -61,7 +62,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             foreach (var surveyId in listSurveyId)
             {
                 var list = await _context.Results
-                        .Where(r => r.SurveyId == (surveyId))
+                        .Where(r => r.SurveyId == (surveyId) && !r.UserId.Equals(1))
                         .OrderByDescending(r => r.Point)
                         .ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate)
                         .Take(3)
@@ -84,6 +85,65 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 TotalAwards = listTotalResultTop3.Count()
             };
             return responseModel;
+        }
+
+        public async Task<GeneralModel> GeneralInfor()
+        {
+            //Top 3 Student: Awards
+            var listSurveyId = await _context.Results.GroupBy(r => r.SurveyId).Select(r => r.Key).ToListAsync();
+            List<Result> listTotalResultTop3 = new List<Result>();
+            foreach (var surveyId in listSurveyId)
+            {
+                var list = await _context.Results
+                        .Where(r => r.SurveyId == (surveyId) && !r.UserId.Equals(1))
+                        .OrderByDescending(r => r.Point)
+                        .ThenBy(r => r.SubmitTime).ThenBy(r => r.CreatedDate)
+                        .Take(3)
+                        .ToListAsync();
+                list.ForEach(item => listTotalResultTop3.Add(item));
+            }
+            DateTime dt = DateTime.UtcNow;
+            var listCloseSurvey = await _context.Surveys.Where(s => s.EndTime < dt).ToListAsync();
+            var listUpcomingSurvey = await _context.Surveys.Where(s => s.StartDate > dt).ToListAsync();
+
+            var listSeminarStudent = await _context.Seminars.Where(s => s.forUser == 2).ToListAsync();
+            List<Survey> listSurvey = new();
+            foreach(var seminar in listSeminarStudent)
+            {
+                var listSurveyStudent = await _context.Surveys.Where(s => s.SerminarId == seminar.Id).ToListAsync();
+                listSurveyStudent.ForEach(item => listSurvey.Add(item));
+            }
+            var totalStudentTakeSurvey = 0;
+            foreach(var survey in listSurvey)
+            {
+                var listStudent = await _context.Results.Where(r => r.SurveyId == survey.Id && !r.UserId.Equals(1)).ToListAsync();
+                totalStudentTakeSurvey = totalStudentTakeSurvey + listStudent.Count();
+            }
+
+            var listSeminarStaff = await _context.Seminars.Where(s => s.forUser == 1).ToListAsync();
+            List<Survey> listSurveyStaff = new();
+            foreach (var seminar in listSeminarStaff)
+            {
+                var listSurveyStaffEntity = await _context.Surveys.Where(s => s.SerminarId == seminar.Id).ToListAsync();
+                listSurveyStaffEntity.ForEach(item => listSurveyStaff.Add(item));
+            }
+            var totalStaffTakeSurvey = 0;
+            foreach (var survey in listSurveyStaff)
+            {
+                var listStaff = await _context.Results.Where(r => r.SurveyId == survey.Id && !r.UserId.Equals(1)).ToListAsync();
+                totalStaffTakeSurvey = totalStaffTakeSurvey + listStaff.Count();
+            }
+
+            var generalModel = new GeneralModel
+            {
+                TotalAwards = listTotalResultTop3.Count(),
+                TotalClosedSurvey = listCloseSurvey.Count(),
+                TotalUpcomingSurvey = listUpcomingSurvey.Count(),
+                TotalStaff = totalStaffTakeSurvey,
+                TotalStudent = totalStudentTakeSurvey
+
+            };
+            return generalModel;
         }
     }
 }

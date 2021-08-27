@@ -148,8 +148,9 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 Subject = _subjectService.GetById(x.SubjectId),
                 forUser = x.forUser,
                 StartDate = x.StartDate.ToString("yyyy-MM-dd"),
-                EndDate = x.EndTime.ToString("yyyy-MM-dd")
-            });
+                EndDate = x.EndTime.ToString("yyyy-MM-dd"),
+                TotalRequestAccept = _context.UserSeminars.Where(us => us.SeminarId == x.Id && us.Status == 1).ToList().Count()
+            }) ;
             var responsePagedModel = new  ResponsePagedModel
             {
                 ListData = seminarModel.ToList(),
@@ -197,10 +198,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         public async Task<List<SeminarModel>> GetListSeminar(string status)
         {
             DateTime dt = DateTime.UtcNow;
-            List<Seminar> listSeminar = new();
+            List<Seminar> listSeminar = new();            
             if (status == "upcoming")
             {
-                listSeminar = await _context.Seminars.Where(s=> s.StartDate > dt).OrderByDescending(s=> s.StartDate).ToListAsync();
+                listSeminar = await _context.Seminars.Where(s => s.StartDate > dt).OrderByDescending(s => s.StartDate).ToListAsync();
             }
             if (status == "happening")
             {
@@ -220,7 +221,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 StartDate = x.StartDate.ToString("yyyy-MM-dd"),
                 EndDate = x.EndTime.ToString("yyyy-MM-dd")
             });
-            return seminarModel.Take(3).ToList();
+            return seminarModel.Take(6).ToList();
         }
 
         public async Task<bool> Update(SeminarModel model)

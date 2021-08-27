@@ -37,6 +37,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         public SurveyModel Create(SurveyModel model)
         {
             var transaction = _context.Database.BeginTransaction();
+            var serminar = _seminartRespository.Get(model.SeminarId);
             try
             {
                 var survey = new Survey
@@ -46,7 +47,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     EndTime = Convert.ToDateTime(model.EndDate),
                     Status = (int)model.Status,
                     SerminarId = model.SeminarId,
-                    Serminar = _seminartRespository.Get(model.SeminarId),
+                    Serminar = serminar,
                     Description = model.Description,
                 };
                 _surveyRespository.Insert(survey);
@@ -56,7 +57,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 int maxQuestion = _context.Questions.Where(q => q.SubjectId == seminar.SubjectId).ToList().Count();
 
                 if (maxQuestion < model.NumberOfQuestion) throw new Exception("Invalid input param");
-                var listRandomQuestion = _context.Questions.OrderBy(q => Guid.NewGuid()).Take(model.NumberOfQuestion);
+                var listRandomQuestion = _context.Questions.Where(q => q.SubjectId == seminar.SubjectId).OrderBy(q => Guid.NewGuid()).Take(model.NumberOfQuestion);
                 foreach (Question question in listRandomQuestion)
                 {
                     SurveyQuestion obj = new SurveyQuestion();
