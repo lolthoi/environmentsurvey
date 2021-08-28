@@ -1,17 +1,37 @@
 var domain = "https://localhost:44304";
 const regexDateTime = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
+
+var CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dhy6m4jwi/upload";
+var CLOUDINARY_UPLOAD_PRESET = "qoyyunmj"
+
 var loadFile = function (event) {
   $("#form-group-image").append(
     '<img id="preview" src="#" alt="Image" class="mt-3 img-thumbnail"/>'
   );
   var image = document.getElementById("preview");
   image.src = URL.createObjectURL(event.target.files[0]);
+  var file = event.target.files[0];
+  var formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET );
+  axios({
+    url:CLOUDINARY_URL,
+    method: 'POST',
+    headers :{
+      'Content-Type':'application/x-www-form-urlencoded'
+    },
+    data: formData
+  }).then(function(res){
+    console.log(res);
+    $('#ImagePath').val(res.data.secure_url+ "-"+res.data.public_id);
+  }).catch(function(err){
+    $("#image-valid").text("Choose Image error, try again");
+  });
 };
 $(document).ready(function () {
-  if($("#SubjectId").val() == ""){
-    console.log("Rỗng");
-  }
   
+  
+
   loadSubject();
   $("#StartTime").datetimepicker({
     format: "Y-m-d H:m:s",
@@ -25,6 +45,9 @@ $(document).ready(function () {
     changeYear: true,
     minDate: 0,
   });
+
+
+
   function validateForm() {
     var flag = true;
     if ($("#Name").val().trim() == "") {

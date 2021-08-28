@@ -201,6 +201,7 @@
                     <p class="text-danger" id="avatar-error"></p>
                     <form action="#" id="avatarForm" enctype="multipart/form-data">
                       <input type="hidden" id="ID2" name="ID">
+                      <input type="hidden" type="text" autocomplete="off" class="form-control" name="Image" id="ImagePath">
                       <div class="form-group">
                         <input type="file" class="" id="File" name="File" onchange="loadFile(event)"><br />
                         <small id="invalid-file" class="text-danger"></small>
@@ -355,6 +356,7 @@
   <!-- Main Script -->
   <script src="js/script.js"></script>
   <script src="js/viewJs/authorize.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="js/viewJs/profile.js"></script>
 </body>
 </html>

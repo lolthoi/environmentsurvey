@@ -34,34 +34,18 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         private IConfiguration _configuration;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly ISubjectService _subjectService;
-
-        public SeminarService(ESContext context, IConfiguration configuration, IHostingEnvironment hostingEnvironment, ISubjectService subjectService)
+        private readonly ICloudinaryService _cloudinaryService;
+        public SeminarService(ICloudinaryService cloudinaryService,  ESContext context, IConfiguration configuration, IHostingEnvironment hostingEnvironment, ISubjectService subjectService)
         {
             _context = context;
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
             _subjectService = subjectService;
+            _cloudinaryService = cloudinaryService;
         }
 
         public async Task<bool> Create(SeminarModel model)
         {
-            var file = model.File;
-            if (file != null)
-            {
-                string imageFolderPath = _hostingEnvironment.WebRootPath + "/Images";
-                if (!Directory.Exists(imageFolderPath))
-                {
-                    Directory.CreateDirectory(imageFolderPath);
-                }
-                FileInfo fi = new FileInfo(file.FileName);
-                var newfilename = "Image_" + DateTime.UtcNow.ToString("yyyyMMddHHmmssfff") + fi.Extension;
-                var path = Path.Combine("", _hostingEnvironment.WebRootPath + "/Images/" + newfilename);
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                    model.Image = newfilename;
-                }
-            }
             var seminar = new Seminar
             {
                 Name = model.Name,
@@ -231,25 +215,12 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 throw new Exception("Seminar not found");
             else
             {
-                if(model.File != null)
+                if (model.File != null)
                 {
-                    string imagePath = _hostingEnvironment.WebRootPath + "/Images/" + seminar.Image;
-                    File.Delete(imagePath);
-                    var file = model.File;
-                    string imageFolderPath = _hostingEnvironment.WebRootPath + "/Images";
-                    if (!Directory.Exists(imageFolderPath))
-                    {
-                        Directory.CreateDirectory(imageFolderPath);
-                    }
-                    FileInfo fi = new FileInfo(file.FileName);
-                    var newfilename = "Image_" + DateTime.UtcNow.ToString("yyyyMMddHHmmssfff") + fi.Extension;
-                    var path = Path.Combine("", _hostingEnvironment.WebRootPath + "/Images/" + newfilename);
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                        seminar.Image = newfilename;
-                    }
+                    seminar.Image = model.Image;
+                    _cloudinaryService.DeleteImage(seminar.Image);
                 }
+                
                 seminar.Name = model.Name;
                 seminar.Description = model.Description;
                 seminar.Location = model.Location;
@@ -350,7 +321,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         public async Task<List<SeminarModel>> RelatedSeminar(string subject, int idSeminar)
         {
             List<SeminarModel> listUpcomingSeminar = new();
-            var listSeminar = await _context.Seminars.Where(s=> s.Subject.Subject1.Equals(subject) && s.Id != idSeminar).OrderByDescending(s => s.CreatedDate).ToListAsync();
+            DateTime dt = DateTime.UtcNow;
+            var listSeminar = await _context.Seminars.Where(s=> s.Subject.Subject1.Equals(subject) && s.Id != idSeminar).Where(s=> s.StartDate > dt).OrderByDescending(s => s.CreatedDate).ToListAsync();
             if (listSeminar.Count() > 0)
             {
                 listUpcomingSeminar = listSeminar.Select(x => new SeminarModel

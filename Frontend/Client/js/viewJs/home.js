@@ -111,10 +111,15 @@ $(document).ready(function(){
 		data: JSON.stringify(dataTopStudent),
 		datatype:"json",
 		async:true,
-		success : function(response){	
-			response.listResult.forEach(function(result){
-				showTop3StudentSurvey(result);
-			});
+		success : function(response){
+			if(response.listResult.length > 0){
+				response.listResult.forEach(function(result){
+					showTop3StudentSurvey(result);
+				});
+			}else{
+				$('#top3Score').html("")
+			}	
+			
 		},       
 	})
 	
@@ -144,10 +149,11 @@ function showTop3StudentSurvey(result) {	    
 
 //show seminar
 function showSeminar(seminar){
+	seminar.Image = seminar.Image.split('-')[0]; 
 	$('#seminar').append(
 		'<div class="col-lg-4 col-sm-6 mb-5">'
 			+'<div class="card p-0 border-primary rounded-0 hover-shadow">'
-			+'<img class="card-img-top rounded-0 seminar_picture" style="height=200px!important" src="'+domain+'/Images/'+seminar.Image+'" alt="course thumb">'
+			+'<img class="card-img-top rounded-0 seminar_picture" style="height=200px!important" src="'+seminar.Image+'" alt="course thumb">'
 			+'<div class="card-body">'
 				+'<ul class="list-inline mb-2 seminar_item">'
 				+'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+seminar.StartDate+'</li>'
@@ -166,10 +172,11 @@ function showSeminar(seminar){
 }
 
 function showSeminarUpcoming(seminar){
+	seminar.Image = seminar.Image.split('-')[0]; 
 	$('#upcomingSeminars').append(
 		'<div class="col-lg-4 col-sm-6 mb-5">'
 			+'<div class="card p-0 border-primary rounded-0 hover-shadow">'
-			+'<img class="card-img-top rounded-0 seminar_picture" style="height=200px!important" src="'+domain+'/Images/'+seminar.Image+'" alt="course thumb">'
+			+'<img class="card-img-top rounded-0 seminar_picture" style="height=200px!important" src="'+seminar.Image+'" alt="course thumb">'
 			+'<div class="card-body">'
 				+'<ul class="list-inline mb-2 seminar_item">'
 				+'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+seminar.StartDate+'</li>'

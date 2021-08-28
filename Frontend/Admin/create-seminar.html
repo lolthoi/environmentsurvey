@@ -11,7 +11,7 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Create Seminar</title>
+    <title>Admin | Create Seminar</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
@@ -243,6 +243,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <form action="#" id="createForm" enctype="multipart/form-data">
+                                    <div class="form-group">                                       
+                                        <input type="hidden" type="text" autocomplete="off" class="form-control" name="Image" id="ImagePath">
+                                    </div>
                                     <div class="form-group">
                                         <label for="Name">Seminar Name</label>
                                         <input type="text" autocomplete="off" class="form-control" name="Name" id="Name"
@@ -298,7 +301,7 @@
                                     </div>
                                     <div class="form-group" id="form-group-image">
                                         <label for="Image">Image</label>
-                                        <input type="file" class="form-control" name="Image" id="Image" onchange="loadFile(event)">
+                                        <input type="file" class="form-control" name="file" id="Image" onchange="loadFile(event)">
                                         <small id="image-valid" class="text-danger"></small>  
                                     </div>
                                     <div class="form-group">
@@ -363,6 +366,7 @@
     <!--Custom JavaScript -->
     <script src="js/custom.js"></script>
     <script src="js/viewJs/authorize.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/viewJs/create-seminar.js"></script>
 </body>
 

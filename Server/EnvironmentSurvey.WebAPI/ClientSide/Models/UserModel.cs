@@ -27,5 +27,6 @@ namespace EnvironmentSurvey.WebAPI.ClientSide.Models
     {
         public int ID { get; set; }
         public IFormFile File { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -3,9 +3,30 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
 const regexDateTime = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
+
+var CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dhy6m4jwi/upload";
+var CLOUDINARY_UPLOAD_PRESET = "qoyyunmj"
 var loadFile = function (event) {
     var image = document.getElementById("preview");
     image.src = URL.createObjectURL(event.target.files[0]);
+
+    var file = event.target.files[0];
+    var formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET );
+    axios({
+      url:CLOUDINARY_URL,
+      method: 'POST',
+      headers :{
+        'Content-Type':'application/x-www-form-urlencoded'
+      },
+      data: formData
+    }).then(function(res){
+      console.log(res);
+      $('#ImagePath').val(res.data.secure_url+ "-"+res.data.public_id);
+    }).catch(function(err){
+      $("#image-valid").text("Choose Image error, try again");
+    });
 };
 $(document).ready(function () {
     loadSubject();
@@ -24,7 +45,7 @@ $(document).ready(function () {
             $("#Location").val(seminar.Location);
             $("#StartTime").val(seminar.StartDate);
             $("#EndTime").val(seminar.EndDate);
-            $("#preview").attr("src",domain+'/Images/'+seminar.Image);
+            $("#preview").attr("src",seminar.Image.split("-")[0]);
             $("#Description").val(seminar.Description);
             $("input[name=forUser][value="+seminar.forUser+"]").prop("checked",true);
             $("#SubjectId option[value="+seminar.SubjectId+"]").prop("selected",true);

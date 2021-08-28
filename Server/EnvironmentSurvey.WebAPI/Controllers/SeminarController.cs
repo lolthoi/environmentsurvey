@@ -17,10 +17,12 @@ namespace EnvironmentSurvey.WebAPI.Controllers
     public class SeminarController : Controller
     {
         private readonly ISeminarService _seminarSevice;
+        private readonly ICloudinaryService _cloudinaryService;
 
-        public SeminarController(ISeminarService seminarSevice)
+        public SeminarController(ISeminarService seminarSevice, ICloudinaryService cloudinaryService)
         {
             _seminarSevice = seminarSevice;
+            _cloudinaryService = cloudinaryService;
         }
 
         [HttpPost]
@@ -81,7 +83,8 @@ namespace EnvironmentSurvey.WebAPI.Controllers
                 SubjectId = int.Parse( data["SubjectId"]),
                 StartDate = data["StartTime"],
                 EndDate = data["EndTime"],
-                forUser = int.Parse(data["forUser"])
+                forUser = int.Parse(data["forUser"]),
+                Image = data["Image"]
             };
             var response = await _seminarSevice.Create(model);
             if (response)
@@ -104,7 +107,8 @@ namespace EnvironmentSurvey.WebAPI.Controllers
                 SubjectId = int.Parse(data["SubjectId"]),
                 StartDate = data["StartTime"],
                 EndDate = data["EndTime"],
-                forUser = int.Parse(data["forUser"])
+                forUser = int.Parse(data["forUser"]),
+                Image = data["Image"]
             };
             if(data.Files.Count() != 0)
             {
