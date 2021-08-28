@@ -102,7 +102,8 @@ namespace EnvironmentSurvey.WebAPI.Controllers
         {
             var model = new ChangeAvatarModel
             {
-                ID = int.Parse(data["ID"])
+                ID = int.Parse(data["ID"]),
+                Image = data["Image"]
             };
             if (data.Files.Count() != 0)
             {

@@ -6,6 +6,9 @@ var regexImage = new RegExp(
   "([a-zA-Z0-9s_\\.-:()])+(" + allowed.join("|") + ")$"
 );
 const passRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+var CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dhy6m4jwi/upload";
+var CLOUDINARY_UPLOAD_PRESET = "qoyyunmj"
 //Get Profile
 $(document).ready(function () {
   var data = {
@@ -22,8 +25,8 @@ $(document).ready(function () {
     datatype: "json",
     async: true,
     success: function (response) {
-      $("#user-img").attr("src", domain + "/Images/" + response.Image);
-      $("#old-img").text(domain + "/Images/" + response.Image);
+      $("#user-img").attr("src", response.Image.split("-")[0]);
+      $("#old-img").text(response.Image.split("-")[0]);
       $("#user-name").text(response.FirstName + " " + response.LastName);
       $("#NumberId").text(response.NumberId);
       $("#Email").text(response.Email);
@@ -61,6 +64,24 @@ var loadFile = function (event) {
   }
   if (flag) {
     image.src = URL.createObjectURL(event.target.files[0]);
+    var file = event.target.files[0];
+    var formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET );
+    axios({
+      url:CLOUDINARY_URL,
+      method: 'POST',
+      headers :{
+        'Content-Type':'application/x-www-form-urlencoded'
+      },
+      data: formData
+    }).then(function(res){
+      console.log(res);
+      $('#ImagePath').val(res.data.secure_url+ "-"+res.data.public_id);
+    }).catch(function(err){
+      $("#invalid-file").text("Choose Image error, try again");
+    });
+
   } else {
     image.src = $("#old-img").text();
   }

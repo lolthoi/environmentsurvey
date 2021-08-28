@@ -20,7 +20,7 @@ window.onload = function(){
             datatype:"json",
             async:true,
             success : function(response){
-                $('#user-img').attr("src", domain+'/Images/'+response.Image);
+                $('#user-img').attr("src", response.Image.split("-")[0]);
                 $('#user-name').text(response.FirstName + ' ' + response.LastName);
             },       
         })

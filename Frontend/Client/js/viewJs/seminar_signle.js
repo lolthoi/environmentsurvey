@@ -45,10 +45,13 @@ function getRelatedSeminar(subject, IdSeminar){
     contentType: "application/json; charset=utf-8",
     async:false,
     success : function(response){
-      response.forEach(function(seminar){
-        showSeminarRelate(seminar)
-      })
-      
+      if(response.length > 0){
+        response.forEach(function(seminar){
+          showSeminarRelate(seminar)
+        })
+      }else{
+        $('#listRelated').html("")
+      }           
     },       
 })
 }
@@ -190,10 +193,11 @@ function showListSurveyPendingDecline(survey){
 }
 
 function showSeminarDetail(seminar){
+  seminar.Image = seminar.Image.split('-')[0]; 
 	$('#seminar_detail').append(
 		'<div class="row">'
             +'<div class="col-12 mb-4">'
-            +'<img src="'+domain+'/Images/'+seminar.Image+'" class="img-fluid w-100">'
+            +'<img src="'+seminar.Image+'" class="img-fluid w-100">'
             +'</div>'
         +'</div>'
     +'<div class="row align-items-center mb-5 seminar_item">'
@@ -264,10 +268,11 @@ function showSeminarDetail(seminar){
 }
 
 function showSeminarDetailRegisteringOrDecline(seminar){
+  seminar.Image = seminar.Image.split('-')[0]; 
 	$('#seminar_detail').append(
 		'<div class="row">'
             +'<div class="col-12 mb-4">'
-            +'<img src="'+domain+'/Images/'+seminar.Image+'" class="img-fluid w-100">'
+            +'<img src="'+seminar.Image+'" class="img-fluid w-100">'
             +'</div>'
         +'</div>'
     +'<div class="row align-items-center mb-5 seminar_item">'
@@ -334,10 +339,11 @@ function showSeminarDetailRegisteringOrDecline(seminar){
 }
 
 function showSeminarDetailRegistered(seminar){
+  seminar.Image = seminar.Image.split('-')[0]; 
 	$('#seminar_detail').append(
 		'<div class="row">'
             +'<div class="col-12 mb-4">'
-            +'<img src="'+domain+'/Images/'+seminar.Image+'" class="img-fluid w-100">'
+            +'<img src="'+seminar.Image+'" class="img-fluid w-100">'
             +'</div>'
         +'</div>'
     +'<div class="row align-items-center mb-5 seminar_item">'
@@ -460,10 +466,11 @@ $(document).ready(function() {
 });
 
 function showSeminarRelate(seminar){
+  seminar.Image = seminar.Image.split('-')[0]; 
 	$('#relatedSeminar').append(
 		'<div class="col-lg-4 col-sm-6 mb-5">'
 			+'<div class="card p-0 border-primary rounded-0 hover-shadow">'
-			+'<img class="card-img-top rounded-0 seminar_picture" style="height=200px!important" src="'+domain+'/Images/'+seminar.Image+'" alt="course thumb">'
+			+'<img class="card-img-top rounded-0 seminar_picture" style="height=200px!important" src="'+seminar.Image+'" alt="course thumb">'
 			+'<div class="card-body">'
 				+'<ul class="list-inline mb-2 seminar_item">'
 				+'<li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>'+seminar.StartDate+'</li>'
