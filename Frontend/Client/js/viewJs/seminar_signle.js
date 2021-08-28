@@ -436,7 +436,6 @@ $(document).ready(function() {
 				datatype:"json",
 				async:true,
 				success : function(response){
-          console.log();
 					if(response == "Register success"){
 						var messageSucess = 'Thanks you for Registering seminar: <span style="color: black; font-size:18px">'+nameSeminar+'</span>. The result of registration for the seminar will be notified via email after 24 hours. Please check your email.'
 						$('#message_register_seminar').html(messageSucess);

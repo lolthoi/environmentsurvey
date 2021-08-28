@@ -34,7 +34,6 @@ $(document).ready(function(){
         datatype:"json",
         async: true,
         success: function(response) {
-            console.log(response);
             for (let i = 0; i < response.length;i++) {
                 var listSurveyQuestion = response[i].SurveyQuestions;
                 var flag = 0;
@@ -52,7 +51,6 @@ $(document).ready(function(){
             }
             loadAllQuestion(listForSelect);
             loadSelectedQuestion(selectedList);
-            console.log(selectedList);
         },
     });
 

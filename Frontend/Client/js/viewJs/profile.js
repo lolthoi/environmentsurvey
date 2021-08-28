@@ -63,7 +63,7 @@ var loadFile = function (event) {
     if (!regexImage.test(imageUpload.value.toLowerCase())) flag = false;
   }
   if (flag) {
-    image.src = URL.createObjectURL(event.target.files[0]);
+    $("#registerModal").modal("show");
     var file = event.target.files[0];
     var formData = new FormData();
     formData.append('file', file);
@@ -76,8 +76,9 @@ var loadFile = function (event) {
       },
       data: formData
     }).then(function(res){
-      console.log(res);
+      $("#registerModal").modal("hide");
       $('#ImagePath').val(res.data.secure_url+ "-"+res.data.public_id);
+      image.src = URL.createObjectURL(event.target.files[0]);
     }).catch(function(err){
       $("#invalid-file").text("Choose Image error, try again");
     });

@@ -195,7 +195,6 @@ function loadAllSubject(subjectId){
         datatype:"json",
         async: true,
         success: function(response) {
-            console.log(response);
             response.forEach(e => {
                 if(e.id == subjectId){
                     $("#subject").append(

@@ -13,7 +13,6 @@ $(document).ready(function () {
             $("#supporterTel").html(si.SupporterTel);
         },      
         error: function (response) {
-          console.log(response);
         } 
     })
 });

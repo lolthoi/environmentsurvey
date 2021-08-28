@@ -7,9 +7,7 @@ const regexDateTime = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
 var CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dhy6m4jwi/upload";
 var CLOUDINARY_UPLOAD_PRESET = "qoyyunmj"
 var loadFile = function (event) {
-    var image = document.getElementById("preview");
-    image.src = URL.createObjectURL(event.target.files[0]);
-
+    $("#registerModal").modal("show");
     var file = event.target.files[0];
     var formData = new FormData();
     formData.append('file', file);
@@ -22,7 +20,9 @@ var loadFile = function (event) {
       },
       data: formData
     }).then(function(res){
-      console.log(res);
+      $("#registerModal").modal("hide");
+      var image = document.getElementById("preview");
+      image.src = URL.createObjectURL(event.target.files[0]);
       $('#ImagePath').val(res.data.secure_url+ "-"+res.data.public_id);
     }).catch(function(err){
       $("#image-valid").text("Choose Image error, try again");

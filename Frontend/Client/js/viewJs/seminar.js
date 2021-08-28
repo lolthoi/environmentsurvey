@@ -78,7 +78,6 @@ function callAjax(pageNumber){
         },  
 		     
     })
-	//console.log(totalPage)
 	getTotal(totalPage)
 	$('#search_key').on('input', function(){
 		clearSeminar();
@@ -88,7 +87,6 @@ function callAjax(pageNumber){
 			FromDate : "",
 			ToDate : ""
 		}
-		console.log($(this).val());
 		$.ajax({
 			type : "POST",
 			url: domain+"/api/Seminar?PageNumber="+pageNumber+"&PageSize=6",
@@ -100,7 +98,6 @@ function callAjax(pageNumber){
 			datatype:"json",
 			async:true,
 			success : function(response){
-				console.log("response "+response);
 				if(role == null || role == "ADMIN"){
 					response.ListData.forEach(function(seminar) {
 						showSeminar(seminar);					
@@ -159,8 +156,6 @@ function pagination(pageNumber = 1,totalPage){
 		$('#previousPage').addClass('disableLink');
 	}	
 	$('#nextPage').click(function(){
-		console.log(pageNumber);
-		console.log(totalPage);
 		pageNumber++
 		clearSeminar();
 		if(pageNumber <= totalPage){
