@@ -214,7 +214,6 @@ function loadSubject(name){
     },
     async: true,
     success: function (response) {
-      console.log(response);
       response.forEach(function(subject) {
         if(subject.Subject == name){
           $('#SubjectId').append(`<option selected value="${subject.Id}">

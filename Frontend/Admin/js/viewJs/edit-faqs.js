@@ -17,7 +17,6 @@ $(document).ready(function () {
             $("#Solution").val(faq.Solution);
         },      
         error: function (response) {
-          console.log(response);
         } 
     })
     function validateForm() {
