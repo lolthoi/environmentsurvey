@@ -56,7 +56,6 @@ function getList(pageNumber) {
     async: false,
     success: function (response) {
       getTotalPage(response.TotalPage);
-      //getSurveyName(response.listResult[0].surveyName)
       if(response.listResult.length == 0){
         $("#list-seminar tbody ").append(
           "<tr>" +
@@ -64,8 +63,7 @@ function getList(pageNumber) {
           "</tr>"
         )};
       response.listResult.forEach(function (model) {
-        showSurvey_Result(model);
-        //checkedElement(listIdChecked);        
+        showSurvey_Result(model);        
       });
       $('#currentPage').html(response.PageNumber);
       $('#surveyName').html( response.listResult[0].surveyName);
@@ -88,76 +86,13 @@ function showSurvey_Result(model) {
         '<td class="text-center">' +
         model.Ranked+
         "</td>" +
-        // '<td class="text-center">' +
-        // '<input class="form-check-input checkBox" type="checkbox" onclick="checkBox('+model.Id+')" value="'+model.Email+'/'+model.FullName+'" id="'+model.Id+'">'+
-        // "</td>" +
         "</tr>"
     )   
 }
 
 
 
-// function checkBox(id){
-//   var check = false;
-//   if($('#'+id+'').is(":checked")){
-//     emailuser = $('#'+id+'').val();
-//     let array = emailuser.split("/");
-//     var object = {};
-//     object["Email"] = array[0];
-//     object["FullName"] = array[1];
-//     emailUser.push(object);
-//     listIdChecked.push(id)
-//     check = false;   
-//   }
-//   if(!$('#'+id+'').is(":checked")){
-//     emailuser = $('#'+id+'').val();
-//     let array = emailuser.split("/");
-//     var object = {};
-//     object["Email"] = array[0];
-//     object["FullName"] = array[1];
-//     emailUser = emailUser.filter(x=> x.Email!=array[0])
-//     const index = listIdChecked.indexOf(id);
-//     if (index > -1) {
-//       listIdChecked.splice(index, 1);
-//     }
-//     check = false; 
-//   }
-//   if(!check){
-//     sendEmail(emailUser, surveyName);
-//   }
-  
-// }
-//sendEmail(emailUser, surveyName);
 
-// function checkedElement(listIdChecked){
-//   listIdChecked.forEach(function(id){
-//     $('#'+id+'').prop("checked", true);
-//   })
-// }
-// function sendEmail(emailUser, surveyName){
-//   $('#sendEmail').click(function(){
-//     console.log("send email");
-//     var dataSendEmail = {
-//       ListEmailUser: emailUser,
-//       SurveyName : surveyName
-//     }
-//     console.log(dataSendEmail);
-//     // $.ajax({
-//     //   type: "POST",
-//     //   url: domain + "/api/Result/sendEmailAward",
-//     //   headers: {
-//     //     Authorization: "Bearer " + token,
-//     //   },
-//     //   contentType: "application/json; charset=utf-8",
-//     //   data: JSON.stringify(dataSendEmail),
-//     //   datatype:"json",
-//     //   async: false,
-//     //   success: function (response) {
-//     //     console.log(response);
-//     //   },
-//     // });
-//   });
-// }
 
 
 

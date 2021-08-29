@@ -8,7 +8,6 @@ var UserId = localStorage.getItem("userId");
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
-console.log(id);
 
 
 var listQuestion = '';
@@ -16,9 +15,7 @@ var check = "";
 
 $(document).ready(function(){
   checkResultUser(id, UserId);
-  console.log(check)
   if(check){
-    console.log("check ok");
     SaveResult(id, UserId);
   }
   else{
@@ -112,7 +109,6 @@ function pagination(listQuestion, pageNumber = 1){
 
   addButtonSubmit();
   $('#nameSurvey').html(listQuestion[0].NameSurvey);
-  console.log($('#listQuestion').children());
   var pageSize = 5;
   var listElement = $('#listQuestion').children();
 
@@ -122,13 +118,11 @@ function pagination(listQuestion, pageNumber = 1){
 
   if(pageNumber*pageSize + 1 == listElement.length){
     for(var i=(pageNumber -1)*pageSize; i< pageNumber*pageSize + 1; i++){
-      console.log(i)
       $(listElement[i]).css("display","block");
     }
   }
 
   totalPage = Math.ceil(listQuestion.length/pageSize);
-  console.log(totalPage)
 
   $('#currentPage').html(pageNumber);
 
@@ -157,7 +151,6 @@ function pagination(listQuestion, pageNumber = 1){
 			if(pageNumber == totalPage){
         if(pageNumber*pageSize +1 == listElement.length){
           for(var i=(pageNumber -1)*pageSize; i< pageNumber*pageSize + 1; i++){
-            console.log(i)
             $(listElement[i]).css("display","block");
           }
         }
@@ -170,7 +163,6 @@ function pagination(listQuestion, pageNumber = 1){
 		pageNumber--;
     $('#currentPage').html("");
     $('#currentPage').html(pageNumber);
-    console.log(pageNumber)
 		if(pageNumber >= 1){
 			for(var i=(pageNumber -1)*pageSize; i<pageNumber*pageSize; i++){
         $(listElement[i]).css("display","block");
@@ -217,9 +209,7 @@ function clockCountUp(listQuestion){
     }
   }
   $("body").on("click", '#submit', function(){	
-    //console.log($('#backToContinous').dataset)
     clearInterval(interval);
-    console.log(totalSeconds);
     var data = [];	
       var datacheck = [];
       var siblings = $(this).parent().siblings();

@@ -8,8 +8,7 @@ var loadFile = function (event) {
   $("#form-group-image").append(
     '<img id="preview" src="#" alt="Image" class="mt-3 img-thumbnail"/>'
   );
-  var image = document.getElementById("preview");
-  image.src = URL.createObjectURL(event.target.files[0]);
+  $("#registerModal").modal("show");
   var file = event.target.files[0];
   var formData = new FormData();
   formData.append('file', file);
@@ -22,7 +21,9 @@ var loadFile = function (event) {
     },
     data: formData
   }).then(function(res){
-    console.log(res);
+    $("#registerModal").modal("hide");
+    var image = document.getElementById("preview");
+    image.src = URL.createObjectURL(event.target.files[0]);
     $('#ImagePath').val(res.data.secure_url+ "-"+res.data.public_id);
   }).catch(function(err){
     $("#image-valid").text("Choose Image error, try again");
@@ -198,7 +199,6 @@ function loadSubject(){
     },
     async: true,
     success: function (response) {
-      console.log(response);
       response.forEach(function(subject) {
         $('#SubjectId').append(`<option value="${subject.Id}">
                                        ${subject.Subject}

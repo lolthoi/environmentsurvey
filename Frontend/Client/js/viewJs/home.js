@@ -126,11 +126,12 @@ $(document).ready(function(){
 });
 
 
-function showTop3StudentSurvey(result) {	    	
+function showTop3StudentSurvey(result) {	
+	result.Image = result.Image.split("-")[0]    	
     $('.owl-carousel').owlCarousel('add', 
 		'<div class="item">'+
 			'<div class="card border-0 rounded-0 hover-shadow">'+
-				'<img class="card-img-top rounded-0" src="https://localhost:44304/Images/'+result.Image+'" alt="teacher">'+
+				'<img class="card-img-top rounded-0" src="'+result.Image+'" alt="teacher">'+
 				'<div class="card-body">'+
 					'<h4 class="card-title">'+result.FullName+'</h4>'+
 					'<ul class="list-inline seminar_item">'+

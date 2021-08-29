@@ -91,7 +91,6 @@ async function loadPage(){
             success: function(response) {
                 $("#surveyName").val(response.Name);
                 $("#des").text(response.Description);
-                console.log(response.StartDate);
                 var startTime = convertDatetime(response.StartDate);
                 var endTime = convertDatetime(response.EndDate);
                 formatDatePicker(startTime,endTime);

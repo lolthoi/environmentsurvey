@@ -41,7 +41,6 @@ function getList(){
         datatype:"json",
         async: true,
         success: function(response) {
-          console.log(response);
             tempList = response;
             showList(tempList);
         },

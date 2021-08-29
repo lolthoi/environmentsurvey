@@ -13,7 +13,6 @@ $(document).ready(function(){
   ClearData();
   getList(pageNumber = 1);
   pagination(pageNumber = 1, totalPage );
-  console.log("loading")
   if(filter){
     var now = new Date();
     var day = ("0" + now.getDate()).slice(-2);
@@ -21,7 +20,6 @@ $(document).ready(function(){
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
     $('#FromDate').val(today);
     $('#submit').click();
-    console.log("auto click")
   }
 })
 

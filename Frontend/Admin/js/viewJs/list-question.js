@@ -103,7 +103,6 @@ function getList(){
         datatype:"json",
         async: true,
         success: function(response) {
-          console.log(response);
             data = response;
             tempList = response;
             totalPage = Math.ceil(data.length/6);

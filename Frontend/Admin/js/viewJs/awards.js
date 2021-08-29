@@ -8,7 +8,6 @@ var totalPage = '';
 $(document).ready(function(){
   getList(pageNumber = 1);
   pagination(pageNumber = 1, totalPage );
-  console.log(totalPage)
 })
 
 $('#submit').click(function(){
