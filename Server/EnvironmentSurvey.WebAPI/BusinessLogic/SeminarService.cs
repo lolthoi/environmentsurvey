@@ -217,8 +217,8 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             {
                 if (model.File != null)
                 {
-                    seminar.Image = model.Image;
                     _cloudinaryService.DeleteImage(seminar.Image);
+                    seminar.Image = model.Image;
                 }
                 
                 seminar.Name = model.Name;
@@ -246,8 +246,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 throw new Exception("Seminar not found");
             else
             {
-                string imagePath = _hostingEnvironment.WebRootPath + "/Images/" + seminar.Image;
-                File.Delete(imagePath);
+                _cloudinaryService.DeleteImage(seminar.Image);
                 seminar.DeletedDate = DateTime.UtcNow;
                 var result = await _context.SaveChangesAsync();
                 if (result > 0)

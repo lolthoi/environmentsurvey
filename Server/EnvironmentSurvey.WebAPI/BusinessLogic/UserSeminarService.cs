@@ -46,11 +46,11 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                 if (option == 1)
                 {                  
                     userSerminar.Status = 1;
-                    message = "Thank you for your interest in the seminars at The Educenter. Your seminar registration <b>" + seminar.Name + "</b> has been accepted. <a href='http://127.0.0.1:5500/Client/my_seminar.html'>Click here</a>  to see detail. Thanks you !";
+                    message = "Thank you for your interest in the seminars at The Educenter. Your seminar registration <b>" + seminar.Name + "</b> has been accepted. <a href='https://environmentsurvey.herokuapp.com//Client/my_seminar.html'>Click here</a>  to see detail. Thanks you !";
                 } else
                 {
                     userSerminar.Status = 3;
-                    message = "Thank you for your interest in the seminars at The Educenter. Your seminar registration <b>" + seminar.Name + "</b> has been declined because you are not yet eligible to participate in this seminar. <a href='http://127.0.0.1:5500/Client/fags.html'>Click here</a>  to see detail. Thanks you !";
+                    message = "Thank you for your interest in the seminars at The Educenter. Your seminar registration <b>" + seminar.Name + "</b> has been declined because you are not yet eligible to participate in this seminar. <a href='https://environmentsurvey.herokuapp.com//Client/fags.html'>Click here</a>  to see detail. Thanks you !";
                 }
                 await _context.SaveChangesAsync();
                 await _sendMailService.SendEmailConfirm(user.Email, subject, user.Username, message);
