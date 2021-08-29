@@ -69,7 +69,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
                     Email = model.Email,
                     Tel = model.Tel,
                     Gender = model.Gender,
-                    Image = "default-avatar.jpg",
+                    Image = "https://res.cloudinary.com/dhy6m4jwi/image/upload/v1630245597/dcstxkiigmqnk634baka.jpg-dcstxkiigmqnk634baka",
                     Status = (int)Status.PENDING,
                     CreatedDate = DateTime.UtcNow,
                 };

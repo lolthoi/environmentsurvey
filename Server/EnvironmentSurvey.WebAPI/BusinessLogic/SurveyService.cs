@@ -217,7 +217,7 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
 
         public async Task<ResponsePagedModel> GetAllSurvey(PaginationClientModel paginationClientModel, SearchModel model)
         {
-            DateTime dateTime = DateTime.Now;
+            DateTime dateTime = DateTime.UtcNow.AddHours(7);
             var query = _context.Surveys;
             if (model.FromDate == "" && model.ToDate == "" && model.Search_key == "")
             {
