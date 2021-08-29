@@ -178,7 +178,7 @@ function showSeminar(seminar) {
         '<button title="Delete Seminar" type="button" class="btn btn-block btn-danger text-white" id="delete' +
         seminar.ID +
         '"><i class="fa fa-trash"></i></button> ' +
-        '<a href="inforSeminar.html?id=' +
+        '<a href="InforSeminar.html?id=' +
         seminar.ID +
         '" class="btn btn-block btn-info text-white" title="View detail"><i class=" ti-book"></i></a></td>' +
         "</tr>"
@@ -216,7 +216,7 @@ function showSeminar(seminar) {
         '"><i class="fa fa-trash"></i></button> ' +
         '<a href="list-survey.html?seminarId='+seminar.ID +
         '" class="btn btn-block btn-info text-white" title="List Surveys"><i class="fas fa-list"></i></a> ' +
-        '<a href="inforSeminar.html?id=' +
+        '<a href="InforSeminar.html?id=' +
         seminar.ID +
         '&status=" class="btn btn-block btn-info text-white" title="View detail" ><i class=" ti-book"></i></a></td>' +
         "</tr>"
