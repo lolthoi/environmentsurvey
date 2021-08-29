@@ -24,20 +24,28 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             var public_id = pathImage.Split("-")[1];
             Account account = new Account(CLOUD_NAME, API_KEY, API_SECRET);
             cloudinary = new Cloudinary(account);
-            try
+            if(public_id != "dcstxkiigmqnk634baka")
             {
-                DeletionParams destroyParams = new DeletionParams(public_id)
+                try
                 {
-                    ResourceType = ResourceType.Image
-                };
+                    DeletionParams destroyParams = new DeletionParams(public_id)
+                    {
+                        ResourceType = ResourceType.Image
+                    };
 
-                DeletionResult destroyResult = cloudinary.Destroy(destroyParams);
-                return "success";
+                    DeletionResult destroyResult = cloudinary.Destroy(destroyParams);
+                    return "success";
+                }
+                catch (Exception e)
+                {
+                    return "Delete fail";
+                }
             }
-            catch(Exception e)
+            else
             {
-                return "Upload fail";
+                return "image default";
             }
+            
             
         }
     }
