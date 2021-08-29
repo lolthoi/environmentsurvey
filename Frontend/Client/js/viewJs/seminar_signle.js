@@ -253,7 +253,7 @@ function showSeminarDetail(seminar){
      +'</div>'
      +'<div class="col-12 mb-4">'
        +'<h3 class="mb-3">Survey</h3>'
-       +'<p><b>Description</b>: These are all surveys you can participate in this workshop. Each survey can only be taken once. After Click Submit, you can see the number of correct answers and the time it took to complete the survey. You can <a href="http://127.0.0.1:5500/Client/myHistory.html">Click Here</a> to see your current ranking.</p>'
+       +'<p><b>Description</b>: These are all surveys you can participate in this workshop. Each survey can only be taken once. After Click Submit, you can see the number of correct answers and the time it took to complete the survey. You can <a href="myHistory.html">Click Here</a> to see your current ranking.</p>'
        +'<div class="row" id="listSurvey">'
        
        +'</div>'
@@ -328,7 +328,7 @@ function showSeminarDetailRegisteringOrDecline(seminar){
      +'</div>'
      +'<div class="col-12 mb-4">'
        +'<h3 class="mb-3">Survey</h3>'
-       +'<p><b>Description</b>: These are all surveys you can participate in this workshop. Each survey can only be taken once. After Click Submit, you can see the number of correct answers and the time it took to complete the survey. You can <a href="http://127.0.0.1:5500/Client/myHistory.html">Click Here</a> to see your current ranking.</p>'
+       +'<p><b>Description</b>: These are all surveys you can participate in this workshop. Each survey can only be taken once. After Click Submit, you can see the number of correct answers and the time it took to complete the survey. You can <a href="myHistory.html">Click Here</a> to see your current ranking.</p>'
        +'<div class="row" id="listSurvey">'
        
        +'</div>'
@@ -399,7 +399,7 @@ function showSeminarDetailRegistered(seminar){
      +'</div>'
      +'<div class="col-12 mb-4">'
        +'<h3 class="mb-3">Survey</h3>'
-       +'<p><b>Description</b>: These are all surveys you can participate in this workshop. Each survey can only be taken once. After Click Submit, you can see the number of correct answers and the time it took to complete the survey. You can <a href="http://127.0.0.1:5500/Client/myHistory.html">Click Here</a> to see your current ranking.</p>'
+       +'<p><b>Description</b>: These are all surveys you can participate in this workshop. Each survey can only be taken once. After Click Submit, you can see the number of correct answers and the time it took to complete the survey. You can <a href="myHistory.html">Click Here</a> to see your current ranking.</p>'
        +'<div class="row" id="listSurvey">'
        
        +'</div>'
