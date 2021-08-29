@@ -1,7 +1,7 @@
 var domain = "https://localhost:44304";
-var role = localStorage.getItem("role");
-var username = localStorage.getItem("username");
-var token = localStorage.getItem("token")
+var role = sessionStorage.getItem("role");
+var username = sessionStorage.getItem("username");
+var token = sessionStorage.getItem("token")
 var totalPage1 ='';
 $(document).ready(function(){
 	callAjax(pageNumber = 1);
@@ -61,7 +61,7 @@ function callAjax(pageNumber){
         success : function(response){
 
 			getTotalPage(response.TotalPage);
-			//localStorage.setItem("response",response);
+			//sessionStorage.setItem("response",response);
 			if(role == null || role == "ADMIN"){
 				response.ListData.forEach(function(seminar) {
 					showSeminar(seminar);					
