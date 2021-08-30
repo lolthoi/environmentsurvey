@@ -12,10 +12,12 @@ II.Running
  4.Select Import from Self-Contained File, then select file data.sql in project folder -> Database, finally select Start Import.
  5.In project folder, open Server Folder, open EnviromentSurvey.sln by Microsoft Visual Studio.
  6.Wait for project finish setup all dependency.
- 7.Press F5 to start project, project will open in new window browser, leave this window open.
- 8.Open Microsoft Studio Code, File -> Open Folder, select folder Frontend in project folder.
- 9.Expand tab Client, right click on index.html and select Open with Live Server.
- 10.Open new window browser, insert "http://localhost:5500/Client/Index.html" in address bar to go to Index Page.
+ 7.In Solution Explorer, open "appsettings.json".
+ 8.At ConnectionStrings, change Server, Uid and Pwd value with IP, username, password of your database. Press Ctrl + S to save change.
+ 9.Press F5 to start project, project will open in new window browser, leave this window open.
+ 10.Open Microsoft Studio Code, File -> Open Folder, select folder Frontend in project folder.
+ 11.Expand tab Client, right click on index.html and select Open with Live Server.
+ 12.Open new window browser, insert "http://localhost:5500/Client/Index.html" in address bar to go to Index Page.
 
 III. Account for Access Admin Page
  - Username: admin
