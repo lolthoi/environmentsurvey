@@ -54,10 +54,10 @@ $(document).ready(function () {
         datatype: "json",
         async: true,
         success: function (response) {
-          localStorage.setItem("username", response.authenModel.Username);
-          localStorage.setItem("role", response.authenModel.Role);
-          localStorage.setItem("token", response.authenModel.Token);
-          localStorage.setItem("userId", response.authenModel.UserId);
+          sessionStorage.setItem("username", response.authenModel.Username);
+          sessionStorage.setItem("role", response.authenModel.Role);
+          sessionStorage.setItem("token", response.authenModel.Token);
+          sessionStorage.setItem("userId", response.authenModel.UserId);
 
           window.location.href = "index.html";
           //   if (response.authenModel.Role == "ADMIN") {

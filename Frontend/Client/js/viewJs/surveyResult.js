@@ -3,8 +3,8 @@ $(document).ready(function(){
     var url_string = window.location + "";
     var url = new URL(url_string);
     var surveyId = url.searchParams.get("surveyId");
-    var username = localStorage.getItem('username');
-    var token = localStorage.getItem('token');
+    var username = sessionStorage.getItem('username');
+    var token = sessionStorage.getItem('token');
 
     var data = {
         surveyId : surveyId,

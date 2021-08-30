@@ -7,7 +7,7 @@ var url = new URL(url_string);
 var surveyId = Number.parseInt(url.searchParams.get("surveyId"));
 var seminarId = url.searchParams.get("seminarId");
 
-var token = localStorage.getItem("token");
+var token = sessionStorage.getItem("token");
 
 $(document).ready(function(){
     $.ajax({

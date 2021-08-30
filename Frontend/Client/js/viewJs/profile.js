@@ -1,6 +1,6 @@
 var domain = "https://localhost:44304";
-var token = localStorage.getItem("token");
-var username = localStorage.getItem("username");
+var token = sessionStorage.getItem("token");
+var username = sessionStorage.getItem("username");
 var allowed = [".jpg", ".png", ".gif", ".jpeg", ".jfif"];
 var regexImage = new RegExp(
   "([a-zA-Z0-9s_\\.-:()])+(" + allowed.join("|") + ")$"

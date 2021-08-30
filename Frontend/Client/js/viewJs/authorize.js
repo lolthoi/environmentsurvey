@@ -3,9 +3,9 @@ var domain = "https://localhost:44304";
 
 $(document).ready(function(){
 
-    var username = localStorage.getItem('username');
-    var token = localStorage.getItem('token');
-    var role = localStorage.getItem('role');
+    var username = sessionStorage.getItem('username');
+    var token = sessionStorage.getItem('token');
+    var role = sessionStorage.getItem('role');
     $.ajax({
         type: "POST",
         url: domain+"/api/User/checkUserExists?username=" + username,
@@ -28,7 +28,7 @@ $(document).ready(function(){
     }
 })
 $('.logout').click(function(){
-    localStorage.clear();
+    sessionStorage.clear();
     $('.profile').css("display","none");
     $('.login').css("display","block");
     window.location.href = 'index.html';
