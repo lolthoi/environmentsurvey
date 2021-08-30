@@ -312,7 +312,7 @@ $(document).ready(function () {
       async: true,
       success: function (response) {
         if (response == "Success") {
-          localStorage.setItem("registerUser", $("#Username").val().trim());
+          sessionStorage.setItem("registerUser", $("#Username").val().trim());
           $("#registerModal").modal("hide");
           $("#successModal").modal("show");
           setInterval(function () {

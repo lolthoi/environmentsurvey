@@ -1,7 +1,7 @@
 var domain = "https://localhost:44304";
-var role = localStorage.getItem("role");
-var token = localStorage.getItem('token');
-var username = localStorage.getItem('username');
+var role = sessionStorage.getItem("role");
+var token = sessionStorage.getItem('token');
+var username = sessionStorage.getItem('username');
 window.onload = function(){
     if(role != 'ADMIN'){
         window.location.replace("/Client/index.html");

@@ -26,14 +26,14 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         public async Task<DashboardModel> DataDashboard()
         {
             DateTime dt = DateTime.Now;
-            var seminars = await _context.Seminars.ToListAsync();
+            var seminars = await _context.Seminars.Where(s => !s.DeletedDate.HasValue).ToListAsync();
             var totalseminars = seminars.Count();
             var users = await _context.Users.Where(u=> u.Status.Equals(1)).Where(s=> !s.DeletedDate.HasValue).Where(s => !s.Role.Equals("ADMIN")).ToListAsync();
             var totalUser = users.Count();
             var newUsers = await _context.Users.Where(u => u.Status.Equals(1) && u.CreatedDate.Year == dt.Year && u.CreatedDate.Month == dt.Month && u.CreatedDate.Day == dt.Day)
                             .ToListAsync();
             var totalNewUser = newUsers.Count();
-            var surveys = await _context.Surveys.ToListAsync();
+            var surveys = await _context.Surveys.Where(s => !s.DeletedDate.HasValue).ToListAsync();
             var totalSurvey = surveys.Count();
             var requestSeminars = await _context.UserSeminars.Where(s=> s.Status == 1).ToListAsync();
             var totalRquestSeminars = requestSeminars.Count();

@@ -1,7 +1,7 @@
 var domain = "https://localhost:44304";
 var tempList = null;
 
-var token = localStorage.getItem("token");
+var token = sessionStorage.getItem("token");
 var url_string = window.location + "";
 var url = new URL(url_string);
 var seminarId = url.searchParams.get("seminarId");

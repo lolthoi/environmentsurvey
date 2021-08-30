@@ -1,5 +1,5 @@
 var domain = "https://localhost:44304";
-var token = localStorage.getItem("token");
+var token = sessionStorage.getItem("token");
 
 var url_string = window.location + "";
 var url = new URL(url_string);

@@ -1,7 +1,7 @@
 var domain = "https://localhost:44304";
-var role = localStorage.getItem("role");
-var username = localStorage.getItem("username");
-var token = localStorage.getItem("token");
+var role = sessionStorage.getItem("role");
+var username = sessionStorage.getItem("username");
+var token = sessionStorage.getItem("token");
 // get list faqs
 function getList() {
   $.ajax({

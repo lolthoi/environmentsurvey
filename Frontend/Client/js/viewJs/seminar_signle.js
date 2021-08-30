@@ -1,8 +1,8 @@
 var domain = "https://localhost:44304";
-var token = localStorage.getItem('token');
-var role = localStorage.getItem("role");
-var username = localStorage.getItem("username");
-var userId = localStorage.getItem("userId");
+var token = sessionStorage.getItem('token');
+var role = sessionStorage.getItem("role");
+var username = sessionStorage.getItem("username");
+var userId = sessionStorage.getItem("userId");
 
 
 const queryString = window.location.search;
