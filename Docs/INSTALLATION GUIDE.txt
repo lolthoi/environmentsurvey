@@ -19,7 +19,7 @@ II.Running
 
 III. Account for Access Admin Page
  - Username: admin
- - Password: admin123
+ - Password: admin
 
 
 
