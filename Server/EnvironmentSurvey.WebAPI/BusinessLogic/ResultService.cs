@@ -178,6 +178,10 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
             }
             else
             {
+                result.point = point;
+                result.SubmitTime = model.SubmitTime;
+                result.UserId = userId;
+                result.surveyId = surveyId;
                 return result;
             }
 
@@ -328,22 +332,30 @@ namespace EnvironmentSurvey.WebAPI.BusinessLogic
         {
             if(model != null)
             {
-                Result res = new()
+                User user = await _context.Users.FindAsync(model.UserId);
+                if (user.Role != "ADMIN")
                 {
-                    Point = 0,
-                    SubmitTime = 0,
-                    UserId = model.UserId,
-                    SurveyId = model.SurveyId,
-                    CreatedDate = DateTime.UtcNow
-                };
-                try
+                    Result res = new()
+                    {
+                        Point = 0,
+                        SubmitTime = 0,
+                        UserId = model.UserId,
+                        SurveyId = model.SurveyId,
+                        CreatedDate = DateTime.UtcNow
+                    };
+                    try
+                    {
+                        _context.Results.Add(res);
+                        await _context.SaveChangesAsync();
+                        return "success";
+                    }
+                    catch (Exception e)
+                    {
+                        return "save error";
+                    }
+                } else
                 {
-                    _context.Results.Add(res);
-                    await _context.SaveChangesAsync();
                     return "success";
-                }catch(Exception e)
-                {
-                    return "save error";
                 }
             }
             return "data client null";
