@@ -199,7 +199,7 @@ function convertMaxDate(string){
     var month = dates[1];
     var day = dates[2];
 
-    var dateConverted = month+"/"+day+"/"+year+" 12:00 PM";
+    var dateConverted = month+"/"+day+"/"+year+" 11:00 PM";
     return dateConverted;
 }
 
