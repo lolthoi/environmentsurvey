@@ -134,6 +134,7 @@ function pagination(listQuestion, pageNumber = 1){
 		$('#previousPage').addClass('disableLink');
 	}	
 	$('#nextPage').click(function(){
+    $('html,body').scrollTop(0);
 		pageNumber++
     $('#currentPage').html("");
     $('#currentPage').html(pageNumber);
@@ -160,6 +161,7 @@ function pagination(listQuestion, pageNumber = 1){
 		}			
 	});
 	$('#previousPage').click(function(){
+    $('html,body').scrollTop(0);
 		pageNumber--;
     $('#currentPage').html("");
     $('#currentPage').html(pageNumber);
