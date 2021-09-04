@@ -16,7 +16,8 @@ namespace EnvironmentSurvey.WebAPI
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
+        //Class for delpoy
+        /*public static IHostBuilder CreateHostBuilder(string[] args)
         {
             string port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
             string url = String.Concat("http://0.0.0.0:", port);
@@ -26,12 +27,16 @@ namespace EnvironmentSurvey.WebAPI
                 {
                     webBuilder.UseStartup<Startup>().UseUrls(url);
                 });
+        }*/
 
-            /*return Host.CreateDefaultBuilder(args)
+        //Class for local running
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });*/
+                });
         }
     }
 }

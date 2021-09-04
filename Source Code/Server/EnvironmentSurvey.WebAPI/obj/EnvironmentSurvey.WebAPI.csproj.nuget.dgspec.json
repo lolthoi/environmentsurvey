@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Aptech\\BackUpOri\\environmentsurvey\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj": {}
+    "E:\\Code\\Sem3\\environmentsurvey\\Source Code\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj": {}
   },
   "projects": {
-    "D:\\Aptech\\BackUpOri\\environmentsurvey\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj": {
+    "E:\\Code\\Sem3\\environmentsurvey\\Source Code\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Aptech\\BackUpOri\\environmentsurvey\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj",
+        "projectUniqueName": "E:\\Code\\Sem3\\environmentsurvey\\Source Code\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj",
         "projectName": "EnvironmentSurvey.WebAPI",
-        "projectPath": "D:\\Aptech\\BackUpOri\\environmentsurvey\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj",
-        "packagesPath": "C:\\Users\\thanh\\.nuget\\packages\\",
-        "outputPath": "D:\\Aptech\\BackUpOri\\environmentsurvey\\Server\\EnvironmentSurvey.WebAPI\\obj\\",
+        "projectPath": "E:\\Code\\Sem3\\environmentsurvey\\Source Code\\Server\\EnvironmentSurvey.WebAPI\\EnvironmentSurvey.WebAPI.csproj",
+        "packagesPath": "C:\\Users\\vuong\\.nuget\\packages\\",
+        "outputPath": "E:\\Code\\Sem3\\environmentsurvey\\Source Code\\Server\\EnvironmentSurvey.WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\thanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vuong\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -44,13 +44,21 @@
               "target": "Package",
               "version": "[4.0.2, )"
             },
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.15.2, )"
+            },
+            "Cronos": {
+              "target": "Package",
+              "version": "[0.7.1, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[2.14.0, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[5.0.8, )"
+              "version": "[3.1.10, )"
             },
             "Microsoft.AspNetCore.StaticFiles": {
               "target": "Package",
@@ -58,17 +66,13 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.8, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[5.0.8, )"
+              "version": "[3.1.10, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.8, )"
+              "version": "[3.1.10, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -77,6 +81,18 @@
             "MimeKit": {
               "target": "Package",
               "version": "[2.14.0, )"
+            },
+            "MySql.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.10, )"
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[1.3.11, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[7.2.2, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -101,7 +117,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

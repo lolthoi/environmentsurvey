@@ -5,7 +5,7 @@ I.Requirement
   3. Microsoft Visual Code
    - In Visual Code, install Live Server Extenstion
 
-II.Running
+II.Running Local
  1.Unpack file project.
  2.Open MySql WorkBench and create new Connection.
  3.Open Connection created, at Server tab, open Data Import.
@@ -19,9 +19,55 @@ II.Running
  11.Expand tab Client, right click on index.html and select Open with Live Server.
  12.Open new window browser, insert "http://localhost:5500/Client/Index.html" in address bar to go to Index Page.
 
+III.Deploy Guide
+ 1.We use google cloud run to deploy out service project. You need an google account has been activated google cloud platform.
+ 2.After login google cloud platform, create a new cloud project.
+ 3.On google cloud platfrom, go to SQL, create new MySQL Instance.
+ 4.After created MySQL Instance, go to Users tab and create a new user.
+ 5.Open MySql WorkBench and create new Connection.
+ 6.Insert your project database name at Connection Name.
+ 7.At Hostname, insert your google cloud SQL Public IP address.
+ 8.At Username and password, insert your username and password you created at Step 4 -> OK.
+ 9.Open Connection created, at Server tab, open Data Import.
+ 10.Select Import from Self-Contained File, then select file data.sql in project folder -> Database, finally select Start Import.
+ 11.In project folder, open Server Folder, open EnviromentSurvey.sln by Microsoft Visual Studio.
+ 12.Wait for project finish setup all dependency.
+ 13.In Solution Explorer, open "startup.cs".
+ 14.Find service for running on local and commnet it, uncommnet service for deploy.
+ 15.In Solution Explorer, open "Program.cs".
+ 16.Find service for running on local and commnet it, uncommnet service for deploy.
+ 17.Install cloud SDK from this link: https://cloud.google.com/sdk/docs/install
+ 18.Open Command Prompt and go to project folder -> Server.
+ 19.Build and submit an image using the following command: "gcloud builds submit --tag gcr.io/{your-project-Id}/{your-cloud-project-name}".
+ 20.Deploy your image using the following command: "gcloud run deploy --image gcr.io/{your-project-Id}/{your-cloud-project-name}".
+ 21.Input your project name.
+ 22.Select your region.
+ 23.Wait for process finish and copy the URL of your project deployed.
+ 24.Open Visual Studio Code, File -> Open Folder, select folder Frontend in project folder.
+ 25.Add index.php file and add header file
+	"<?php 
+	   header('Content-Type: application/json');
+	   header('Access-Control-Allow-Origin: *');
+	   header("Location: /Client/index.html");
+	?>"
+ 26.Press Ctrl+Shift+H and replace all "https://localhost:44304" to URL of project deployed at step 23
+ 27.Login your Heroku website and create an new app
+ 28.Install Heroku CLI on your computer
+ 29.Open Terminal in Visual Studio Code
+ 30.Login your Heroku account by "heroku login" command
+ 31.Use "git init" command to creates a new Git repository
+ 32.Deploy website to Heroku using Git by 3 commands
+	$ git add .
+	$ git commit -am "make it better"
+	$ git push heroku master
+ 33.Open new window browser, insert "http://[your-app-name]/Client/" in address bar to go to website.
+
 III. Account for Access Admin Page
  - Username: admin
  - Password: admin
+
+IV.Project online
+ You test our project from this link: https://environmentsurvey.herokuapp.com/Client/index.html
 
 
 

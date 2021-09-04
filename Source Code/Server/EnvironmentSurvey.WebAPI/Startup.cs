@@ -47,8 +47,11 @@ namespace EnvironmentSurvey.WebAPI
             {
                 c.AddPolicy("AllowOrigin", op => op.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
-            //services.AddDbContext<ESContext>(options => options.UseMySQL(Configuration.GetConnectionString("EnvironmentSurvey")));
-            services.AddDbContext<ESContext>(options => options.UseMySQL(StartupExtensions.GetMySqlConnectionString().ToString()));
+            //Service to connect DB local
+            services.AddDbContext<ESContext>(options => options.UseMySQL(Configuration.GetConnectionString("EnvironmentSurvey")));
+
+            //Service to connect DB online
+            //services.AddDbContext<ESContext>(options => options.UseMySQL(StartupExtensions.GetMySqlConnectionString().ToString()));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserService, UserService>();
